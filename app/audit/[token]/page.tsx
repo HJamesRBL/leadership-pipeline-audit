@@ -1,0 +1,491 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { DndContext, rectIntersection, KeyboardSensor, PointerSensor, useSensor, useSensors, DragOverlay } from '@dnd-kit/core'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
+interface Employee {
+  id: string
+  name: string
+  title: string
+  businessUnit: string
+  careerStage: number
+  performanceRank: number
+}
+
+// Stage descriptions for the expandable section
+const stageDescriptions = [
+  {
+    stage: 1,
+    title: "One",
+    color: "#E8B70B", // Yellow
+    description: "People who are in One are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have expert technical skills, so they are often not trusted with independent projects. They need others in the organization to give them direction and guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
+  },
+  {
+    stage: 2,
+    title: "Two",
+    color: "#ED1B34", // Red
+    description: "Those in Two are independent contributors. They are experts in a technical or functional area. They are strong technically. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not typically seen as developmental to others because they believe their technical contributions are enough."
+  },
+  {
+    stage: 3,
+    title: "Three",
+    color: "#0086D6", // Medium RBL Blue
+    description: "People who are described in Three have shifted from expert to someone who can be interdependent with others. They are strong influencers. They are still knowledgeable about technical areas but have shifted from a focus on self to a focus on ensuring the success of their team. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. Those in Three are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully."
+  },
+  {
+    stage: 4,
+    title: "Four",
+    color: "#071D49", // Dark RBL Navy
+    description: "People in Four are seen as contributing through the entire business. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and  information. They have shifted from influence to power. They set strategic direction for a large part if not the entire organization. From the outside, those in FOUR are seen as representing the entire business not just a part of the business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+  }
+]
+
+// Sortable Employee Card Component
+function SortableEmployeeCard({ 
+  employee, 
+  index,
+  isTopPerformer,
+  isBottomPerformer 
+}: { 
+  employee: Employee, 
+  index: number,
+  isTopPerformer: boolean,
+  isBottomPerformer: boolean
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: employee.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  }
+
+  // Determine background color
+  let backgroundColor = 'white'
+  let borderColor = isDragging ? '#0086D6' : '#e5e7eb'
+  
+  if (isTopPerformer) {
+    backgroundColor = '#E8FFF9' // Light RBL green tint
+    borderColor = isDragging ? '#0086D6' : '#5EC4B6'
+  } else if (isBottomPerformer) {
+    backgroundColor = '#FEF2F2' // Light red tint
+    borderColor = isDragging ? '#0086D6' : '#FCA5A5'
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        ...style,
+        backgroundColor,
+        borderColor
+      }}
+      {...attributes}
+      {...listeners}
+      className={`p-4 border-2 rounded-lg cursor-move transition-all hover:shadow-lg`}
+    >
+      <div className="text-center">
+        {/* Performance Label Inside Card */}
+        {(isTopPerformer || isBottomPerformer) && (
+          <div className={`text-xs font-bold mb-2 ${
+            isTopPerformer ? 'text-green-600' : 'text-red-600'
+          }`}>
+            {isTopPerformer ? 'HIGHEST PERFORMER' : 'LEAST HIGHEST PERFORMER'}
+          </div>
+        )}
+        
+        {/* Rank Number */}
+        <div className={`text-3xl font-bold mb-2 ${
+          isTopPerformer ? 'text-green-600' : 
+          isBottomPerformer ? 'text-red-600' : 
+          'text-blue-600'
+        }`}>
+          #{index + 1}
+        </div>
+        
+        {/* Employee Name */}
+        <div className="font-semibold text-base mb-1">
+          {employee.name}
+        </div>
+        
+        {/* Title */}
+        <div className="text-xs text-gray-600 mb-1">
+          {employee.title}
+        </div>
+        
+        {/* Business Unit */}
+        <div className="text-xs text-gray-500">
+          {employee.businessUnit}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function AuditPage({ params }: { params: { token: string } }) {
+  const [step, setStep] = useState<'loading' | 'stages' | 'ranking' | 'complete'>('loading')
+  const [employees, setEmployees] = useState<Employee[]>([])
+  const [leaderName, setLeaderName] = useState('')
+  const [message, setMessage] = useState('')
+  const [showDescriptions, setShowDescriptions] = useState(false)
+  const [activeId, setActiveId] = useState<string | null>(null)
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  useEffect(() => {
+    loadAuditData()
+  }, [])
+
+  const loadAuditData = async () => {
+    try {
+      const response = await fetch(`/api/audit/leader/${params.token}`)
+      if (response.ok) {
+        const data = await response.json()
+        if (data.completed) {
+          setStep('complete')
+          setMessage('You have already completed this audit. Thank you!')
+        } else {
+          setEmployees(data.employees)
+          setLeaderName(data.leaderName)
+          setStep('stages')
+        }
+      } else {
+        setMessage('Invalid audit link')
+      }
+    } catch (error) {
+      setMessage('Error loading audit')
+    }
+  }
+
+  const handleStageChange = (employeeId: string, stage: number) => {
+    setEmployees(employees.map(emp => 
+      emp.id === employeeId ? { ...emp, careerStage: stage } : emp
+    ))
+  }
+
+  const proceedToRanking = () => {
+    // Check if all stages are selected
+    if (employees.some(emp => emp.careerStage === 0)) {
+      setMessage('Please select a career stage for all employees')
+      return
+    }
+    setMessage('')
+    setStep('ranking')
+  }
+
+  const handleDragStart = (event: any) => {
+    setActiveId(event.active.id)
+  }
+
+  const handleDragOver = (event: any) => {
+    const { active, over } = event
+    
+    if (over && active.id !== over.id) {
+      setEmployees((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id)
+        const newIndex = items.findIndex(item => item.id === over.id)
+        return arrayMove(items, oldIndex, newIndex)
+      })
+    }
+  }
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event
+
+    if (over && active.id !== over.id) {
+      setEmployees((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id)
+        const newIndex = items.findIndex(item => item.id === over.id)
+        return arrayMove(items, oldIndex, newIndex)
+      })
+    }
+    
+    setActiveId(null)
+  }
+
+  const submitRatings = async () => {
+    try {
+      // Update performance ranks based on current order
+      const rankedEmployees = employees.map((emp, index) => ({
+        ...emp,
+        performanceRank: index + 1
+      }))
+
+      const response = await fetch(`/api/audit/leader/${params.token}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ employees: rankedEmployees })
+      })
+
+      if (response.ok) {
+        setStep('complete')
+        setMessage('Thank you! Your ratings have been submitted successfully.')
+      } else {
+        setMessage('Error submitting ratings')
+      }
+    } catch (error) {
+      setMessage('Error: ' + error)
+    }
+  }
+
+  if (step === 'loading') {
+    return <div className="p-8 text-center">Loading audit data...</div>
+  }
+
+  if (step === 'complete') {
+    return (
+      <div className="max-w-2xl mx-auto p-8 text-center">
+        <h1 className="text-3xl font-bold mb-4 text-green-600">✓ Audit Complete</h1>
+        <p className="text-lg">{message}</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto p-8">
+      {/* RBL Brand Header */}
+      <div style={{ 
+        background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)', 
+        color: 'white', 
+        padding: '1.5rem', 
+        borderRadius: '0.5rem', 
+        marginBottom: '2rem' 
+      }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: 'white' }}>Pipeline Audit</h1>
+        <p style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
+      </div>
+
+      {/* Stage Selection */}
+      {step === 'stages' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Step 1: Determine Employees' Way of Contributing
+          </h2>
+          <p className="mb-6 text-gray-600">
+            For each employee, sort each person into one of the four options.
+          </p>
+
+          {/* Stage Framework Table */}
+          <div className="mb-6 bg-white rounded-lg shadow overflow-hidden">
+            <div className="grid grid-cols-4" style={{ minHeight: '300px' }}>
+              {/* Stage 1 Column */}
+              <div className="border-r border-gray-200">
+                <div 
+                  className="text-white text-center py-3 font-bold text-lg"
+                  style={{ backgroundColor: '#E8B70B' }}
+                >
+                  One
+                </div>
+                <div className="px-6 py-4">
+                  <ul className="space-y-3">
+                    <li className="text-sm text-gray-700">Accepts supervision</li>
+                    <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
+                    <li className="text-sm text-gray-700">Routine and detailed tasks</li>
+                    <li className="text-sm text-gray-700">Learns how “we” do things</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Stage 2 Column */}
+              <div className="border-r border-gray-200">
+                <div 
+                  className="text-white text-center py-3 font-bold text-lg"
+                  style={{ backgroundColor: '#ED1B34' }}
+                >
+                  Two
+                </div>
+                <div className="px-6 py-4">
+                  <ul className="space-y-3">
+                    <li className="text-sm text-gray-700">Responsible for projects</li>
+                    <li className="text-sm text-gray-700">Works independently and produces results</li>
+                    <li className="text-sm text-gray-700">Credible</li>
+                    <li className="text-sm text-gray-700">Increases expertise</li>
+                    <li className="text-sm text-gray-700">Builds internal network</li>
+                    <li className="text-sm text-gray-700">Acts as an innovator</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Stage 3 Column */}
+              <div className="border-r border-gray-200">
+                <div 
+                  className="text-white text-center py-3 font-bold text-lg"
+                  style={{ backgroundColor: '#0086D6' }}
+                >
+                  Three
+                </div>
+                <div className="px-6 py-4">
+                  <ul className="space-y-3">
+                    <li className="text-sm text-gray-700">Manages, coaches, mentors or idea leader</li>
+                    <li className="text-sm text-gray-700">Increases technical breadth</li>
+                    <li className="text-sm text-gray-700">Integrator of ideas</li>
+                    <li className="text-sm text-gray-700">Represents workgroup to outside stakeholders</li>
+                    <li className="text-sm text-gray-700">Builds internal and external networks</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Stage 4 Column */}
+              <div>
+                <div 
+                  className="text-white text-center py-3 font-bold text-lg"
+                  style={{ backgroundColor: '#071D49' }}
+                >
+                  Four
+                </div>
+                <div className="px-6 py-4">
+                  <ul className="space-y-3">
+                    <li className="text-sm text-gray-700">Sets strategic direction</li>
+                    <li className="text-sm text-gray-700">Uses power rather than influence</li>
+                    <li className="text-sm text-gray-700">Sponsors key people</li>
+                    <li className="text-sm text-gray-700">Represents the entire organization to outside groups</li>
+                    <li className="text-sm text-gray-700">Provides global technical direction to the organization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Toggle for Stage Descriptions */}
+          <button
+            onClick={() => setShowDescriptions(!showDescriptions)}
+            className="mb-6 px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
+            style={{ background: 'rgba(0, 134, 214, 0.1)' }}
+          >
+            {showDescriptions ? '− Hide' : '+ Show'} Detailed Descriptions
+          </button>
+
+          {/* Stage Descriptions */}
+          {showDescriptions && (
+            <div className="mb-6 space-y-4">
+              {stageDescriptions.map((stage) => (
+                <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4" 
+                     style={{ borderLeftColor: stage.color }}>
+                  <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
+                    {stage.title}
+                  </h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {stage.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Employee Cards */}
+          <div className="space-y-4 mb-8">
+            {employees.map(emp => (
+              <div key={emp.id} className="p-4 bg-white border rounded-lg shadow">
+                <div className="flex justify-between items-center">
+                  <div className="flex-1">
+                    <div className="font-semibold">{emp.name}</div>
+                    <div className="text-sm text-gray-600">{emp.title} - {emp.businessUnit}</div>
+                  </div>
+                  <select
+                    value={emp.careerStage}
+                    onChange={(e) => handleStageChange(emp.id, parseInt(e.target.value))}
+                    className="ml-4 p-2 border rounded text-lg font-semibold"
+                    style={{ minWidth: '150px' }}
+                  >
+                    <option value="0">Selection</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                  </select>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={proceedToRanking}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+            style={{ background: '#0086D6' }}
+          >
+            Proceed to Performance Ranking →
+          </button>
+        </div>
+      )}
+
+      {/* Performance Ranking */}
+      {step === 'ranking' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Step 2: Rank by Performance
+          </h2>
+          <p className="mb-6 text-gray-600">
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest?  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. There will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. We will not show your responses here by name. </p>
+<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader who knows these people. You are being asked to rank best to least performers in terms of everything you know about them and their contributions to success. </p>
+            <p className="mb-6 text-gray-600"> A tip for how to do this is to first pick your top 5 and then your bottom 5. Sort the middle out after you have this figured out. </p>
+            <p className="mb-6 text-gray-600">Now rank them.
+          </p>
+
+          <DndContext
+            sensors={sensors}
+            collisionDetection={rectIntersection}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={employees.map(e => e.id)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-4 gap-4 mb-8">
+                {employees.map((emp, index) => {
+                  const isTopPerformer = index === 0
+                  const isBottomPerformer = index === employees.length - 1
+                  
+                  return (
+                    <SortableEmployeeCard 
+                      key={emp.id}
+                      employee={emp} 
+                      index={index}
+                      isTopPerformer={isTopPerformer}
+                      isBottomPerformer={isBottomPerformer}
+                    />
+                  )
+                })}
+              </div>
+            </SortableContext>
+          </DndContext>
+
+          <button
+            onClick={submitRatings}
+            className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
+            style={{ background: '#5EC4B6' }}
+          >
+            Submit Final Rankings
+          </button>
+        </div>
+      )}
+
+      {/* Error Messages */}
+      {message && (
+        <div className={`mt-4 p-3 rounded ${message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
+          {message}
+        </div>
+      )}
+    </div>
+  )
+}

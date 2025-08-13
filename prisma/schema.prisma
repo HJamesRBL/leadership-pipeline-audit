@@ -1,0 +1,76 @@
+// Enhanced Schema for Pipeline Audit with Comparison Support
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enhanced audit table with organization and round tracking
+model Audit {
+  id             String   @id @default(uuid())
+  name           String
+  organizationId String?  // Groups audits by company/organization
+  organizationName String? // Company name for easy reference
+  auditRound     Int      @default(1) // 1 for first audit, 2 for second, etc.
+  previousAuditId String? // Reference to previous audit for comparison
+  createdAt      DateTime @default(now())
+  
+  employees     Employee[]
+  auditLeaders  AuditLeader[]
+  
+  // Self-relation for audit history
+  previousAudit Audit?  @relation("AuditHistory", fields: [previousAuditId], references: [id])
+  nextAudits    Audit[] @relation("AuditHistory")
+  
+  @@index([organizationId])
+  @@index([previousAuditId])
+}
+
+// Enhanced employees table with tracking ID and email
+model Employee {
+  id           String  @id @default(uuid())
+  auditId      String
+  employeeUniqueId String? // Unique identifier across audits (email or employee ID)
+  name         String
+  email        String?  // Add email field here
+  title        String
+  businessUnit String
+  company      String
+  
+  audit        Audit    @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  ratings      Rating[]
+  
+  @@index([employeeUniqueId])
+  @@index([auditId, employeeUniqueId])
+}
+
+// Audit leaders who do the rating
+model AuditLeader {
+  id       String  @id @default(uuid())
+  auditId  String
+  name     String
+  email    String
+  token    String  @unique // Unique URL token
+  completed Boolean @default(false)
+  
+  audit    Audit    @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  ratings  Rating[]
+}
+
+// Ratings by audit leaders
+model Rating {
+  id              String @id @default(uuid())
+  auditLeaderId   String
+  employeeId      String
+  careerStage     Int    // 1-4
+  performanceRank Int    // 1 to N (unique per audit leader)
+  
+  auditLeader AuditLeader @relation(fields: [auditLeaderId], references: [id], onDelete: Cascade)
+  employee    Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  
+  @@unique([auditLeaderId, employeeId])
+  // @@unique([auditLeaderId, performanceRank])
+}
