@@ -15,23 +15,58 @@ export async function POST(request: Request) {
       leaderCount: body.auditLeaders?.length
     })
 
-    const { 
-      name, 
+    const {
+      name,
       organizationId,
       organizationName,
       auditRound,
       previousAuditId,
-      employees, 
-      auditLeaders 
+      employees,
+      auditLeaders
     } = body
 
-    // Create the audit with new fields
+    // Determine the correct organization info
+    let finalOrganizationId = organizationId;
+    let finalOrganizationName = organizationName;
+    
+    // If this is a follow-up round, inherit organization info from the previous audit
+    if (previousAuditId) {
+      console.log('This is a follow-up round, fetching previous audit info...')
+      const previousAudit = await prisma.audit.findUnique({
+        where: { id: previousAuditId },
+        select: { 
+          organizationId: true, 
+          organizationName: true 
+        }
+      })
+      
+      if (previousAudit) {
+        // Always use the organization info from the previous round
+        finalOrganizationId = previousAudit.organizationId || organizationId || uuidv4()
+        finalOrganizationName = previousAudit.organizationName || organizationName || 'Unspecified'
+        console.log('Using organization info from previous audit:', {
+          organizationId: finalOrganizationId,
+          organizationName: finalOrganizationName
+        })
+      } else {
+        // Previous audit not found, use provided values or generate new
+        finalOrganizationId = organizationId || uuidv4()
+        finalOrganizationName = organizationName || 'Unspecified'
+        console.log('Warning: Previous audit not found, using provided values')
+      }
+    } else {
+      // This is a first round, use provided values or generate new
+      finalOrganizationId = organizationId || uuidv4()
+      finalOrganizationName = organizationName || 'Unspecified'
+    }
+
+    // Create the audit with the correct organization info
     console.log('Creating audit in database...')
     const audit = await prisma.audit.create({
       data: {
         name,
-        organizationId: organizationId || uuidv4(),
-        organizationName: organizationName || 'Unspecified',
+        organizationId: finalOrganizationId,
+        organizationName: finalOrganizationName,
         auditRound: auditRound || 1,
         previousAuditId: previousAuditId || null
       }
@@ -51,7 +86,7 @@ export async function POST(request: Request) {
           email: emp.email || '',
           title: emp.title,
           businessUnit: emp.businessUnit,
-          company: emp.company || organizationName || 'Unspecified'
+          company: emp.company || finalOrganizationName || 'Unspecified'
         }
       })
       createdEmployees.push(created)
@@ -106,7 +141,7 @@ export async function POST(request: Request) {
       success: true,
       auditId: audit.id,
       auditName: audit.name,
-      organizationName: organizationName,
+      organizationName: finalOrganizationName,  // Return the final organization name
       auditRound: auditRound,
       links
     })
@@ -115,8 +150,8 @@ export async function POST(request: Request) {
     console.error('Detailed error creating audit:', error)
     console.error('Error stack:', (error as Error).stack)
     return NextResponse.json(
-      { 
-        error: 'Failed to create audit', 
+      {
+        error: 'Failed to create audit',
         details: (error as Error).message,
         stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined
       },
