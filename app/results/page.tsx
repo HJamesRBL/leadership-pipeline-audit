@@ -342,7 +342,7 @@ export default function ResultsPage() {
 }
 
   const stageColors = {
-    1: '#E8B70B',  // Yellow
+    1: '#E8B70B',  // Yello
     2: '#ED1B34',  // Red
     3: '#0086D6',  // Blue
     4: '#071D49'   // Navy
