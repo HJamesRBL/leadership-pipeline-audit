@@ -448,7 +448,7 @@ export default function ResultsPage() {
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Promoted</p>
+                  <p className="text-sm text-gray-600">Advanced</p>
                   <p className="text-2xl font-bold text-green-600">
                     {comparisonData.movements.promoted}
                   </p>
