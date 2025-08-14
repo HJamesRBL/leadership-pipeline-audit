@@ -1,7 +1,6 @@
 export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-
 const prisma = new PrismaClient()
 
 export async function GET() {
@@ -20,7 +19,7 @@ export async function GET() {
         createdAt: 'desc'
       }
     })
-
+    
     // Transform the data to include computed fields and new organization fields
     const auditsWithStats = audits.map(audit => {
       // Get company from organizationName or fall back to first employee's company
@@ -29,7 +28,7 @@ export async function GET() {
       // Calculate completion stats
       const totalLeaders = audit.auditLeaders.length
       const completedLeaders = audit.auditLeaders.filter(leader => leader.completed).length
-
+      
       return {
         id: audit.id,
         name: audit.name,
@@ -45,14 +44,11 @@ export async function GET() {
         completionRate: totalLeaders > 0 ? Math.round((completedLeaders / totalLeaders) * 100) : 0
       }
     })
-
-    return NextResponse.json(auditsWithStats)
     
+    return NextResponse.json(auditsWithStats)
   } catch (error) {
     console.error('Error fetching audits:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch audits' },
-      { status: 500 }
-    )
+    // ALWAYS return an empty array on error, not an error object
+    return NextResponse.json([])
   }
 }

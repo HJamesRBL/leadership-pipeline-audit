@@ -10,10 +10,17 @@ export async function GET(request: Request) {
     const auditId = searchParams.get('id')
 
     if (!auditId) {
-      return NextResponse.json(
-        { error: 'Audit ID is required' },
-        { status: 400 }
-      )
+      // Return empty structure instead of error
+      return NextResponse.json({
+        auditName: '',
+        totalLeaders: 0,
+        completedLeaders: 0,
+        completionStatus: [],
+        stageCounts: [],
+        averagePerformance: [],
+        rawData: [],
+        calculationNote: ''
+      })
     }
 
     // Fetch audit with all related data
@@ -34,10 +41,17 @@ export async function GET(request: Request) {
     })
 
     if (!audit) {
-      return NextResponse.json(
-        { error: 'Audit not found' },
-        { status: 404 }
-      )
+      // Return empty structure instead of error
+      return NextResponse.json({
+        auditName: '',
+        totalLeaders: 0,
+        completedLeaders: 0,
+        completionStatus: [],
+        stageCounts: [],
+        averagePerformance: [],
+        rawData: [],
+        calculationNote: ''
+      })
     }
 
     // Calculate completion status
@@ -137,9 +151,16 @@ export async function GET(request: Request) {
 
   } catch (error) {
     console.error('Error fetching audit results:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch audit results' },
-      { status: 500 }
-    )
+    // Return empty structure instead of error
+    return NextResponse.json({
+      auditName: '',
+      totalLeaders: 0,
+      completedLeaders: 0,
+      completionStatus: [],
+      stageCounts: [],
+      averagePerformance: [],
+      rawData: [],
+      calculationNote: ''
+    })
   }
 }

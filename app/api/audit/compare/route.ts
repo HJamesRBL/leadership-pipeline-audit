@@ -36,10 +36,39 @@ export async function GET(request: Request) {
     const previousAuditId = searchParams.get('previousId')
 
     if (!currentAuditId || !previousAuditId) {
-      return NextResponse.json(
-        { error: 'Both currentId and previousId are required' },
-        { status: 400 }
-      )
+      // Return empty structure instead of error
+      return NextResponse.json({
+        currentAudit: null,
+        previousAudit: null,
+        comparisons: [],
+        movements: {
+          promoted: 0,
+          maintained: 0,
+          demoted: 0,
+          newHires: 0,
+          departures: 0,
+          performanceImproved: 0,
+          performanceMaintained: 0,
+          performanceDeclined: 0
+        },
+        movementPatterns: {
+          transitions: [],
+          byStageChange: {
+            promoted: [],
+            maintained: [],
+            demoted: []
+          }
+        },
+        roiMetrics: {
+          highPotentialAdvanced: 0,
+          atRiskImproved: 0,
+          talentHealthScore: 0,
+          successionReadiness: {
+            previousReady: 0,
+            currentReady: 0
+          }
+        }
+      })
     }
 
     // Fetch both audits with all related data
@@ -77,10 +106,39 @@ export async function GET(request: Request) {
     ])
 
     if (!currentAudit || !previousAudit) {
-      return NextResponse.json(
-        { error: 'One or both audits not found' },
-        { status: 404 }
-      )
+      // Return empty structure instead of error
+      return NextResponse.json({
+        currentAudit: null,
+        previousAudit: null,
+        comparisons: [],
+        movements: {
+          promoted: 0,
+          maintained: 0,
+          demoted: 0,
+          newHires: 0,
+          departures: 0,
+          performanceImproved: 0,
+          performanceMaintained: 0,
+          performanceDeclined: 0
+        },
+        movementPatterns: {
+          transitions: [],
+          byStageChange: {
+            promoted: [],
+            maintained: [],
+            demoted: []
+          }
+        },
+        roiMetrics: {
+          highPotentialAdvanced: 0,
+          atRiskImproved: 0,
+          talentHealthScore: 0,
+          successionReadiness: {
+            previousReady: 0,
+            currentReady: 0
+          }
+        }
+      })
     }
 
     // Process ratings for both audits
@@ -296,10 +354,39 @@ export async function GET(request: Request) {
 
   } catch (error) {
     console.error('Error comparing audits:', error)
-    return NextResponse.json(
-      { error: 'Failed to compare audits' },
-      { status: 500 }
-    )
+    // Return empty structure instead of error
+    return NextResponse.json({
+      currentAudit: null,
+      previousAudit: null,
+      comparisons: [],
+      movements: {
+        promoted: 0,
+        maintained: 0,
+        demoted: 0,
+        newHires: 0,
+        departures: 0,
+        performanceImproved: 0,
+        performanceMaintained: 0,
+        performanceDeclined: 0
+      },
+      movementPatterns: {
+        transitions: [],
+        byStageChange: {
+          promoted: [],
+          maintained: [],
+          demoted: []
+        }
+      },
+      roiMetrics: {
+        highPotentialAdvanced: 0,
+        atRiskImproved: 0,
+        talentHealthScore: 0,
+        successionReadiness: {
+          previousReady: 0,
+          currentReady: 0
+        }
+      }
+    })
   }
 }
 

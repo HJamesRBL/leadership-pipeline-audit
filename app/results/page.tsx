@@ -23,6 +23,8 @@ interface AuditResult {
   stageCounts: { stage: number; count: number }[]
   averagePerformance: { stage: number; average: number }[]
   completionStatus: { name: string; email: string; completed: boolean }[]
+  rawData?: any[] // Add this line
+  calculationNote?: string
 }
 
 interface AuditInfo {
@@ -260,50 +262,84 @@ export default function ResultsPage() {
   }, [selectedAudit, audits])
 
   const fetchAudits = async () => {
-    try {
-      const response = await fetch('/api/audit/list')
-      if (response.ok) {
-        const data = await response.json()
-        setAudits(data)
-      }
-    } catch (error) {
-      console.error('Error fetching audits:', error)
+  try {
+    const response = await fetch('/api/audit/list')
+    if (response.ok) {
+      const data = await response.json()
+      // Ensure data is always an array
+      setAudits(Array.isArray(data) ? data : [])
     }
+  } catch (error) {
+    console.error('Error fetching audits:', error)
+    setAudits([]) // Set empty array on error
   }
+}
 
   const fetchResults = async () => {
-    if (!selectedAudit) return
-    
-    setLoading(true)
-    try {
-      const response = await fetch(`/api/audit/get-results/results?id=${selectedAudit}`)
-      if (response.ok) {
-        const data = await response.json()
-        setResults(data)
+  if (!selectedAudit) return
+  
+  setLoading(true)
+  try {
+    const response = await fetch(`/api/audit/get-results/results?id=${selectedAudit}`)
+    if (response.ok) {
+      const data = await response.json()
+      // Ensure all arrays in results are actually arrays
+      const safeResults = {
+        ...data,
+        stageCounts: Array.isArray(data.stageCounts) ? data.stageCounts : [],
+        averagePerformance: Array.isArray(data.averagePerformance) ? data.averagePerformance : [],
+        completionStatus: Array.isArray(data.completionStatus) ? data.completionStatus : [],
+        rawData: Array.isArray(data.rawData) ? data.rawData : []
       }
-    } catch (error) {
-      console.error('Error fetching results:', error)
-    } finally {
-      setLoading(false)
+      setResults(safeResults)
     }
+  } catch (error) {
+    console.error('Error fetching results:', error)
+    // Set empty results structure on error
+    setResults({
+      auditName: '',
+      totalLeaders: 0,
+      completedLeaders: 0,
+      stageCounts: [],
+      averagePerformance: [],
+      completionStatus: [],
+      rawData: []
+    })
+  } finally {
+    setLoading(false)
   }
+}
 
   const fetchComparison = async () => {
-    if (!selectedAudit || !selectedPreviousAudit) return
-    
-    setLoadingComparison(true)
-    try {
-      const response = await fetch(`/api/audit/compare?currentId=${selectedAudit}&previousId=${selectedPreviousAudit}`)
-      if (response.ok) {
-        const data = await response.json()
-        setComparisonData(data)
+  if (!selectedAudit || !selectedPreviousAudit) return
+  
+  setLoadingComparison(true)
+  try {
+    const response = await fetch(`/api/audit/compare?currentId=${selectedAudit}&previousId=${selectedPreviousAudit}`)
+    if (response.ok) {
+      const data = await response.json()
+      // Ensure all arrays in comparison data are actually arrays
+      const safeComparisonData = {
+        ...data,
+        comparisons: Array.isArray(data.comparisons) ? data.comparisons : [],
+        movementPatterns: {
+          transitions: Array.isArray(data.movementPatterns?.transitions) ? data.movementPatterns.transitions : [],
+          byStageChange: {
+            promoted: Array.isArray(data.movementPatterns?.byStageChange?.promoted) ? data.movementPatterns.byStageChange.promoted : [],
+            maintained: Array.isArray(data.movementPatterns?.byStageChange?.maintained) ? data.movementPatterns.byStageChange.maintained : [],
+            demoted: Array.isArray(data.movementPatterns?.byStageChange?.demoted) ? data.movementPatterns.byStageChange.demoted : []
+          }
+        }
       }
-    } catch (error) {
-      console.error('Error fetching comparison:', error)
-    } finally {
-      setLoadingComparison(false)
+      setComparisonData(safeComparisonData)
     }
+  } catch (error) {
+    console.error('Error fetching comparison:', error)
+    setComparisonData(null)
+  } finally {
+    setLoadingComparison(false)
   }
+}
 
   const stageColors = {
     1: '#E8B70B',  // Yellow

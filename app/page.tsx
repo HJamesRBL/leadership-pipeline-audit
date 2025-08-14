@@ -28,16 +28,18 @@ export default function AdminDashboard() {
   }, [])
 
   const fetchAudits = async () => {
-    try {
-      const response = await fetch('/api/audit/list')
-      const data = await response.json()
-      setAudits(data)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching audits:', error)
-      setLoading(false)
-    }
+  try {
+    const response = await fetch('/api/audit/list')
+    const data = await response.json()
+    // Ensure data is always an array
+    setAudits(Array.isArray(data) ? data : [])
+    setLoading(false)
+  } catch (error) {
+    console.error('Error fetching audits:', error)
+    setAudits([]) // Set empty array on error
+    setLoading(false)
   }
+}
 
   const handleDelete = async (auditId: string) => {
     try {
