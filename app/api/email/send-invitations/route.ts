@@ -2,22 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { generateInvitationEmail } from '../../../../lib/email-templates';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Only initialize Resend if API key exists
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 export async function POST(request: NextRequest) {
   try {
     const { auditId, auditName, auditLeaders, fromEmail = 'audit@rblgroup.com', fromName = 'The RBL Group' } = await request.json();
-
+    
     if (!auditId || !auditName || !auditLeaders || !Array.isArray(auditLeaders)) {
       return NextResponse.json(
         { error: 'Missing required fields: auditId, auditName, auditLeaders' },
         { status: 400 }
       );
     }
-
+    
     const emailResults = [];
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-
+    
     for (const leader of auditLeaders) {
       try {
         const { name, email, employees, token } = leader;
@@ -31,10 +34,10 @@ export async function POST(request: NextRequest) {
           });
           continue;
         }
-
+        
         // Generate the audit link
         const auditLink = `${appUrl}/audit/${token}`;
-
+        
         // Generate email content
         const emailContent = generateInvitationEmail({
           leaderName: name,
@@ -43,7 +46,20 @@ export async function POST(request: NextRequest) {
           employeeCount: employees.length,
           employeeNames: employees
         });
-
+        
+        // Check if email service is configured
+        if (!resend) {
+          console.log(`Email service not configured. Would send to ${email} with link: ${auditLink}`);
+          emailResults.push({
+            leaderName: name,
+            email: email,
+            status: 'simulated',
+            auditLink: auditLink,
+            note: 'Email service not configured - link generated but email not sent'
+          });
+          continue;
+        }
+        
         // Send email via Resend
         const emailResponse = await resend.emails.send({
           from: `${fromName} <${fromEmail}>`,
@@ -56,7 +72,7 @@ export async function POST(request: NextRequest) {
             { name: 'audit-id', value: auditId.toString() }
           ]
         });
-
+        
         emailResults.push({
           leaderName: name,
           email: email,
@@ -64,7 +80,7 @@ export async function POST(request: NextRequest) {
           messageId: emailResponse.data?.id,
           auditLink: auditLink
         });
-
+        
       } catch (emailError) {
         console.error(`Failed to send email to ${leader.email}:`, emailError);
         emailResults.push({
@@ -75,25 +91,27 @@ export async function POST(request: NextRequest) {
         });
       }
     }
-
+    
     // Count successes and failures
     const sent = emailResults.filter(r => r.status === 'sent').length;
     const failed = emailResults.filter(r => r.status === 'failed').length;
-
+    const simulated = emailResults.filter(r => r.status === 'simulated').length;
+    
     return NextResponse.json({
       success: true,
       summary: {
         total: auditLeaders.length,
         sent: sent,
-        failed: failed
+        failed: failed,
+        simulated: simulated
       },
       results: emailResults
     });
-
+    
   } catch (error) {
     console.error('Send invitations API error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to send invitations',
         details: error instanceof Error ? error.message : 'Unknown error'
       },
