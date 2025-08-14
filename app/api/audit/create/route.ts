@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { v4 as uuidv4 } from 'uuid'
 
-
-
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -40,69 +38,68 @@ export async function POST(request: Request) {
     })
     console.log('Audit created successfully:', audit.id)
 
-    // Create employees with unique tracking ID (email)
+    // Create employees SEQUENTIALLY (not in parallel)
     console.log('Creating employees...')
-    const createdEmployees = await Promise.all(
-      employees.map((emp: any) => {
-        console.log('Creating employee:', emp.name)
-        return prisma.employee.create({
-          data: {
-            auditId: audit.id,
-            employeeUniqueId: emp.employeeUniqueId || emp.email, // Use email as unique ID
-            name: emp.name,
-            email: emp.email || '', // Make sure email is saved
-            title: emp.title,
-            businessUnit: emp.businessUnit,
-            company: emp.company || organizationName || 'Unspecified'
-          }
-        })
+    const createdEmployees = []
+    for (const emp of employees) {
+      console.log('Creating employee:', emp.name)
+      const created = await prisma.employee.create({
+        data: {
+          auditId: audit.id,
+          employeeUniqueId: emp.employeeUniqueId || emp.email,
+          name: emp.name,
+          email: emp.email || '',
+          title: emp.title,
+          businessUnit: emp.businessUnit,
+          company: emp.company || organizationName || 'Unspecified'
+        }
       })
-    )
+      createdEmployees.push(created)
+    }
     console.log(`Created ${createdEmployees.length} employees`)
 
-    // Create audit leaders with unique tokens and return enhanced links
+    // Create audit leaders SEQUENTIALLY with their ratings
     console.log('Creating audit leaders...')
-    const links = await Promise.all(
-      auditLeaders.map(async (leader: any) => {
-        const token = uuidv4()
-        console.log('Creating audit leader:', leader.name)
-        const createdLeader = await prisma.auditLeader.create({
-          data: {
-            auditId: audit.id,
-            name: leader.name,
-            email: leader.email,
-            token,
-          }
-        })
-
-        // Create empty ratings for each employee this leader should rate
-        const employeesToRate = createdEmployees.filter(emp =>
-          leader.employees.includes(emp.name)
-        )
-        console.log(`Assigning ${employeesToRate.length} employees to ${leader.name}`)
-
-        // DON'T set performanceRank yet - it will be set when they submit
-        for (const emp of employeesToRate) {
-          await prisma.rating.create({
-            data: {
-              auditLeaderId: createdLeader.id,
-              employeeId: emp.id,
-              careerStage: 0, // Will be set by audit leader
-              performanceRank: 999, // Temporary value - will be updated when submitted
-            }
-          })
-        }
-
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-        return {
+    const links = []
+    for (const leader of auditLeaders) {
+      const token = uuidv4()
+      console.log('Creating audit leader:', leader.name)
+      
+      const createdLeader = await prisma.auditLeader.create({
+        data: {
+          auditId: audit.id,
           name: leader.name,
           email: leader.email,
-          link: `${baseUrl}/audit/${token}`,
-          token: token,
-          employees: leader.employees
+          token,
         }
       })
-    )
+
+      // Create ratings for this leader SEQUENTIALLY
+      const employeesToRate = createdEmployees.filter(emp =>
+        leader.employees.includes(emp.name)
+      )
+      console.log(`Assigning ${employeesToRate.length} employees to ${leader.name}`)
+
+      for (const emp of employeesToRate) {
+        await prisma.rating.create({
+          data: {
+            auditLeaderId: createdLeader.id,
+            employeeId: emp.id,
+            careerStage: 0,
+            performanceRank: 999,
+          }
+        })
+      }
+
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      links.push({
+        name: leader.name,
+        email: leader.email,
+        link: `${baseUrl}/audit/${token}`,
+        token: token,
+        employees: leader.employees
+      })
+    }
     console.log(`Created ${links.length} audit leaders with links`)
 
     return NextResponse.json({
