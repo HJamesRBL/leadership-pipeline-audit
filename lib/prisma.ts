@@ -1,13 +1,16 @@
 import { PrismaClient } from '@prisma/client'
 
 declare global {
-  // allow global `var` declarations
-  // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined
 }
 
-// Get the database URL and append pgbouncer mode
-const databaseUrl = process.env.DATABASE_URL + '?pgbouncer=true&connection_limit=1'
+// Only add pgbouncer if not already in the URL
+let databaseUrl = process.env.DATABASE_URL!
+if (!databaseUrl.includes('pgbouncer=true')) {
+  databaseUrl = databaseUrl.includes('?') 
+    ? `${databaseUrl}&pgbouncer=true&connection_limit=1`
+    : `${databaseUrl}?pgbouncer=true&connection_limit=1`
+}
 
 export const prisma =
   global.prisma ||
