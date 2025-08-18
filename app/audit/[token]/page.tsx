@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { DndContext, rectIntersection, KeyboardSensor, PointerSensor, useSensor, useSensors, DragOverlay } from '@dnd-kit/core'
+import { DndContext, rectIntersection, KeyboardSensor, PointerSensor, useSensor, useSensors, DragOverlay, TouchSensor } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -92,20 +92,20 @@ function SortableEmployeeCard({
       }}
       {...attributes}
       {...listeners}
-      className={`p-4 border-2 rounded-lg cursor-move transition-all hover:shadow-lg`}
+      className={`p-3 sm:p-4 border-2 rounded-lg cursor-move transition-all hover:shadow-lg touch-manipulation`}
     >
       <div className="text-center">
         {/* Performance Label Inside Card */}
         {(isTopPerformer || isBottomPerformer) && (
-          <div className={`text-xs font-bold mb-2 ${
+          <div className={`text-[10px] sm:text-xs font-bold mb-1 sm:mb-2 ${
             isTopPerformer ? 'text-green-600' : 'text-red-600'
           }`}>
-            {isTopPerformer ? 'HIGHEST PERFORMER' : 'LEAST HIGHEST PERFORMER'}
+            {isTopPerformer ? 'HIGHEST' : 'LEAST HIGH'}
           </div>
         )}
         
         {/* Rank Number */}
-        <div className={`text-3xl font-bold mb-2 ${
+        <div className={`text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 ${
           isTopPerformer ? 'text-green-600' : 
           isBottomPerformer ? 'text-red-600' : 
           'text-blue-600'
@@ -114,17 +114,17 @@ function SortableEmployeeCard({
         </div>
         
         {/* Employee Name */}
-        <div className="font-semibold text-base mb-1">
+        <div className="font-semibold text-sm sm:text-base mb-1">
           {employee.name}
         </div>
         
         {/* Title */}
-        <div className="text-xs text-gray-600 mb-1">
+        <div className="text-[10px] sm:text-xs text-gray-600 mb-1 line-clamp-2">
           {employee.title}
         </div>
         
         {/* Business Unit */}
-        <div className="text-xs text-gray-500">
+        <div className="text-[10px] sm:text-xs text-gray-500 line-clamp-1">
           {employee.businessUnit}
         </div>
       </div>
@@ -144,6 +144,12 @@ export default function AuditPage({ params }: { params: { token: string } }) {
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -248,44 +254,48 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   }
 
   if (step === 'loading') {
-    return <div className="p-8 text-center">Loading audit data...</div>
+    return <div className="p-4 sm:p-8 text-center">Loading audit data...</div>
   }
 
   if (step === 'complete') {
     return (
-      <div className="max-w-2xl mx-auto p-8 text-center">
-        <h1 className="text-3xl font-bold mb-4 text-green-600">✓ Audit Complete</h1>
-        <p className="text-lg">{message}</p>
+      <div className="max-w-2xl mx-auto p-4 sm:p-8 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-green-600">✓ Audit Complete</h1>
+        <p className="text-base sm:text-lg">{message}</p>
       </div>
     )
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
       {/* RBL Brand Header */}
       <div style={{ 
         background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)', 
         color: 'white', 
-        padding: '1.5rem', 
+        padding: '1rem', 
         borderRadius: '0.5rem', 
-        marginBottom: '2rem' 
-      }}>
-        <h1 className="text-3xl font-bold mb-2" style={{ color: 'white' }}>Pipeline Audit</h1>
-        <p style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
+        marginBottom: '1.5rem' 
+      }} className="sm:p-6">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2" style={{ color: 'white' }}>
+          Pipeline Audit
+        </h1>
+        <p className="text-sm sm:text-base" style={{ opacity: 0.95, color: 'white' }}>
+          Welcome, {leaderName}
+        </p>
       </div>
 
       {/* Stage Selection */}
       {step === 'stages' && (
         <div>
-          <h2 className="text-2xl font-semibold mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">
             Step 1: Determine Employees' Way of Contributing
           </h2>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-4 sm:mb-6 text-sm sm:text-base text-gray-600">
             For each employee, sort each person into one of the four options.
           </p>
 
-          {/* Stage Framework Table */}
-          <div className="mb-6 bg-white rounded-lg shadow overflow-hidden">
+          {/* Stage Framework Table - Desktop */}
+          <div className="hidden lg:block mb-6 bg-white rounded-lg shadow overflow-hidden">
             <div className="grid grid-cols-4" style={{ minHeight: '300px' }}>
               {/* Stage 1 Column */}
               <div className="border-r border-gray-200">
@@ -300,7 +310,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <li className="text-sm text-gray-700">Accepts supervision</li>
                     <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
                     <li className="text-sm text-gray-700">Routine and detailed tasks</li>
-                    <li className="text-sm text-gray-700">Learns how “we” do things</li>
+                    <li className="text-sm text-gray-700">Learns how "we" do things</li>
                   </ul>
                 </div>
               </div>
@@ -365,10 +375,89 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             </div>
           </div>
 
+          {/* Stage Framework - Mobile */}
+          <div className="lg:hidden mb-4 space-y-3">
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="grid grid-cols-2 gap-0">
+                {/* Stage 1 */}
+                <div className="border-r border-b border-gray-200">
+                  <div 
+                    className="text-white text-center py-2 font-bold text-sm"
+                    style={{ backgroundColor: '#E8B70B' }}
+                  >
+                    One
+                  </div>
+                  <div className="p-3">
+                    <ul className="space-y-2">
+                      <li className="text-xs text-gray-700">• Accepts supervision</li>
+                      <li className="text-xs text-gray-700">• Works on portions</li>
+                      <li className="text-xs text-gray-700">• Routine tasks</li>
+                      <li className="text-xs text-gray-700">• Learns culture</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Stage 2 */}
+                <div className="border-b border-gray-200">
+                  <div 
+                    className="text-white text-center py-2 font-bold text-sm"
+                    style={{ backgroundColor: '#ED1B34' }}
+                  >
+                    Two
+                  </div>
+                  <div className="p-3">
+                    <ul className="space-y-2">
+                      <li className="text-xs text-gray-700">• Own projects</li>
+                      <li className="text-xs text-gray-700">• Independent</li>
+                      <li className="text-xs text-gray-700">• Expert/Credible</li>
+                      <li className="text-xs text-gray-700">• Innovator</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Stage 3 */}
+                <div className="border-r border-gray-200">
+                  <div 
+                    className="text-white text-center py-2 font-bold text-sm"
+                    style={{ backgroundColor: '#0086D6' }}
+                  >
+                    Three
+                  </div>
+                  <div className="p-3">
+                    <ul className="space-y-2">
+                      <li className="text-xs text-gray-700">• Manages/mentors</li>
+                      <li className="text-xs text-gray-700">• Integrator</li>
+                      <li className="text-xs text-gray-700">• Represents team</li>
+                      <li className="text-xs text-gray-700">• Networks</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Stage 4 */}
+                <div>
+                  <div 
+                    className="text-white text-center py-2 font-bold text-sm"
+                    style={{ backgroundColor: '#071D49' }}
+                  >
+                    Four
+                  </div>
+                  <div className="p-3">
+                    <ul className="space-y-2">
+                      <li className="text-xs text-gray-700">• Sets strategy</li>
+                      <li className="text-xs text-gray-700">• Uses power</li>
+                      <li className="text-xs text-gray-700">• Sponsors people</li>
+                      <li className="text-xs text-gray-700">• Represents org</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Toggle for Stage Descriptions */}
           <button
             onClick={() => setShowDescriptions(!showDescriptions)}
-            className="mb-6 px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
+            className="mb-4 sm:mb-6 px-3 sm:px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium text-sm sm:text-base"
             style={{ background: 'rgba(0, 134, 214, 0.1)' }}
           >
             {showDescriptions ? '− Hide' : '+ Show'} Detailed Descriptions
@@ -376,14 +465,14 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
           {/* Stage Descriptions */}
           {showDescriptions && (
-            <div className="mb-6 space-y-4">
+            <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
               {stageDescriptions.map((stage) => (
-                <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4" 
+                <div key={stage.stage} className="bg-white p-3 sm:p-4 rounded-lg shadow border-l-4" 
                      style={{ borderLeftColor: stage.color }}>
-                  <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
+                  <h3 className="font-bold text-base sm:text-lg mb-2" style={{ color: stage.color }}>
                     {stage.title}
                   </h3>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                     {stage.description}
                   </p>
                 </div>
@@ -392,21 +481,23 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           )}
 
           {/* Employee Cards */}
-          <div className="space-y-4 mb-8">
+          <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
             {employees.map(emp => (
-              <div key={emp.id} className="p-4 bg-white border rounded-lg shadow">
-                <div className="flex justify-between items-center">
+              <div key={emp.id} className="p-3 sm:p-4 bg-white border rounded-lg shadow">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                   <div className="flex-1">
-                    <div className="font-semibold">{emp.name}</div>
-                    <div className="text-sm text-gray-600">{emp.title} - {emp.businessUnit}</div>
+                    <div className="font-semibold text-sm sm:text-base">{emp.name}</div>
+                    <div className="text-xs sm:text-sm text-gray-600">
+                      {emp.title} - {emp.businessUnit}
+                    </div>
                   </div>
                   <select
                     value={emp.careerStage}
                     onChange={(e) => handleStageChange(emp.id, parseInt(e.target.value))}
-                    className="ml-4 p-2 border rounded text-lg font-semibold"
-                    style={{ minWidth: '150px' }}
+                    className="w-full sm:w-auto p-2 border rounded text-base sm:text-lg font-semibold"
+                    style={{ minWidth: '120px' }}
                   >
-                    <option value="0">Selection</option>
+                    <option value="0">Select</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -419,7 +510,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
           <button
             onClick={proceedToRanking}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold text-sm sm:text-base"
             style={{ background: '#0086D6' }}
           >
             Proceed to Performance Ranking →
@@ -430,15 +521,24 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Performance Ranking */}
       {step === 'ranking' && (
         <div>
-          <h2 className="text-2xl font-semibold mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">
             Step 2: Rank by Performance
           </h2>
-          <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest?  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. There will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. We will not show your responses here by name. </p>
-<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader who knows these people. You are being asked to rank best to least performers in terms of everything you know about them and their contributions to success. </p>
-            <p className="mb-6 text-gray-600"> A tip for how to do this is to first pick your top 5 and then your bottom 5. Sort the middle out after you have this figured out. </p>
-            <p className="mb-6 text-gray-600">Now rank them.
-          </p>
+          
+          <div className="space-y-3 mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+              In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest? The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong.
+            </p>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+              The definition of performance is your opinion as a leader who knows these people. You are being asked to rank best to least performers in terms of everything you know about them and their contributions to success.
+            </p>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+              <strong>Tip:</strong> First pick your top 5 and then your bottom 5. Sort the middle out after you have this figured out.
+            </p>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 font-semibold">
+              Now rank them by dragging and dropping:
+            </p>
+          </div>
 
           <DndContext
             sensors={sensors}
@@ -451,7 +551,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               items={employees.map(e => e.id)}
               strategy={rectSortingStrategy}
             >
-              <div className="grid grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 mb-6 sm:mb-8">
                 {employees.map((emp, index) => {
                   const isTopPerformer = index === 0
                   const isBottomPerformer = index === employees.length - 1
@@ -472,7 +572,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
           <button
             onClick={submitRatings}
-            className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
+            className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold text-sm sm:text-base"
             style={{ background: '#5EC4B6' }}
           >
             Submit Final Rankings
@@ -482,7 +582,9 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
       {/* Error Messages */}
       {message && (
-        <div className={`mt-4 p-3 rounded ${message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
+        <div className={`mt-4 p-3 rounded text-sm ${
+          message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+        }`}>
           {message}
         </div>
       )}
