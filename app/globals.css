@@ -574,3 +574,100 @@ select {
   .p-8 { padding: 1rem; }
   h1 { font-size: 1.5rem; }
 }
+/* Add these styles to your existing globals.css */
+
+/* Mobile menu button - hidden on desktop */
+.mobile-menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-menu-button span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+/* Desktop menu - shown by default */
+.desktop-menu {
+  display: flex;
+}
+
+/* Mobile dropdown - hidden by default */
+.mobile-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-top: 1px solid #e5e7eb;
+}
+
+.mobile-dropdown a {
+  display: block;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-dropdown a:hover {
+  background-color: #f9fafb;
+}
+
+/* Mobile styles - 768px and below */
+@media (max-width: 768px) {
+  /* Show mobile menu button */
+  .mobile-menu-button {
+    display: flex;
+  }
+  
+  /* Hide desktop menu */
+  .desktop-menu {
+    display: none;
+  }
+  
+  /* Show mobile dropdown when open */
+  .mobile-dropdown {
+    display: block;
+  }
+  
+  /* Make logo smaller on mobile */
+  .logo {
+    max-height: 40px !important;
+    max-width: 140px !important;
+  }
+  
+  /* Make title text smaller on mobile */
+  .title-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Hide divider on very small screens */
+  @media (max-width: 480px) {
+    .divider {
+      display: none;
+    }
+    
+    .title-text {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+/* Ensure nav is relative for dropdown positioning */
+nav {
+  position: relative;
+}
