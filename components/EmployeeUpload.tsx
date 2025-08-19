@@ -198,58 +198,94 @@ export default function EmployeeUpload({ onDataUploaded }: EmployeeUploadProps) 
   };
 
   return (
-    <div className="mb-8">
-      <div className="border-2 border-dashed border-blue-500 rounded-lg p-4 sm:p-6 lg:p-8 text-center bg-gray-50">
+    <div style={{ marginBottom: '2rem' }}>
+      <div style={{ 
+        border: '2px dashed #0086D6', 
+        borderRadius: '8px', 
+        padding: '2rem', 
+        textAlign: 'center',
+        backgroundColor: '#f8f9fa'
+      }}>
         <input
           type="file"
           accept=".csv"
           onChange={handleFileUpload}
           disabled={isProcessing}
-          className="mb-4 text-sm sm:text-base"
+          style={{ marginBottom: '1rem' }}
         />
-        <p className="text-xs sm:text-sm font-bold text-gray-700 mb-2">
-          Upload CSV with columns: <span className="text-blue-600">Name, Email, Title, Business Unit, Audit Leader, Leader Email</span>
+        <p style={{ margin: '0.5rem 0', color: '#666', fontWeight: 'bold' }}>
+          Upload CSV with columns: <strong>Name, Email, Title, Business Unit, Audit Leader, Leader Email</strong>
         </p>
-        <p className="text-xs text-gray-600 mb-4">
+        <p style={{ margin: '0', fontSize: '0.9rem', color: '#888' }}>
           Tip: Export from Excel as CSV for best results
         </p>
-        <div className="mt-4">
+        <div style={{ marginTop: '1rem', textAlign: 'center' }}>
           <button
             onClick={downloadTemplate}
-            className="px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium text-sm sm:text-base shadow-md"
-            style={{ background: '#5EC4B6' }}
+            style={{
+              background: '#5EC4B6',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '6px',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
+            onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
           >
             📥 Download CSV Template
           </button>
-          <p className="mt-2 text-xs text-gray-600">
+          <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.8rem', color: '#666' }}>
             Get a pre-formatted template with sample data
           </p>
         </div>
       </div>
 
       {isProcessing && (
-        <p className="text-blue-600 mt-4 text-sm sm:text-base">Processing file...</p>
+        <p style={{ color: '#0086D6', marginTop: '1rem' }}>Processing file...</p>
       )}
 
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded-md mt-4 text-xs sm:text-sm">
+        <div style={{ 
+          backgroundColor: '#f8d7da', 
+          color: '#721c24', 
+          padding: '0.75rem', 
+          borderRadius: '4px',
+          marginTop: '1rem'
+        }}>
           {error}
         </div>
       )}
 
       {fileName && !error && uploadSummary && (
-        <div className="mt-4">
-          <div className="bg-green-100 text-green-800 p-3 sm:p-4 rounded-md mb-4">
-            <p className="font-bold mb-2 text-sm sm:text-base">
+        <div style={{ marginTop: '1rem' }}>
+          <div style={{ 
+            backgroundColor: '#d4edda', 
+            color: '#155724', 
+            padding: '1rem', 
+            borderRadius: '4px',
+            marginBottom: '1rem'
+          }}>
+            <p style={{ fontWeight: 'bold', margin: '0 0 0.5rem 0' }}>
               ✅ Successfully loaded: {fileName}
             </p>
-            <p className="text-xs sm:text-sm">
+            <p style={{ margin: '0', fontSize: '0.9rem' }}>
               📊 Found: {uploadSummary.employees} employees, {uploadSummary.leaders} audit leaders
             </p>
           </div>
           <button 
             onClick={clearUpload}
-            className="px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50 transition-colors text-sm sm:text-base"
+            style={{
+              background: 'none',
+              border: '1px solid #0086D6',
+              color: '#0086D6',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
           >
             Upload Different File
           </button>
@@ -257,38 +293,44 @@ export default function EmployeeUpload({ onDataUploaded }: EmployeeUploadProps) 
       )}
 
       {preview.length > 0 && (
-        <div className="mt-6">
-          <h4 className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">Preview (first 5 rows):</h4>
-          <div className="overflow-x-auto -mx-4 sm:mx-0">
-            <div className="min-w-[600px] px-4 sm:px-0">
-              <table className="w-full border-collapse bg-white rounded shadow-sm text-xs sm:text-sm">
-                <thead>
-                  <tr className="bg-gray-800 text-white">
-                    <th className="p-2 text-left">Name</th>
-                    <th className="p-2 text-left">Email</th>
-                    <th className="p-2 text-left">Title</th>
-                    <th className="p-2 text-left hidden sm:table-cell">Business Unit</th>
-                    <th className="p-2 text-left hidden md:table-cell">Audit Leader</th>
-                    <th className="p-2 text-left hidden lg:table-cell">Leader Email</th>
+        <div style={{ marginTop: '1.5rem' }}>
+          <h4 style={{ color: '#071D49' }}>Preview (first 5 rows):</h4>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ 
+              width: '100%', 
+              borderCollapse: 'collapse',
+              backgroundColor: 'white',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              fontSize: '0.85rem'
+            }}>
+              <thead>
+                <tr style={{ backgroundColor: '#071D49', color: 'white' }}>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Name</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Email</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Title</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Business Unit</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Audit Leader</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'left' }}>Leader Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {preview.map((row, index) => (
+                  <tr key={index} style={{ borderBottom: '1px solid #eee' }}>
+                    <td style={{ padding: '0.5rem' }}>{row['Name'] || row['name'] || ''}</td>
+                    <td style={{ padding: '0.5rem' }}>{row['Email'] || row['email'] || ''}</td>
+                    <td style={{ padding: '0.5rem' }}>{row['Title'] || row['title'] || ''}</td>
+                    <td style={{ padding: '0.5rem' }}>{row['Business Unit'] || row['business_unit'] || ''}</td>
+                    <td style={{ padding: '0.5rem' }}>{row['Audit Leader'] || row['audit_leader'] || ''}</td>
+                    <td style={{ padding: '0.5rem' }}>{row['Leader Email'] || row['leader_email'] || ''}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {preview.map((row, index) => (
-                    <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="p-2">{row['Name'] || row['name'] || ''}</td>
-                      <td className="p-2 text-xs">{row['Email'] || row['email'] || ''}</td>
-                      <td className="p-2">{row['Title'] || row['title'] || ''}</td>
-                      <td className="p-2 hidden sm:table-cell">{row['Business Unit'] || row['business_unit'] || ''}</td>
-                      <td className="p-2 hidden md:table-cell">{row['Audit Leader'] || row['audit_leader'] || ''}</td>
-                      <td className="p-2 hidden lg:table-cell text-xs">{row['Leader Email'] || row['leader_email'] || ''}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
           {preview.length === 5 && (
-            <p className="mt-2 text-xs sm:text-sm text-gray-600 italic">
+            <p style={{ marginTop: '0.5rem', color: '#666', fontStyle: 'italic' }}>
               ...and more rows
             </p>
           )}
