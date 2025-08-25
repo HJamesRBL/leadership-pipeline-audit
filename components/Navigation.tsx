@@ -180,10 +180,11 @@ export default function Navigation() {
           }
         }
 
-        /* Extra small devices - hide platform title text */
+        /* Extra small devices - make platform title smaller */
         @media (max-width: 480px) {
           .platform-title {
-            display: none;
+            font-size: 0.875rem; /* Smaller font on mobile */
+            display: inline;
           }
         }
       `}</style>
