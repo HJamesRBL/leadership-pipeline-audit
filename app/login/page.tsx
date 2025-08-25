@@ -101,11 +101,6 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-
-        <div className="text-center text-sm text-gray-600">
-          <p>Note: No admin users exist yet.</p>
-          <p>We'll create one in the next step.</p>
-        </div>
       </div>
     </div>
   )
