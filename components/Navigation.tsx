@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const pathname = usePathname()
 
   const toggleMenu = () => {
@@ -22,6 +22,9 @@ export default function Navigation() {
   if (pathname === '/login' || pathname.startsWith('/audit/')) {
     return null
   }
+
+  // Don't render session-dependent content during build
+  const isLoading = status === 'loading'
 
   return (
     <>
@@ -61,7 +64,7 @@ export default function Navigation() {
             <a href="/">Dashboard</a>
             <a href="/create">Create Audit</a>
             <a href="/results">View Results</a>
-            {session && (
+            {!isLoading && session && (
               <button
                 onClick={handleLogout}
                 className="text-red-600 hover:text-red-800 font-medium"
