@@ -1,4 +1,4 @@
-// Enhanced Schema for Pipeline Audit with Comparison Support
+// Enhanced Schema for Pipeline Audit with Comparison Support and Authentication
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,6 +7,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ==================== EXISTING MODELS ====================
 
 // Enhanced audit table with organization and round tracking
 model Audit {
@@ -73,4 +75,29 @@ model Rating {
   
   @@unique([auditLeaderId, employeeId])
   // @@unique([auditLeaderId, performanceRank])
+}
+
+// ==================== NEW AUTHENTICATION MODELS ====================
+
+// Admin users who can log into the system
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String    // Hashed password
+  name          String?
+  role          String    @default("admin") // "admin" or "super_admin"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+}
+
+// Active login sessions
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
