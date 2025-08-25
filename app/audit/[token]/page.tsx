@@ -284,82 +284,174 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             For each employee, sort each person into one of the four options.
           </p>
 
-          {/* Stage Framework Table */}
-          <div className="mb-6 bg-white rounded-lg shadow overflow-hidden">
-            <div className="grid grid-cols-4" style={{ minHeight: '300px' }}>
-              {/* Stage 1 Column */}
-              <div className="border-r border-gray-200">
-                <div 
-                  className="text-white text-center py-3 font-bold text-lg"
-                  style={{ backgroundColor: '#E8B70B' }}
-                >
-                  One
+          {/* Stage Framework Tables - Desktop shows as one 4-column table, Mobile shows as two 2-column tables */}
+          <div className="stage-framework-container mb-6">
+            {/* Desktop: Single 4-column table */}
+            <div className="desktop-table bg-white rounded-lg shadow overflow-hidden">
+              <div className="grid grid-cols-4" style={{ minHeight: '300px' }}>
+                {/* Stage 1 Column */}
+                <div className="border-r border-gray-200">
+                  <div 
+                    className="text-white text-center py-3 font-bold text-lg"
+                    style={{ backgroundColor: '#E8B70B' }}
+                  >
+                    One
+                  </div>
+                  <div className="px-6 py-4">
+                    <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Accepts supervision</li>
+                      <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
+                      <li className="text-sm text-gray-700">Routine and detailed tasks</li>
+                      <li className="text-sm text-gray-700">Learns how "we" do things</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="px-6 py-4">
-                  <ul className="space-y-3">
-                    <li className="text-sm text-gray-700">Accepts supervision</li>
-                    <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
-                    <li className="text-sm text-gray-700">Routine and detailed tasks</li>
-                    <li className="text-sm text-gray-700">Learns how “we” do things</li>
-                  </ul>
+
+                {/* Stage 2 Column */}
+                <div className="border-r border-gray-200">
+                  <div 
+                    className="text-white text-center py-3 font-bold text-lg"
+                    style={{ backgroundColor: '#ED1B34' }}
+                  >
+                    Two
+                  </div>
+                  <div className="px-6 py-4">
+                    <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Responsible for projects</li>
+                      <li className="text-sm text-gray-700">Works independently and produces results</li>
+                      <li className="text-sm text-gray-700">Credible</li>
+                      <li className="text-sm text-gray-700">Increases expertise</li>
+                      <li className="text-sm text-gray-700">Builds internal network</li>
+                      <li className="text-sm text-gray-700">Acts as an innovator</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Stage 3 Column */}
+                <div className="border-r border-gray-200">
+                  <div 
+                    className="text-white text-center py-3 font-bold text-lg"
+                    style={{ backgroundColor: '#0086D6' }}
+                  >
+                    Three
+                  </div>
+                  <div className="px-6 py-4">
+                    <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Manages, coaches, mentors or idea leader</li>
+                      <li className="text-sm text-gray-700">Increases technical breadth</li>
+                      <li className="text-sm text-gray-700">Integrator of ideas</li>
+                      <li className="text-sm text-gray-700">Represents workgroup to outside stakeholders</li>
+                      <li className="text-sm text-gray-700">Builds internal and external networks</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Stage 4 Column */}
+                <div>
+                  <div 
+                    className="text-white text-center py-3 font-bold text-lg"
+                    style={{ backgroundColor: '#071D49' }}
+                  >
+                    Four
+                  </div>
+                  <div className="px-6 py-4">
+                    <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Sets strategic direction</li>
+                      <li className="text-sm text-gray-700">Uses power rather than influence</li>
+                      <li className="text-sm text-gray-700">Sponsors key people</li>
+                      <li className="text-sm text-gray-700">Represents the entire organization to outside groups</li>
+                      <li className="text-sm text-gray-700">Provides global technical direction to the organization</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile: Two 2-column tables */}
+            <div className="mobile-tables">
+              {/* First Table: Stages 1 & 2 */}
+              <div className="bg-white rounded-lg shadow overflow-hidden mb-4">
+                <div className="grid grid-cols-2">
+                  {/* Stage 1 Column */}
+                  <div className="border-r border-gray-200">
+                    <div 
+                      className="text-white text-center py-3 font-bold text-lg"
+                      style={{ backgroundColor: '#E8B70B' }}
+                    >
+                      One
+                    </div>
+                    <div className="px-4 py-4">
+                      <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Accepts supervision</li>
+                        <li className="text-xs text-gray-700">Works on a portion of a larger project</li>
+                        <li className="text-xs text-gray-700">Routine and detailed tasks</li>
+                        <li className="text-xs text-gray-700">Learns how "we" do things</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Stage 2 Column */}
+                  <div>
+                    <div 
+                      className="text-white text-center py-3 font-bold text-lg"
+                      style={{ backgroundColor: '#ED1B34' }}
+                    >
+                      Two
+                    </div>
+                    <div className="px-4 py-4">
+                      <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Responsible for projects</li>
+                        <li className="text-xs text-gray-700">Works independently and produces results</li>
+                        <li className="text-xs text-gray-700">Credible</li>
+                        <li className="text-xs text-gray-700">Increases expertise</li>
+                        <li className="text-xs text-gray-700">Builds internal network</li>
+                        <li className="text-xs text-gray-700">Acts as an innovator</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Stage 2 Column */}
-              <div className="border-r border-gray-200">
-                <div 
-                  className="text-white text-center py-3 font-bold text-lg"
-                  style={{ backgroundColor: '#ED1B34' }}
-                >
-                  Two
-                </div>
-                <div className="px-6 py-4">
-                  <ul className="space-y-3">
-                    <li className="text-sm text-gray-700">Responsible for projects</li>
-                    <li className="text-sm text-gray-700">Works independently and produces results</li>
-                    <li className="text-sm text-gray-700">Credible</li>
-                    <li className="text-sm text-gray-700">Increases expertise</li>
-                    <li className="text-sm text-gray-700">Builds internal network</li>
-                    <li className="text-sm text-gray-700">Acts as an innovator</li>
-                  </ul>
-                </div>
-              </div>
+              {/* Second Table: Stages 3 & 4 */}
+              <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="grid grid-cols-2">
+                  {/* Stage 3 Column */}
+                  <div className="border-r border-gray-200">
+                    <div 
+                      className="text-white text-center py-3 font-bold text-lg"
+                      style={{ backgroundColor: '#0086D6' }}
+                    >
+                      Three
+                    </div>
+                    <div className="px-4 py-4">
+                      <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Manages, coaches, mentors or idea leader</li>
+                        <li className="text-xs text-gray-700">Increases technical breadth</li>
+                        <li className="text-xs text-gray-700">Integrator of ideas</li>
+                        <li className="text-xs text-gray-700">Represents workgroup to outside stakeholders</li>
+                        <li className="text-xs text-gray-700">Builds internal and external networks</li>
+                      </ul>
+                    </div>
+                  </div>
 
-              {/* Stage 3 Column */}
-              <div className="border-r border-gray-200">
-                <div 
-                  className="text-white text-center py-3 font-bold text-lg"
-                  style={{ backgroundColor: '#0086D6' }}
-                >
-                  Three
-                </div>
-                <div className="px-6 py-4">
-                  <ul className="space-y-3">
-                    <li className="text-sm text-gray-700">Manages, coaches, mentors or idea leader</li>
-                    <li className="text-sm text-gray-700">Increases technical breadth</li>
-                    <li className="text-sm text-gray-700">Integrator of ideas</li>
-                    <li className="text-sm text-gray-700">Represents workgroup to outside stakeholders</li>
-                    <li className="text-sm text-gray-700">Builds internal and external networks</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Stage 4 Column */}
-              <div>
-                <div 
-                  className="text-white text-center py-3 font-bold text-lg"
-                  style={{ backgroundColor: '#071D49' }}
-                >
-                  Four
-                </div>
-                <div className="px-6 py-4">
-                  <ul className="space-y-3">
-                    <li className="text-sm text-gray-700">Sets strategic direction</li>
-                    <li className="text-sm text-gray-700">Uses power rather than influence</li>
-                    <li className="text-sm text-gray-700">Sponsors key people</li>
-                    <li className="text-sm text-gray-700">Represents the entire organization to outside groups</li>
-                    <li className="text-sm text-gray-700">Provides global technical direction to the organization</li>
-                  </ul>
+                  {/* Stage 4 Column */}
+                  <div>
+                    <div 
+                      className="text-white text-center py-3 font-bold text-lg"
+                      style={{ backgroundColor: '#071D49' }}
+                    >
+                      Four
+                    </div>
+                    <div className="px-4 py-4">
+                      <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Sets strategic direction</li>
+                        <li className="text-xs text-gray-700">Uses power rather than influence</li>
+                        <li className="text-xs text-gray-700">Sponsors key people</li>
+                        <li className="text-xs text-gray-700">Represents the entire organization to outside groups</li>
+                        <li className="text-xs text-gray-700">Provides global technical direction to the organization</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -486,6 +578,28 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           {message}
         </div>
       )}
+
+      <style jsx>{`
+        /* Default: show desktop table, hide mobile tables */
+        .desktop-table {
+          display: block;
+        }
+        
+        .mobile-tables {
+          display: none;
+        }
+
+        /* Mobile breakpoint - switch to two tables */
+        @media (max-width: 768px) {
+          .desktop-table {
+            display: none;
+          }
+          
+          .mobile-tables {
+            display: block;
+          }
+        }
+      `}</style>
     </div>
   )
 }
