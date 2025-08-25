@@ -2,12 +2,25 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useSession, signOut } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { data: session } = useSession()
+  const pathname = usePathname()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
+  }
+
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/login' })
+  }
+
+  // Don't show navigation on login page or audit leader pages
+  if (pathname === '/login' || pathname.startsWith('/audit/')) {
+    return null
   }
 
   return (
@@ -48,6 +61,14 @@ export default function Navigation() {
             <a href="/">Dashboard</a>
             <a href="/create">Create Audit</a>
             <a href="/results">View Results</a>
+            {session && (
+              <button
+                onClick={handleLogout}
+                className="text-red-600 hover:text-red-800 font-medium"
+              >
+                Logout
+              </button>
+            )}
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -67,6 +88,17 @@ export default function Navigation() {
           <a href="/" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
           <a href="/create" onClick={() => setIsMenuOpen(false)}>Create Audit</a>
           <a href="/results" onClick={() => setIsMenuOpen(false)}>View Results</a>
+          {session && (
+            <button
+              onClick={() => {
+                setIsMenuOpen(false)
+                handleLogout()
+              }}
+              className="block w-full text-left px-6 py-3 text-red-600 hover:bg-red-50 font-medium"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </nav>
 
