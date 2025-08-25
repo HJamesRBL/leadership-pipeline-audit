@@ -59,24 +59,9 @@ export default function Navigation() {
             <span className="platform-title">Leadership Pipeline Audit Platform</span>
           </h1>
 
-          {/* Desktop Navigation */}
-          <div className="desktop-nav space-x-4">
-            <a href="/">Dashboard</a>
-            <a href="/create">Create Audit</a>
-            <a href="/results">View Results</a>
-            {!isLoading && session && (
-              <button
-                onClick={handleLogout}
-                className="text-red-600 hover:text-red-800 font-medium"
-              >
-                Logout
-              </button>
-            )}
-          </div>
-
-          {/* Mobile Hamburger Button */}
+          {/* Hamburger Button - Always visible */}
           <button 
-            className="mobile-menu-button"
+            className="menu-button"
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
           >
@@ -86,12 +71,12 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
-        <div className={`mobile-nav ${isMenuOpen ? 'mobile-nav-open' : ''}`}>
+          {/* Dropdown Menu */}
+          <div className={`nav-dropdown ${isMenuOpen ? 'nav-dropdown-open' : ''}`}>
           <a href="/" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
           <a href="/create" onClick={() => setIsMenuOpen(false)}>Create Audit</a>
           <a href="/results" onClick={() => setIsMenuOpen(false)}>View Results</a>
-          {session && (
+          {!isLoading && session && (
             <button
               onClick={() => {
                 setIsMenuOpen(false)
@@ -106,14 +91,9 @@ export default function Navigation() {
       </nav>
 
       <style jsx>{`
-        /* Desktop Navigation - Hide on mobile */
-        .desktop-nav {
+        /* Hamburger Menu Button - Always visible */
+        .menu-button {
           display: flex;
-        }
-
-        /* Mobile Menu Button - Hide on desktop */
-        .mobile-menu-button {
-          display: none;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -136,9 +116,9 @@ export default function Navigation() {
           border-radius: 2px;
         }
 
-        /* Mobile Dropdown Menu */
-        .mobile-nav {
-          display: none;
+        /* Dropdown Menu */
+        .nav-dropdown {
+          display: block;
           position: absolute;
           top: 100%;
           left: 0;
@@ -150,7 +130,7 @@ export default function Navigation() {
           transition: max-height 0.3s ease-out;
         }
 
-        .mobile-nav a {
+        .nav-dropdown a {
           display: block;
           padding: 1rem 1.5rem;
           color: #333;
@@ -159,60 +139,46 @@ export default function Navigation() {
           transition: background-color 0.2s;
         }
 
-        .mobile-nav a:hover {
+        .nav-dropdown a:hover {
           background-color: #f3f4f6;
         }
 
-        .mobile-nav a:last-child {
+        .nav-dropdown a:last-child {
           border-bottom: none;
         }
 
-        /* Platform title - hide text on small mobile */
+        .nav-dropdown-open {
+          max-height: 300px;
+        }
+
+        /* Animate hamburger to X when open */
+        .menu-button:has(+ .nav-dropdown-open) .hamburger-line:nth-child(1),
+        .nav-dropdown-open ~ .menu-button .hamburger-line:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+
+        .menu-button:has(+ .nav-dropdown-open) .hamburger-line:nth-child(2),
+        .nav-dropdown-open ~ .menu-button .hamburger-line:nth-child(2) {
+          opacity: 0;
+        }
+
+        .menu-button:has(+ .nav-dropdown-open) .hamburger-line:nth-child(3),
+        .nav-dropdown-open ~ .menu-button .hamburger-line:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Platform title - responsive */
         .platform-title {
           display: inline;
         }
 
-        /* Responsive Breakpoint - 768px for tablets and below */
-        @media (max-width: 768px) {
-          nav {
-            position: relative;
-          }
+        /* Remove all responsive breakpoints since hamburger is always visible */
+        nav {
+          position: relative;
+        }
 
-          .nav-content {
-            padding: 0.75rem 1rem;
-          }
-
-          .desktop-nav {
-            display: none !important;
-          }
-
-          .mobile-menu-button {
-            display: flex;
-          }
-
-          .mobile-nav {
-            display: block;
-          }
-
-          .mobile-nav-open {
-            max-height: 300px;
-          }
-
-          /* Animate hamburger to X when open */
-          .mobile-menu-button:has(+ .mobile-nav-open) .hamburger-line:nth-child(1),
-          .mobile-nav-open ~ .mobile-menu-button .hamburger-line:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-          }
-
-          .mobile-menu-button:has(+ .mobile-nav-open) .hamburger-line:nth-child(2),
-          .mobile-nav-open ~ .mobile-menu-button .hamburger-line:nth-child(2) {
-            opacity: 0;
-          }
-
-          .mobile-menu-button:has(+ .mobile-nav-open) .hamburger-line:nth-child(3),
-          .mobile-nav-open ~ .mobile-menu-button .hamburger-line:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-          }
+        .nav-content {
+          padding: 0.75rem 1rem;
         }
 
         /* Extra small devices - make platform title smaller */
