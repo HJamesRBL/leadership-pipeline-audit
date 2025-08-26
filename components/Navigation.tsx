@@ -72,6 +72,7 @@ export default function Navigation() {
   const isLoading = status === 'loading'
   const userRole = session?.user ? (session.user as any).role : null
   const isSuperAdmin = userRole === 'super_admin'
+  const isOrgSponsor = userRole === 'org_sponsor'
   
   // Debug logging
   console.log('Navigation Debug:', {
@@ -130,10 +131,16 @@ export default function Navigation() {
 
           {/* Dropdown Menu */}
           <div className={`nav-dropdown ${isMenuOpen ? 'nav-dropdown-open' : ''}`}>
-          <a href="/" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
-          <a href="/create" onClick={() => setIsMenuOpen(false)}>Create Audit</a>
+          {!isOrgSponsor && (
+            <>
+              <a href="/" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
+              <a href="/create" onClick={() => setIsMenuOpen(false)}>Create Audit</a>
+            </>
+          )}
           <a href="/results" onClick={() => setIsMenuOpen(false)}>View Results</a>
-          <a href="/admin/users" onClick={() => setIsMenuOpen(false)}>Admin Users</a>
+          {isSuperAdmin && (
+            <a href="/admin/users" onClick={() => setIsMenuOpen(false)}>Admin Users</a>
+          )}
           {!isLoading && session && (
             <button
               onClick={() => {
