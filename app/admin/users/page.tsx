@@ -33,13 +33,15 @@ export default function AdminUsersPage() {
     if (status === 'loading') return
     
     // Check if user is super_admin
-    if (!session || (session.user as any).role !== 'super_admin') {
+    const userRole = session?.user ? (session.user as any).role : null
+    
+    if (!session || userRole !== 'super_admin') {
       router.push('/')
       return
     }
     
     fetchUsers()
-  }, [session, status])
+  }, [session, status, router])
 
   const fetchUsers = async () => {
     try {

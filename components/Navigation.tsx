@@ -23,8 +23,10 @@ export default function Navigation() {
     return null
   }
 
-  // Don't render session-dependent content during build
+  // Wait for session to load
   const isLoading = status === 'loading'
+  const userRole = session?.user ? (session.user as any).role : null
+  const isSuperAdmin = userRole === 'super_admin'
 
   return (
     <>
