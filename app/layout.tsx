@@ -1,13 +1,9 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import Navigation from '@/components/Navigation'
 import SessionProvider from '@/components/SessionProvider'
 import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import './globals.css'
-
-// Dynamically import Navigation with no SSR to avoid useSession during build
-const Navigation = dynamic(() => import('@/components/Navigation'), {
-  ssr: false
-})
 
 export const metadata: Metadata = {
   title: 'Leadership Pipeline Audit Platform | The RBL Group',
@@ -19,7 +15,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
 
   return (
     <html lang="en">

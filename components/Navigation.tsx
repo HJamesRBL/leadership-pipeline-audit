@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
@@ -9,6 +9,11 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { data: session, status } = useSession()
   const pathname = usePathname()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -23,10 +28,60 @@ export default function Navigation() {
     return null
   }
 
+  // Don't render on server or before mounting
+  if (!mounted) {
+    return (
+      <>
+        <nav>
+          <div className="nav-content">
+            <h1 style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '1rem',
+              margin: 0,
+              fontSize: 'clamp(1rem, 2.5vw, 1.5rem)'
+            }}>
+              <Image
+                src="/rbl-logo.png"
+                alt="The RBL Group"
+                width={250}
+                height={100}
+                style={{ 
+                  height: 'auto', 
+                  width: 'auto', 
+                  maxHeight: 'clamp(35px, 5vw, 50px)',
+                  maxWidth: 'clamp(120px, 15vw, 180px)' 
+                }}
+                priority
+              />
+              <span style={{
+                borderLeft: '1px solid #d1d5db',
+                height: 'clamp(25px, 4vw, 40px)',
+                marginLeft: '0.5rem',
+                marginRight: '0.5rem'
+              }}></span>
+              <span className="platform-title">Leadership Pipeline Audit Platform</span>
+            </h1>
+          </div>
+        </nav>
+      </>
+    )
+  }
+
   // Wait for session to load
   const isLoading = status === 'loading'
   const userRole = session?.user ? (session.user as any).role : null
   const isSuperAdmin = userRole === 'super_admin'
+  
+  // Debug logging
+  console.log('Navigation Debug:', {
+    session,
+    status,
+    isLoading,
+    userRole,
+    isSuperAdmin,
+    pathname
+  })
 
   return (
     <>
