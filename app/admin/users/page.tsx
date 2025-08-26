@@ -10,16 +10,27 @@ interface User {
   name: string
   role: string
   createdAt: string
+  organizationAccess?: Array<{
+    organizationId: string
+    organizationName: string
+  }>
+}
+
+interface Organization {
+  organizationId: string
+  organizationName: string
 }
 
 export default function AdminUsersPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [users, setUsers] = useState<User[]>([])
+  const [organizations, setOrganizations] = useState<Organization[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [error, setError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
+  const [selectedOrgs, setSelectedOrgs] = useState<string[]>([])
   
   // New user form state
   const [newUser, setNewUser] = useState({
@@ -41,6 +52,7 @@ export default function AdminUsersPage() {
     }
     
     fetchUsers()
+    fetchOrganizations()
   }, [session, status, router])
 
   const fetchUsers = async () => {
@@ -57,6 +69,18 @@ export default function AdminUsersPage() {
     }
   }
 
+  const fetchOrganizations = async () => {
+    try {
+      const response = await fetch('/api/admin/organizations')
+      if (response.ok) {
+        const data = await response.json()
+        setOrganizations(data)
+      }
+    } catch (error) {
+      console.error('Failed to load organizations')
+    }
+  }
+
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -66,13 +90,17 @@ export default function AdminUsersPage() {
       const response = await fetch('/api/admin/users/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newUser)
+        body: JSON.stringify({
+          ...newUser,
+          organizationIds: newUser.role === 'org_sponsor' ? selectedOrgs : []
+        })
       })
 
       if (response.ok) {
         setSuccessMessage('User created successfully!')
         setShowCreateForm(false)
         setNewUser({ email: '', password: '', name: '', role: 'admin' })
+        setSelectedOrgs([])
         fetchUsers()
       } else {
         const data = await response.json()
@@ -136,7 +164,7 @@ export default function AdminUsersPage() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Admin Users Management</h1>
-        <p className="text-gray-600">Manage administrator accounts and permissions</p>
+        <p className="text-gray-600">Manage administrator accounts and organization access</p>
       </div>
 
       {/* Messages */}
@@ -158,14 +186,14 @@ export default function AdminUsersPage() {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           style={{ backgroundColor: '#0086D6' }}
         >
-          {showCreateForm ? 'Cancel' : '+ Create New Admin'}
+          {showCreateForm ? 'Cancel' : '+ Create New User'}
         </button>
       </div>
 
       {/* Create User Form */}
       {showCreateForm && (
         <div className="mb-8 p-6 bg-gray-50 rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Create New Admin User</h2>
+          <h2 className="text-xl font-semibold mb-4">Create New User</h2>
           <form onSubmit={handleCreateUser} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -208,9 +236,36 @@ export default function AdminUsersPage() {
                 >
                   <option value="admin">Admin</option>
                   <option value="super_admin">Super Admin</option>
+                  <option value="org_sponsor">Organization Sponsor</option>
                 </select>
               </div>
             </div>
+
+            {/* Organization Selection for org_sponsor */}
+            {newUser.role === 'org_sponsor' && organizations.length > 0 && (
+              <div>
+                <label className="block text-sm font-medium mb-2">Select Organizations</label>
+                <div className="border rounded p-3 max-h-40 overflow-y-auto bg-white">
+                  {organizations.map((org) => (
+                    <label key={org.organizationId} className="flex items-center space-x-2 mb-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedOrgs.includes(org.organizationId)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedOrgs([...selectedOrgs, org.organizationId])
+                          } else {
+                            setSelectedOrgs(selectedOrgs.filter(id => id !== org.organizationId))
+                          }
+                        }}
+                      />
+                      <span className="text-sm">{org.organizationName || org.organizationId}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -220,7 +275,10 @@ export default function AdminUsersPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setShowCreateForm(false)}
+                onClick={() => {
+                  setShowCreateForm(false)
+                  setSelectedOrgs([])
+                }}
                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
               >
                 Cancel
@@ -231,7 +289,7 @@ export default function AdminUsersPage() {
       )}
 
       {/* Users Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full">
           <thead className="bg-gray-50">
             <tr>
@@ -243,6 +301,9 @@ export default function AdminUsersPage() {
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Role
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Organizations
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Created
@@ -273,7 +334,19 @@ export default function AdminUsersPage() {
                   >
                     <option value="admin">Admin</option>
                     <option value="super_admin">Super Admin</option>
+                    <option value="org_sponsor">Organization Sponsor</option>
                   </select>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-900">
+                  {user.role === 'org_sponsor' && user.organizationAccess && user.organizationAccess.length > 0 ? (
+                    <div className="text-xs">
+                      {user.organizationAccess.map(org => org.organizationName || org.organizationId).join(', ')}
+                    </div>
+                  ) : user.role === 'org_sponsor' ? (
+                    <span className="text-xs text-gray-500">No organizations assigned</span>
+                  ) : (
+                    <span className="text-xs text-gray-500">All organizations</span>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(user.createdAt).toLocaleDateString()}
@@ -297,7 +370,7 @@ export default function AdminUsersPage() {
         
         {users.length === 0 && (
           <div className="text-center py-8 text-gray-500">
-            No admin users found
+            No users found
           </div>
         )}
       </div>
@@ -306,8 +379,9 @@ export default function AdminUsersPage() {
       <div className="mt-8 p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Role Permissions:</h3>
         <ul className="text-sm space-y-1 text-gray-700">
-          <li><strong>Admin:</strong> Can create and manage audits, view results, manage audit data</li>
+          <li><strong>Admin:</strong> Can create and manage audits, view results for all organizations</li>
           <li><strong>Super Admin:</strong> All admin permissions plus user management capabilities</li>
+          <li><strong>Organization Sponsor:</strong> Can only view results for their assigned organizations</li>
         </ul>
       </div>
     </div>

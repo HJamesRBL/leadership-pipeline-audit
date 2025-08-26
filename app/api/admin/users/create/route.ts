@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { email, password, name, role } = await request.json()
+    const { email, password, name, role, organizationIds } = await request.json()
 
     // Validate input
     if (!email || !password) {
@@ -37,20 +37,29 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Create user
+    // Create user with organization access if org_sponsor
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         name: name || null,
-        role: role || 'admin'
+        role: role || 'admin',
+        ...(role === 'org_sponsor' && organizationIds?.length > 0 && {
+          organizationAccess: {
+            create: organizationIds.map((orgId: string) => ({
+              organizationId: orgId,
+              organizationName: null
+            }))
+          }
+        })
       },
       select: {
         id: true,
         email: true,
         name: true,
         role: true,
-        createdAt: true
+        createdAt: true,
+        organizationAccess: true
       }
     })
 

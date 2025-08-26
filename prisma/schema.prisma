@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ==================== EXISTING MODELS ====================
+// ==================== AUDIT MODELS ====================
 
 // Enhanced audit table with organization and round tracking
 model Audit {
@@ -77,7 +77,7 @@ model Rating {
   // @@unique([auditLeaderId, performanceRank])
 }
 
-// ==================== NEW AUTHENTICATION MODELS ====================
+// ==================== AUTHENTICATION MODELS ====================
 
 // Admin users who can log into the system
 model User {
@@ -85,10 +85,11 @@ model User {
   email         String    @unique
   password      String    // Hashed password
   name          String?
-  role          String    @default("admin") // "admin" or "super_admin"
+  role          String    @default("admin") // "super_admin", "admin", or "org_sponsor"
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
+  organizationAccess UserOrganizationAccess[]  // Organization access for org_sponsor role
 }
 
 // Active login sessions
@@ -100,4 +101,19 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+// Links users to organizations they can view
+model UserOrganizationAccess {
+  id             String   @id @default(uuid())
+  userId         String
+  organizationId String   // The organizationId from Audit table
+  organizationName String? // Optional: Store org name for easy reference
+  createdAt      DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, organizationId]) // Prevent duplicate access entries
+  @@index([userId])
+  @@index([organizationId])
 }
