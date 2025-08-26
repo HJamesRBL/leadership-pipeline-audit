@@ -133,6 +133,7 @@ export default function Navigation() {
           <a href="/" onClick={() => setIsMenuOpen(false)}>Dashboard</a>
           <a href="/create" onClick={() => setIsMenuOpen(false)}>Create Audit</a>
           <a href="/results" onClick={() => setIsMenuOpen(false)}>View Results</a>
+          <a href="/admin/users" onClick={() => setIsMenuOpen(false)}>Admin Users</a>
           {!isLoading && session && (
             <button
               onClick={() => {
