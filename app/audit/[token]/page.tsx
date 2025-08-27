@@ -296,24 +296,24 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
               <h3 className="font-bold text-lg mb-3 text-blue-900">Exercise 1: Ways of Contributing</h3>
               <p className="text-gray-700 mb-2">
-                You will categorize each employee into one of four career stages based on how they contribute to the organization:
+                You will categorize each employee based on how they contribute to the organization::
               </p>
               <ul className="ml-6 space-y-2 text-gray-700">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#E8B70B' }}></span>
-                  <span><strong>Stage One:</strong> Depends on others for direction and support</span>
+                  <span><strong>One:</strong> Depends on others for direction and support</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#ED1B34' }}></span>
-                  <span><strong>Stage Two:</strong> Independent contributor with technical expertise</span>
+                  <span><strong>Two:</strong> Independent contributor with technical expertise</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#0086D6' }}></span>
-                  <span><strong>Stage Three:</strong> Influences and develops others</span>
+                  <span><strong>Three:</strong> Influences and develops others</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
-                  <span><strong>Stage Four:</strong> Directs the business strategically</span>
+                  <span><strong>Four:</strong> Directs the business strategically</span>
                 </li>
               </ul>
             </div>
