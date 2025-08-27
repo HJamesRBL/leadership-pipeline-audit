@@ -238,7 +238,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
       if (response.ok) {
         setStep('complete')
-        setMessage('Thank you! Your ratings have been submitted successfully.')
+        setMessage('Thank you! Your ratings have been submitted successfully. Your results will be synthesized. At the conclusion of the Leadership Pipeline Audit process, we will create a report and share it with the leadership team.')
       } else {
         setMessage('Error submitting ratings')
       }
@@ -299,7 +299,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
-                      <li className="text-sm text-gray-700">Accepts supervision</li>
+                      <li className="text-sm text-gray-700">Depends on others</li>
                       <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
                       <li className="text-sm text-gray-700">Routine and detailed tasks</li>
                       <li className="text-sm text-gray-700">Learns how "we" do things</li>
@@ -317,8 +317,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Works independently</li>
                       <li className="text-sm text-gray-700">Responsible for projects</li>
-                      <li className="text-sm text-gray-700">Works independently and produces results</li>
                       <li className="text-sm text-gray-700">Credible</li>
                       <li className="text-sm text-gray-700">Increases expertise</li>
                       <li className="text-sm text-gray-700">Builds internal network</li>
@@ -337,6 +337,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Influences others</li>
                       <li className="text-sm text-gray-700">Manages, coaches, mentors or idea leader</li>
                       <li className="text-sm text-gray-700">Increases technical breadth</li>
                       <li className="text-sm text-gray-700">Integrator of ideas</li>
@@ -356,6 +357,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
+                      <li className="text-sm text-gray-700">Directs the business</li>
                       <li className="text-sm text-gray-700">Sets strategic direction</li>
                       <li className="text-sm text-gray-700">Uses power rather than influence</li>
                       <li className="text-sm text-gray-700">Sponsors key people</li>
@@ -382,7 +384,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
-                        <li className="text-xs text-gray-700">Accepts supervision</li>
+                        <li className="text-xs text-gray-700">Depends on others</li>
                         <li className="text-xs text-gray-700">Works on a portion of a larger project</li>
                         <li className="text-xs text-gray-700">Routine and detailed tasks</li>
                         <li className="text-xs text-gray-700">Learns how "we" do things</li>
@@ -400,8 +402,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Works independently</li>
                         <li className="text-xs text-gray-700">Responsible for projects</li>
-                        <li className="text-xs text-gray-700">Works independently and produces results</li>
                         <li className="text-xs text-gray-700">Credible</li>
                         <li className="text-xs text-gray-700">Increases expertise</li>
                         <li className="text-xs text-gray-700">Builds internal network</li>
@@ -425,6 +427,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Influences others</li>
                         <li className="text-xs text-gray-700">Manages, coaches, mentors or idea leader</li>
                         <li className="text-xs text-gray-700">Increases technical breadth</li>
                         <li className="text-xs text-gray-700">Integrator of ideas</li>
@@ -444,6 +447,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
+                        <li className="text-xs text-gray-700">Directs the business</li>
                         <li className="text-xs text-gray-700">Sets strategic direction</li>
                         <li className="text-xs text-gray-700">Uses power rather than influence</li>
                         <li className="text-xs text-gray-700">Sponsors key people</li>
@@ -523,12 +527,12 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {step === 'ranking' && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">
-            Step 2: Rank by Performance
+            Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest?  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. There will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. We will not show your responses here by name. </p>
-<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader who knows these people. You are being asked to rank best to least performers in terms of everything you know about them and their contributions to success. </p>
-            <p className="mb-6 text-gray-600"> A tip for how to do this is to first pick your top 5 and then your bottom 5. Sort the middle out after you have this figured out. </p>
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest?  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. There will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
+<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on the relative impact of your employees. Imagine you were starting over with a limited budget. What employees would you hire first, last?</p>
+            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
             <p className="mb-6 text-gray-600">Now rank them.
           </p>
 
