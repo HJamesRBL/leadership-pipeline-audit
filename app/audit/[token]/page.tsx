@@ -133,9 +133,10 @@ function SortableEmployeeCard({
 }
 
 export default function AuditPage({ params }: { params: { token: string } }) {
-  const [step, setStep] = useState<'loading' | 'stages' | 'ranking' | 'complete'>('loading')
+  const [step, setStep] = useState<'loading' | 'introduction' | 'stages' | 'ranking' | 'complete'>('loading')
   const [employees, setEmployees] = useState<Employee[]>([])
   const [leaderName, setLeaderName] = useState('')
+  const [auditName, setAuditName] = useState('')
   const [message, setMessage] = useState('')
   const [showDescriptions, setShowDescriptions] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -166,7 +167,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
         } else {
           setEmployees(data.employees)
           setLeaderName(data.leaderName)
-          setStep('stages')
+          setAuditName(data.auditName || 'Leadership Pipeline Audit')
+          setStep('introduction') // Start with introduction page
         }
       } else {
         setMessage('Invalid audit link')
@@ -256,6 +258,147 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       <div className="max-w-2xl mx-auto p-8 text-center">
         <h1 className="text-3xl font-bold mb-4 text-green-600">✓ Audit Complete</h1>
         <p className="text-lg">{message}</p>
+      </div>
+    )
+  }
+
+  // Introduction Page
+  if (step === 'introduction') {
+    return (
+      <div className="max-w-4xl mx-auto p-8">
+        {/* RBL Brand Header */}
+        <div style={{ 
+          background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)', 
+          color: 'white', 
+          padding: '2rem', 
+          borderRadius: '0.5rem', 
+          marginBottom: '2rem' 
+        }}>
+          <h1 className="text-4xl font-bold mb-3" style={{ color: 'white' }}>Leadership Pipeline Audit</h1>
+          <p className="text-xl" style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
+          <p className="text-sm mt-2" style={{ opacity: 0.85, color: 'white' }}>{auditName}</p>
+        </div>
+
+        {/* Introduction Content */}
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Introduction to the Leadership Pipeline Audit Process</h2>
+          
+          <div className="prose max-w-none mb-8">
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations 
+              understand their talent distribution and identify opportunities for development and advancement.
+            </p>
+            
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              This audit consists of two key exercises that will take approximately 15-20 minutes to complete:
+            </p>
+
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
+              <h3 className="font-bold text-lg mb-3 text-blue-900">Exercise 1: Ways of Contributing</h3>
+              <p className="text-gray-700 mb-2">
+                You will categorize each employee into one of four career stages based on how they contribute to the organization:
+              </p>
+              <ul className="ml-6 space-y-2 text-gray-700">
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#E8B70B' }}></span>
+                  <span><strong>Stage One:</strong> Depends on others for direction and support</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#ED1B34' }}></span>
+                  <span><strong>Stage Two:</strong> Independent contributor with technical expertise</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#0086D6' }}></span>
+                  <span><strong>Stage Three:</strong> Influences and develops others</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
+                  <span><strong>Stage Four:</strong> Directs the business strategically</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-green-50 border-l-4 border-green-600 p-6 mb-6">
+              <h3 className="font-bold text-lg mb-3 text-green-900">Exercise 2: Relative Performance Ranking</h3>
+              <p className="text-gray-700">
+                You will rank employees by their relative performance and impact. This helps identify high performers 
+                who may be ready for advancement and those who may need additional support or development.
+              </p>
+            </div>
+          </div>
+
+          {/* Video Placeholder */}
+          <div className="mb-8">
+            <h3 className="font-bold text-lg mb-4 text-gray-800">Watch the Introduction Video</h3>
+            <div className="bg-gray-100 rounded-lg aspect-video flex items-center justify-center border-2 border-gray-200">
+              <div className="text-center p-8">
+                <svg className="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-gray-600 mb-2">Video Introduction</p>
+                <p className="text-sm text-gray-500">
+                  {/* Replace this div with your video embed code */}
+                  {/* Example for YouTube: */}
+                  {/* <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                  </iframe> */}
+                  [Video embed will go here]
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Important Notes */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
+            <h3 className="font-bold text-lg mb-3 text-amber-900 flex items-center">
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              Important Notes
+            </h3>
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start">
+                <span className="text-amber-600 mr-2">•</span>
+                <span>Your responses are confidential and will be aggregated with other leaders' assessments</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-amber-600 mr-2">•</span>
+                <span>There are no "right" or "wrong" answers - we seek your honest professional judgment</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-amber-600 mr-2">•</span>
+                <span>Please complete the entire audit in one session (approximately 15-20 minutes)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-amber-600 mr-2">•</span>
+                <span>You will evaluate {employees.length} employees in this audit</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Begin Button */}
+          <div className="text-center">
+            <button
+              onClick={() => setStep('stages')}
+              className="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+              style={{ background: 'linear-gradient(135deg, #0086D6 0%, #071D49 100%)' }}
+            >
+              Begin Leadership Pipeline Audit →
+            </button>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center text-sm text-gray-500">
+          <p>© The RBL Group • All rights reserved</p>
+          <p className="mt-1">For technical assistance, please contact your audit administrator</p>
+        </div>
       </div>
     )
   }
