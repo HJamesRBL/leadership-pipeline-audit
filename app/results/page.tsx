@@ -495,30 +495,26 @@ export default function ResultsPage() {
               <div className="text-sm text-gray-600">Performance Gradient</div>
               <div className="text-2xl font-bold">
                 {(() => {
-                  const stage1_2 = results.averagePerformance.filter(s => s.stage === 1 || s.stage === 2)
-                  const stage3_4 = results.averagePerformance.filter(s => s.stage === 3 || s.stage === 4)
+                  const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                  const stage3 = results.averagePerformance.find(s => s.stage === 3)
                   
-                  if (stage1_2.length === 0 || stage3_4.length === 0) return 'N/A'
+                  if (!stage2 || !stage3) return 'N/A'
                   
-                  const avgStage1_2 = stage1_2.reduce((sum, s) => sum + s.average, 0) / stage1_2.length
-                  const avgStage3_4 = stage3_4.reduce((sum, s) => sum + s.average, 0) / stage3_4.length
-                  const gradient = avgStage3_4 - avgStage1_2
+                  const gradient = stage3.average - stage2.average
                   
                   return `${gradient > 0 ? '+' : ''}${gradient.toFixed(1)}pts`
                 })()}
               </div>
               <div className="text-xs">
                 {(() => {
-                  const stage1_2 = results.averagePerformance.filter(s => s.stage === 1 || s.stage === 2)
-                  const stage3_4 = results.averagePerformance.filter(s => s.stage === 3 || s.stage === 4)
+                  const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                  const stage3 = results.averagePerformance.find(s => s.stage === 3)
                   
-                  if (stage1_2.length === 0 || stage3_4.length === 0) return 'Insufficient data'
+                  if (!stage2 || !stage3) return 'Insufficient data'
                   
-                  const avgStage1_2 = stage1_2.reduce((sum, s) => sum + s.average, 0) / stage1_2.length
-                  const avgStage3_4 = stage3_4.reduce((sum, s) => sum + s.average, 0) / stage3_4.length
-                  const gradient = avgStage3_4 - avgStage1_2
+                  const gradient = stage3.average - stage2.average
                   
-                  if (gradient < 0) return 'Senior leaders underperforming'
+                  if (gradient < 0) return 'Stage 3 underperforming Stage 2'
                   if (gradient <= 20) return 'Limited progression'
                   return 'Strong performance maturation'
                 })()}
@@ -1644,11 +1640,142 @@ export default function ResultsPage() {
                 </div>
               </div>
             </div>
-            
             {/* Calculation note */}
             <div className="mt-4 p-3 bg-blue-50 rounded text-xs text-gray-700">
               <strong>Note:</strong> Performance percentile is calculated by converting ranks (Total People - Rank + 1) 
               and then computing the percentile position within each stage's distribution. Higher percentiles indicate better performance.
+            </div>
+
+            {/* Performance Gradient Interpretation Card */}
+            <div className="mt-6 p-6 rounded-lg border-l-4" style={{
+              backgroundColor: (() => {
+                const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                
+                if (!stage2 || !stage3) return '#F3F4F6'
+                
+                const gradient = stage3.average - stage2.average
+                
+                if (gradient < 0) return '#FEE2E2'
+                if (gradient <= 20) return '#FEF3C7'
+                return '#D1FAE5'
+              })(),
+              borderLeftColor: (() => {
+                const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                
+                if (!stage2 || !stage3) return '#9CA3AF'
+                
+                const gradient = stage3.average - stage2.average
+                
+                if (gradient < 0) return '#EF4444'
+                if (gradient <= 20) return '#F59E0B'
+                return '#10B981'
+              })()
+            }}>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">
+                      {(() => {
+                        const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                        const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                        
+                        if (!stage2 || !stage3) return '❓'
+                        
+                        const gradient = stage3.average - stage2.average
+                        
+                        if (gradient < 0) return '🚨'
+                        if (gradient <= 20) return '⚠️'
+                        return '✅'
+                      })()}
+                    </span>
+                    <h3 className="text-lg font-bold" style={{
+                      color: (() => {
+                        const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                        const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                        
+                        if (!stage2 || !stage3) return '#6B7280'
+                        
+                        const gradient = stage3.average - stage2.average
+                        
+                        if (gradient < 0) return '#991B1B'
+                        if (gradient <= 20) return '#92400E'
+                        return '#065F46'
+                      })()
+                    }}>
+                      {(() => {
+                        const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                        const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                        
+                        if (!stage2 || !stage3) return 'INSUFFICIENT DATA'
+                        
+                        const gradient = stage3.average - stage2.average
+                        
+                        if (gradient < 0) return 'CRITICAL'
+                        if (gradient <= 20) return 'NEEDS ATTENTION'
+                        return 'OPTIMIZED'
+                      })()}
+                    </h3>
+                    <span className="px-3 py-1 rounded-full text-sm font-medium text-white" style={{
+                      backgroundColor: (() => {
+                        const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                        const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                        
+                        if (!stage2 || !stage3) return '#9CA3AF'
+                        
+                        const gradient = stage3.average - stage2.average
+                        
+                        if (gradient < 0) return '#EF4444'
+                        if (gradient <= 20) return '#F59E0B'
+                        return '#10B981'
+                      })()
+                    }}>
+                      Stage 3-2 Gradient: {(() => {
+                        const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                        const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                        
+                        if (!stage2 || !stage3) return 'N/A'
+                        
+                        const gradient = stage3.average - stage2.average
+                        return `${gradient > 0 ? '+' : ''}${gradient.toFixed(1)} pts`
+                      })()}
+                    </span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    {(() => {
+                      const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                      const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                      
+                      if (!stage2 || !stage3) return 'Insufficient Data for Analysis'
+                      
+                      const gradient = stage3.average - stage2.average
+                      
+                      if (gradient < 0) return 'Performance Inversion - Senior Leadership Crisis'
+                      if (gradient <= 20) return 'Limited Performance Progression'
+                      return 'Strong Performance Maturation'
+                    })()}
+                  </h4>
+                  <p className="text-sm text-gray-700">
+                    {(() => {
+                      const stage2 = results.averagePerformance.find(s => s.stage === 2)
+                      const stage3 = results.averagePerformance.find(s => s.stage === 3)
+                      
+                      if (!stage2 || !stage3) return 'Unable to calculate performance gradient between Stage 2 and Stage 3. Ensure both stages have rated employees.'
+                      
+                      const gradient = stage3.average - stage2.average
+                      
+                      if (gradient < 0) {
+                        return 'Your Stage 3 leaders are being outperformed by Stage 2 leaders, indicating a serious organizational challenge. This suggests that the transition to leadership readiness is not translating into effectiveness, potentially due to poor development programs, wrong people advancing, or disengagement at Stage 3. The organization risks losing high-performing Stage 2 leaders who see no performance improvement in advancement.'
+                      }
+                      if (gradient <= 20) {
+                        return 'Performance improves only marginally when leaders move from Stage 2 to Stage 3, suggesting that your development programs aren\'t effectively building capabilities for the leadership transition. This flat performance curve indicates missed opportunities to leverage the Stage 3 readiness and may result in promotion decisions based on tenure rather than demonstrated excellence.'
+                      }
+                      return 'Your organization shows healthy performance progression where the critical transition from Stage 2 to Stage 3 translates into effectiveness. Leaders who reach Stage 3 demonstrate the value of development and readiness, creating a compelling case for career progression. This pattern indicates effective development programs and proper placement of leaders at each stage.'
+                    })()}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 {/* Performance-Stage Distribution Scatterplot */}
@@ -2290,6 +2417,217 @@ export default function ResultsPage() {
   </div>
 </div> 
 */}
+
+          {/* Recommended Leadership Development Actions */}
+          <div className="bg-white rounded-lg shadow-lg" style={{
+            border: `2px solid ${(() => {
+              const stage1_2_percentage = results.stageCounts
+                .filter(s => s.stage === 1 || s.stage === 2)
+                .reduce((sum, s) => sum + s.count, 0) / 
+                results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+              
+              if (stage1_2_percentage >= 40) return '#EF4444'
+              if (stage1_2_percentage >= 20) return '#F59E0B'
+              return '#10B981'
+            })()}`
+          }}>
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">📋</span>
+                <h2 className="text-xl font-bold">Recommended Leadership Development Actions</h2>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium text-white`} style={{
+                  backgroundColor: (() => {
+                    const stage1_2_percentage = results.stageCounts
+                      .filter(s => s.stage === 1 || s.stage === 2)
+                      .reduce((sum, s) => sum + s.count, 0) / 
+                      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                    
+                    if (stage1_2_percentage >= 40) return '#EF4444'
+                    if (stage1_2_percentage >= 20) return '#F59E0B'
+                    return '#10B981'
+                  })()
+                }}>
+                  {(() => {
+                    const stage1_2_percentage = results.stageCounts
+                      .filter(s => s.stage === 1 || s.stage === 2)
+                      .reduce((sum, s) => sum + s.count, 0) / 
+                      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                    
+                    if (stage1_2_percentage >= 40) return 'Critical - Immediate Action Required'
+                    if (stage1_2_percentage >= 20) return 'Needs Attention - Enhancement Required'
+                    return 'Optimized - Sustain Excellence'
+                  })()}
+                </span>
+              </div>
+
+              {/* Recommendations Content */}
+              <div className="space-y-6">
+                {(() => {
+                  const stage1_2_percentage = results.stageCounts
+                    .filter(s => s.stage === 1 || s.stage === 2)
+                    .reduce((sum, s) => sum + s.count, 0) / 
+                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                  
+                  if (stage1_2_percentage >= 40) {
+                    // CRITICAL
+                    return (
+                      <>
+                        <div>
+                          <h3 className="font-bold text-lg mb-4 text-red-900">Immediate Leadership Acceleration Required</h3>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <h4 className="font-semibold mb-2">1. Establish Business Case for Leadership Crisis</h4>
+                              <p className="text-sm text-gray-700 ml-4">Document the cost of underdeveloped leaders on growth, strategy, and customer satisfaction</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">2. Deploy Rapid Assessment Tools</h4>
+                              <p className="text-sm text-gray-700 ml-4">Conduct individual Leadership Code assessments and psychometric evaluations to identify high-potential Stage 1-2 leaders for accelerated development</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">3. Intensive Development Interventions</h4>
+                              <ul className="text-sm text-gray-700 ml-4 space-y-1">
+                                <li>• <strong>Job Assignments:</strong> Pair all Stage 1-2 leaders with Stage 4 mentors in co-leadership arrangements</li>
+                                <li>• <strong>Training:</strong> Enroll in Leadership Academy Bootcamp focusing on the five Leadership Code domains</li>
+                                <li>• <strong>Coaching:</strong> Provide executive coaching for all Stage 2 leaders to accelerate progression to Stage 3</li>
+                              </ul>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Create 90-Day Acceleration Plans</h4>
+                              <p className="text-sm text-gray-700 ml-4">Establish clear milestones for Stage progression</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">5. Consider External Talent Acquisition</h4>
+                              <p className="text-sm text-gray-700 ml-4">Recruit for critical Stage 3-4 positions while developing internal pipeline</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-6 p-4 bg-red-50 rounded-lg">
+                          <p className="text-sm font-semibold text-red-900">Investment Guideline: Invest 3-5% of payroll in leadership development with 70% focused on Stage 1-2 acceleration</p>
+                        </div>
+                      </>
+                    )
+                  } else if (stage1_2_percentage >= 20) {
+                    // NEEDS ATTENTION
+                    return (
+                      <>
+                        <div>
+                          <h3 className="font-bold text-lg mb-4 text-yellow-900">Targeted Development Enhancement</h3>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <h4 className="font-semibold mb-2">1. Refine Competency Model</h4>
+                              <p className="text-sm text-gray-700 ml-4">Clarify both foundational and differentiating competencies specific to your brand</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">2. Implement Structured Assessment</h4>
+                              <p className="text-sm text-gray-700 ml-4">Use aggregated 360 assessments to identify specific capability gaps</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">3. Focused Development Options</h4>
+                              <ul className="text-sm text-gray-700 ml-4 space-y-1">
+                                <li>• <strong>Job Assignments:</strong> Create stretch assignments and cross-functional projects</li>
+                                <li>• <strong>Training:</strong> Deploy targeted modules from Custom Leadership Development programs</li>
+                                <li>• <strong>Shared Language & Tools:</strong> Establish common leadership frameworks across the organization</li>
+                              </ul>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Measure Progress Quarterly</h4>
+                              <p className="text-sm text-gray-700 ml-4">Use follow-up Pipeline Audits to track Stage progression</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">5. Build Development into Performance Management</h4>
+                              <p className="text-sm text-gray-700 ml-4">Make Stage progression a key performance indicator</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
+                          <p className="text-sm font-semibold text-yellow-900">Investment Guideline: Invest 2-3% of payroll with balanced focus across all stages</p>
+                        </div>
+                      </>
+                    )
+                  } else {
+                    // OPTIMIZED
+                    return (
+                      <>
+                        <div>
+                          <h3 className="font-bold text-lg mb-4 text-green-900">Sustain and Enhance Excellence</h3>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <h4 className="font-semibold mb-2">1. Document Best Practices</h4>
+                              <p className="text-sm text-gray-700 ml-4">Capture what's working in your leadership development approach</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">2. Focus on Stage 3 to 4 Progression</h4>
+                              <p className="text-sm text-gray-700 ml-4">Implement advanced academies for senior leader development</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">3. Advanced Development Initiatives</h4>
+                              <ul className="text-sm text-gray-700 ml-4 space-y-1">
+                                <li>• <strong>Job Assignments:</strong> Global rotations and board-level exposure</li>
+                                <li>• <strong>Training:</strong> Focus on strategic and differentiating capabilities</li>
+                                <li>• <strong>External Learning:</strong> Participation in executive networks and thought leadership</li>
+                              </ul>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Measure Business Impact</h4>
+                              <p className="text-sm text-gray-700 ml-4">Track correlation between leadership capability and P/E multiple or other investor metrics</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">5. Manage Reputation</h4>
+                              <p className="text-sm text-gray-700 ml-4">Include leadership strength in annual reports and investor communications</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">6. Continuous Adaptation</h4>
+                              <p className="text-sm text-gray-700 ml-4">Annual Leadership Brand Audit to ensure alignment with evolving customer expectations</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                          <p className="text-sm font-semibold text-green-900">Investment Guideline: Invest 1-2% of payroll focused on maintaining excellence and succession planning</p>
+                        </div>
+                      </>
+                    )
+                  }
+                })()}
+                
+                {/* Universal Next Steps */}
+                <div className="border-t pt-6">
+                  <h3 className="font-bold text-lg mb-4">Universal Next Steps (All Organizations)</h3>
+                  <ol className="space-y-2 text-sm text-gray-700">
+                    <li><strong>1. Establish Regular Audit Cycle:</strong> Conduct Pipeline Audits every 6-12 months to track progress</li>
+                    <li><strong>2. Create Individual Development Plans:</strong> Every leader should have a clear path to their next stage</li>
+                    <li><strong>3. Build Shared Language:</strong> Implement consistent leadership frameworks and tools</li>
+                    <li><strong>4. Link to Business Outcomes:</strong> Connect leadership development investments to measurable business results</li>
+                    <li><strong>5. Communicate Progress:</strong> Share audit results and development initiatives with all stakeholders</li>
+                  </ol>
+                </div>
+                
+                <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+                  <p className="text-sm text-gray-700 italic">
+                    Remember: The goal is not just to develop individual leaders, but to build organizational leadership capability that delivers stakeholder confidence in future results.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Raw Data Table */}
           <div className="bg-white p-6 rounded-lg shadow raw-data-section">
