@@ -240,7 +240,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
       if (response.ok) {
         setStep('complete')
-        setMessage('Thank you! Your ratings have been submitted successfully. Your results will be synthesized. At the conclusion of the Leadership Pipeline Audit process, we will create a report and share it with the leadership team.')
+        setMessage('Your results are now being synthesized into a comprehensive report. Once complete, we will schedule a debrief session to review your results, explore the key insights, and discuss recommended next steps. \n\nThank you for your participation.')
       } else {
         setMessage('Error submitting ratings')
       }
