@@ -23,7 +23,7 @@ interface AuditResult {
   stageCounts: { stage: number; count: number }[]
   averagePerformance: { stage: number; average: number }[]
   completionStatus: { name: string; email: string; completed: boolean }[]
-  rawData?: any[]
+  rawData?: any[] // Add this line
   calculationNote?: string
 }
 
@@ -63,17 +63,6 @@ interface ComparisonData {
   }
 }
 
-interface InterpretationData {
-  category: 'CRITICAL' | 'NEEDS ATTENTION' | 'OPTIMIZED'
-  headline: string
-  bullets: string[]
-  icon: string
-  bgColor: string
-  borderColor: string
-  textColor: string
-  pillColor: string
-}
-
 export default function ResultsPage() {
   const searchParams = useSearchParams()
   const auditIdFromUrl = searchParams.get('auditId')
@@ -88,183 +77,6 @@ export default function ResultsPage() {
   const [loadingComparison, setLoadingComparison] = useState(false)
   const [currentAuditInfo, setCurrentAuditInfo] = useState<AuditInfo | null>(null)
   const [organizationAudits, setOrganizationAudits] = useState<AuditInfo[]>([])
-
-  // Calculate interpretation metrics
-  const getStageDistributionInterpretation = (): InterpretationData | null => {
-    if (!results) return null
-    
-    const stage1Count = results.stageCounts.find(s => s.stage === 1)?.count || 0
-    const stage2Count = results.stageCounts.find(s => s.stage === 2)?.count || 0
-    const totalCount = results.stageCounts.reduce((sum, s) => sum + s.count, 0)
-    const stage12Percentage = totalCount > 0 ? ((stage1Count + stage2Count) / totalCount) * 100 : 0
-    
-    if (stage12Percentage >= 40) {
-      return {
-        category: 'CRITICAL',
-        headline: 'Leadership Readiness Crisis - Immediate Development Required',
-        bullets: [
-          'Growth is unlikely as leaders lack the capability to execute expansion strategies',
-          'Strategic execution is compromised with most leaders neither aligned with nor capable of delivering on organizational goals',
-          'Employee engagement suffers as underdeveloped leaders struggle to inspire and guide their teams effectively',
-          'Customer relationships are at risk with leaders unable to maintain service standards or respond to market needs'
-        ],
-        icon: '🚨',
-        bgColor: '#FEE2E2',
-        borderColor: '#EF4444',
-        textColor: '#991B1B',
-        pillColor: '#DC2626'
-      }
-    } else if (stage12Percentage >= 20) {
-      return {
-        category: 'NEEDS ATTENTION',
-        headline: 'Leadership Development Gaps - Acceleration Needed',
-        bullets: [
-          'Growth potential exists but faces challenges as some leaders aren\'t ready to scale operations',
-          'Strategic alignment is inconsistent with pockets of leaders who need better capability building',
-          'Employee engagement is uneven with many teams experiencing leadership gaps',
-          'Customer satisfaction is at risk in areas led by underdeveloped leaders'
-        ],
-        icon: '⚠️',
-        bgColor: '#FEF3C7',
-        borderColor: '#F59E0B',
-        textColor: '#78350F',
-        pillColor: '#D97706'
-      }
-    } else {
-      return {
-        category: 'OPTIMIZED',
-        headline: 'Strong Leadership Maturity - Ready to Scale',
-        bullets: [
-          'Organization has critical mass to grow and scale with capable leaders ready to execute',
-          'Leaders are aligned and capable of delivering on strategic objectives',
-          'Employee engagement is strong with mature leaders creating positive work environments',
-          'Customer relationships thrive with experienced leaders ensuring consistent value delivery'
-        ],
-        icon: '✅',
-        bgColor: '#D1FAE5',
-        borderColor: '#10B981',
-        textColor: '#064E3B',
-        pillColor: '#059669'
-      }
-    }
-  }
-
-  const getPerformanceGradientInterpretation = (): InterpretationData | null => {
-    if (!results || !results.averagePerformance || results.averagePerformance.length === 0) return null
-    
-    const stage1Avg = results.averagePerformance.find(s => s.stage === 1)?.average || 0
-    const stage2Avg = results.averagePerformance.find(s => s.stage === 2)?.average || 0
-    const stage4Avg = results.averagePerformance.find(s => s.stage === 4)?.average || 0
-    
-    const stage12Avg = (stage1Avg + stage2Avg) / 2 || 0
-    const gradient = stage4Avg - stage12Avg
-    
-    if (gradient < 0) {
-      return {
-        category: 'CRITICAL',
-        headline: 'Performance Inversion - Senior Leadership Crisis',
-        bullets: [
-          'Senior leaders are being outperformed by those in earlier stages',
-          'Experience isn\'t translating into effectiveness',
-          'Risk of losing high-performing junior leaders who see limited inspiring examples above them'
-        ],
-        icon: '📉',
-        bgColor: '#FEE2E2',
-        borderColor: '#EF4444',
-        textColor: '#991B1B',
-        pillColor: '#DC2626'
-      }
-    } else if (gradient <= 20) {
-      return {
-        category: 'NEEDS ATTENTION',
-        headline: 'Limited Performance Progression',
-        bullets: [
-          'Performance improves only marginally with career progression',
-          'Development programs aren\'t effectively building capabilities as leaders advance',
-          'Promotion decisions may be based on tenure rather than demonstrated excellence'
-        ],
-        icon: '📊',
-        bgColor: '#FEF3C7',
-        borderColor: '#F59E0B',
-        textColor: '#78350F',
-        pillColor: '#D97706'
-      }
-    } else {
-      return {
-        category: 'OPTIMIZED',
-        headline: 'Strong Performance Maturation',
-        bullets: [
-          'Healthy performance progression where experience translates into effectiveness',
-          'Senior leaders demonstrate the value of development and experience',
-          'Effective development programs and proper placement of leaders at each stage'
-        ],
-        icon: '📈',
-        bgColor: '#D1FAE5',
-        borderColor: '#10B981',
-        textColor: '#064E3B',
-        pillColor: '#059669'
-      }
-    }
-  }
-
-  // Get overall status for executive summary
-  const getOverallStatus = () => {
-    const stageInterpretation = getStageDistributionInterpretation()
-    const perfInterpretation = getPerformanceGradientInterpretation()
-    
-    if (!stageInterpretation || !perfInterpretation) return null
-    
-    if (stageInterpretation.category === 'CRITICAL' || perfInterpretation.category === 'CRITICAL') {
-      return { status: 'CRITICAL', icon: '🚨', color: 'text-red-600' }
-    } else if (stageInterpretation.category === 'NEEDS ATTENTION' || perfInterpretation.category === 'NEEDS ATTENTION') {
-      return { status: 'NEEDS ATTENTION', icon: '⚠️', color: 'text-yellow-600' }
-    } else {
-      return { status: 'OPTIMIZED', icon: '✅', color: 'text-green-600' }
-    }
-  }
-
-  // Get recommendations based on status
-  const getRecommendations = () => {
-    const stageInterpretation = getStageDistributionInterpretation()
-    if (!stageInterpretation) return []
-    
-    if (stageInterpretation.category === 'CRITICAL') {
-      return [
-        { title: 'Establish Business Case for Leadership Crisis', description: 'Document the cost of underdeveloped leaders on growth, strategy, and customer satisfaction' },
-        { title: 'Deploy Rapid Assessment Tools', description: 'Conduct individual Leadership Code assessments and psychometric evaluations' },
-        { title: 'Intensive Development Interventions', description: 'Pair Stage 1-2 leaders with Stage 4 mentors, enroll in Leadership Academy Bootcamp' },
-        { title: 'Create 90-Day Acceleration Plans', description: 'Set clear milestones for Stage progression' },
-        { title: 'Consider External Talent Acquisition', description: 'Bring in experienced leaders for critical Stage 3-4 positions' }
-      ]
-    } else if (stageInterpretation.category === 'NEEDS ATTENTION') {
-      return [
-        { title: 'Refine Competency Model', description: 'Clarify foundational and differentiating competencies' },
-        { title: 'Implement Structured Assessment', description: 'Use aggregated 360 assessments to identify capability gaps' },
-        { title: 'Focused Development Options', description: 'Create stretch assignments and cross-functional projects' },
-        { title: 'Measure Progress Quarterly', description: 'Track Stage progression with follow-up audits' },
-        { title: 'Build into Performance Management', description: 'Make Stage progression a key performance indicator' }
-      ]
-    } else {
-      return [
-        { title: 'Document Best Practices', description: 'Capture what\'s working in your leadership development approach' },
-        { title: 'Focus on Stage 3 to 4 Progression', description: 'Implement advanced academies for senior leader development' },
-        { title: 'Advanced Development Initiatives', description: 'Global rotations and board-level exposure' },
-        { title: 'Measure Business Impact', description: 'Track correlation between leadership capability and investor metrics' },
-        { title: 'Manage Reputation', description: 'Include leadership strength in annual reports' }
-      ]
-    }
-  }
-
-  // Calculate metrics for executive summary
-  const stage12Percentage = results ? 
-    Math.round(((results.stageCounts.find(s => s.stage === 1)?.count || 0) + 
-    (results.stageCounts.find(s => s.stage === 2)?.count || 0)) / 
-    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100) : 0
-
-  const performanceGradient = results && results.averagePerformance.length > 0 ? 
-    Math.round((results.averagePerformance.find(s => s.stage === 4)?.average || 0) - 
-    ((results.averagePerformance.find(s => s.stage === 1)?.average || 0) + 
-    (results.averagePerformance.find(s => s.stage === 2)?.average || 0)) / 2) : 0
 
   // PDF Export Function
   const exportToPDF = async () => {
@@ -287,19 +99,13 @@ export default function ResultsPage() {
       // Define sections to export
       const sections: { element: Element | null; name: string }[] = []
       
-      // Include executive summary if it exists
-      const execSummary = document.querySelector('.executive-summary-section')
-      if (execSummary) {
-        sections.push({ element: execSummary, name: 'Executive Summary' })
-      }
-      
       // Always include basic sections if they exist
       const basicSections = [
         { selector: '.completion-status-section', name: 'Completion Status' },
         { selector: '.leaders-by-stage-section', name: 'Leaders by Stage' },
         { selector: '.stage-by-performance-section', name: 'Stage by Performance' },
         { selector: '.misalignment-analysis-section', name: 'Misalignment Analysis' },
-        { selector: '.recommendations-section', name: 'Recommendations' },
+        { selector: '.business-unit-health-section', name: 'Business Unit Health' },
       ]
       
       basicSections.forEach(section => {
@@ -536,7 +342,7 @@ export default function ResultsPage() {
 }
 
   const stageColors = {
-    1: '#E8B70B',  // Yellow
+    1: '#E8B70B',  // Yello
     2: '#ED1B34',  // Red
     3: '#0086D6',  // Blue
     4: '#071D49'   // Navy
@@ -571,58 +377,6 @@ export default function ResultsPage() {
           {loading ? 'Loading...' : 'Refresh Results'}
         </button>
       </div>
-
-      {/* Executive Summary Dashboard - NEW */}
-      {results && !loading && (
-        <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg executive-summary-section">
-          <h2 className="text-xl font-bold mb-4">Leadership Health Assessment</h2>
-          
-          <div className="grid grid-cols-3 gap-4">
-            {/* Overall Status Card */}
-            <div className="bg-white p-4 rounded-lg text-center">
-              <div className="text-3xl mb-2">{getOverallStatus()?.icon}</div>
-              <div className={`text-lg font-bold ${getOverallStatus()?.color}`}>
-                {getOverallStatus()?.status}
-              </div>
-              <div className="text-sm text-gray-600">Overall Assessment</div>
-            </div>
-            
-            {/* Stage Distribution Card */}
-            <div className="bg-white p-4 rounded-lg">
-              <div className="text-sm text-gray-600">Stage Readiness</div>
-              <div className="text-2xl font-bold">{stage12Percentage}%</div>
-              <div className="text-xs">in Stages 1-2</div>
-              <div className={`text-xs mt-1 ${
-                stage12Percentage >= 40 ? 'text-red-600' : 
-                stage12Percentage >= 20 ? 'text-yellow-600' : 
-                'text-green-600'
-              }`}>
-                {stage12Percentage >= 40 ? 'Critical' : 
-                 stage12Percentage >= 20 ? 'Needs Attention' : 
-                 'Optimized'}
-              </div>
-            </div>
-            
-            {/* Performance Gradient Card */}
-            <div className="bg-white p-4 rounded-lg">
-              <div className="text-sm text-gray-600">Performance Gradient</div>
-              <div className="text-2xl font-bold">
-                {performanceGradient > 0 ? '+' : ''}{performanceGradient}pts
-              </div>
-              <div className="text-xs">Stage 4 vs Stage 1-2</div>
-              <div className={`text-xs mt-1 ${
-                performanceGradient < 0 ? 'text-red-600' : 
-                performanceGradient <= 20 ? 'text-yellow-600' : 
-                'text-green-600'
-              }`}>
-                {performanceGradient < 0 ? 'Performance Inversion' : 
-                 performanceGradient <= 20 ? 'Limited Progression' : 
-                 'Strong Maturation'}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Comparison Controls - Only show if organization has multiple rounds */}
       {hasMultipleRounds && (
@@ -678,7 +432,101 @@ export default function ResultsPage() {
           )}
         </div>
       )}
-
+            {/* Leadership Health Assessment Dashboard */}
+      {results && !loading && (
+        <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
+          <h2 className="text-xl font-bold mb-4">Leadership Health Assessment</h2>
+          
+          <div className="grid grid-cols-3 gap-4">
+            {/* Overall Status Card */}
+            <div className="bg-white p-4 rounded-lg text-center">
+              <div className="text-3xl mb-2">
+                {(() => {
+                  const stage1_2_percentage = results.stageCounts
+                    .filter(s => s.stage === 1 || s.stage === 2)
+                    .reduce((sum, s) => sum + s.count, 0) / 
+                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                  
+                  if (stage1_2_percentage >= 40) return '🚨'
+                  if (stage1_2_percentage >= 20) return '⚠️'
+                  return '✅'
+                })()}
+              </div>
+              <div className="text-lg font-bold">
+                {(() => {
+                  const stage1_2_percentage = results.stageCounts
+                    .filter(s => s.stage === 1 || s.stage === 2)
+                    .reduce((sum, s) => sum + s.count, 0) / 
+                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                  
+                  if (stage1_2_percentage >= 40) return 'Critical'
+                  if (stage1_2_percentage >= 20) return 'Needs Attention'
+                  return 'Optimized'
+                })()}
+              </div>
+              <div className="text-sm text-gray-600">Overall Assessment</div>
+            </div>
+            
+            {/* Stage Distribution Card */}
+            <div className="bg-white p-4 rounded-lg">
+              <div className="text-sm text-gray-600">Stage Readiness</div>
+              <div className="text-2xl font-bold">
+                {(results.stageCounts
+                  .filter(s => s.stage === 1 || s.stage === 2)
+                  .reduce((sum, s) => sum + s.count, 0) / 
+                  results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100).toFixed(1)}%
+              </div>
+              <div className="text-xs">
+                {(() => {
+                  const percentage = results.stageCounts
+                    .filter(s => s.stage === 1 || s.stage === 2)
+                    .reduce((sum, s) => sum + s.count, 0) / 
+                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                  
+                  if (percentage >= 40) return 'Leaders not ready for roles'
+                  if (percentage >= 20) return 'Development gaps exist'
+                  return 'Leaders appropriately developed'
+                })()}
+              </div>
+            </div>
+            
+            {/* Performance Gradient Card */}
+            <div className="bg-white p-4 rounded-lg">
+              <div className="text-sm text-gray-600">Performance Gradient</div>
+              <div className="text-2xl font-bold">
+                {(() => {
+                  const stage1_2 = results.averagePerformance.filter(s => s.stage === 1 || s.stage === 2)
+                  const stage3_4 = results.averagePerformance.filter(s => s.stage === 3 || s.stage === 4)
+                  
+                  if (stage1_2.length === 0 || stage3_4.length === 0) return 'N/A'
+                  
+                  const avgStage1_2 = stage1_2.reduce((sum, s) => sum + s.average, 0) / stage1_2.length
+                  const avgStage3_4 = stage3_4.reduce((sum, s) => sum + s.average, 0) / stage3_4.length
+                  const gradient = avgStage3_4 - avgStage1_2
+                  
+                  return `${gradient > 0 ? '+' : ''}${gradient.toFixed(1)}pts`
+                })()}
+              </div>
+              <div className="text-xs">
+                {(() => {
+                  const stage1_2 = results.averagePerformance.filter(s => s.stage === 1 || s.stage === 2)
+                  const stage3_4 = results.averagePerformance.filter(s => s.stage === 3 || s.stage === 4)
+                  
+                  if (stage1_2.length === 0 || stage3_4.length === 0) return 'Insufficient data'
+                  
+                  const avgStage1_2 = stage1_2.reduce((sum, s) => sum + s.average, 0) / stage1_2.length
+                  const avgStage3_4 = stage3_4.reduce((sum, s) => sum + s.average, 0) / stage3_4.length
+                  const gradient = avgStage3_4 - avgStage1_2
+                  
+                  if (gradient < 0) return 'Senior leaders underperforming'
+                  if (gradient <= 20) return 'Limited progression'
+                  return 'Strong performance maturation'
+                })()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Loading State */}
       {loading && (
         <div className="text-center py-12">
@@ -1404,11 +1252,11 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* Leaders by Stage - Vertical Bar Chart with Interpretation */}
+          {/* Leaders by Stage - Vertical Bar Chart */}
           <div className="bg-white p-6 rounded-lg shadow leaders-by-stage-section">
             <h2 className="text-xl font-semibold mb-6">Leaders by Stage</h2>
             
-            {/* Chart Container - YOUR EXISTING CHART */}
+            {/* Chart Container */}
             <div style={{ position: 'relative', height: '350px', paddingLeft: '120px' }}>
               {/* Y-axis label */}
               <div style={{ 
@@ -1532,56 +1380,16 @@ export default function ResultsPage() {
                 </div>
               </div>
             </div>
-            
-            {/* NEW: Interpretation Card */}
-            {(() => {
-              const interpretation = getStageDistributionInterpretation()
-              if (!interpretation) return null
-              
-              return (
-                <div className="mt-6 p-6 rounded-lg border-l-4" style={{
-                  backgroundColor: interpretation.bgColor,
-                  borderLeftColor: interpretation.borderColor
-                }}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{interpretation.icon}</span>
-                        <h3 className="text-lg font-bold" style={{color: interpretation.textColor}}>
-                          {interpretation.category}
-                        </h3>
-                        <span className="px-3 py-1 rounded-full text-sm font-medium text-white" style={{
-                          backgroundColor: interpretation.pillColor
-                        }}>
-                          {stage12Percentage}% in Stages 1-2
-                        </span>
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-2">
-                        {interpretation.headline}
-                      </h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        {interpretation.bullets.map((bullet, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )
-            })()}
           </div>
 
-          {/* Stage by Performance - Vertical Bar Chart with Interpretation */}
+          {/* Stage by Performance - Vertical Bar Chart */}
           <div className="bg-white p-6 rounded-lg shadow stage-by-performance-section">
             <h2 className="text-xl font-semibold mb-2">Stage by Performance</h2>
             <p className="text-sm text-gray-600 mb-4">
               Average performance percentile by stage (higher is better performance)
             </p>
             
-            {/* Chart Container - YOUR EXISTING CHART */}
+            {/* Chart Container */}
             <div style={{ position: 'relative', height: '350px', paddingLeft: '120px' }}>
               {/* Y-axis label */}
               <div style={{ 
@@ -1705,95 +1513,694 @@ export default function ResultsPage() {
               </div>
             </div>
             
-            {/* NEW: Interpretation Card */}
-            {(() => {
-              const interpretation = getPerformanceGradientInterpretation()
-              if (!interpretation) return null
-              
-              return (
-                <div className="mt-6 p-6 rounded-lg border-l-4" style={{
-                  backgroundColor: interpretation.bgColor,
-                  borderLeftColor: interpretation.borderColor
-                }}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{interpretation.icon}</span>
-                        <h3 className="text-lg font-bold" style={{color: interpretation.textColor}}>
-                          {interpretation.category}
-                        </h3>
-                        <span className="px-3 py-1 rounded-full text-sm font-medium text-white" style={{
-                          backgroundColor: interpretation.pillColor
-                        }}>
-                          {performanceGradient > 0 ? '+' : ''}{performanceGradient}pt gradient
-                        </span>
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-2">
-                        {interpretation.headline}
-                      </h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        {interpretation.bullets.map((bullet, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )
-            })()}
-            
+            {/* Calculation note */}
             <div className="mt-4 p-3 bg-blue-50 rounded text-xs text-gray-700">
               <strong>Note:</strong> Performance percentile is calculated by converting ranks (Total People - Rank + 1) 
               and then computing the percentile position within each stage's distribution. Higher percentiles indicate better performance.
             </div>
           </div>
+{/* Performance-Stage Distribution Scatterplot */}
+<div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
+  <h2 className="text-xl font-semibold mb-2">Performance-Stage Distribution</h2>
+  <p className="text-sm text-gray-600 mb-6">
+    Individual employee positioning by career stage and performance percentile (higher is better performance)
+  </p>
+  
+  {/* Chart Container */}
+  <div style={{ position: 'relative', height: '400px', paddingLeft: '120px' }}>
+    {/* Y-axis label */}
+    <div style={{ 
+      position: 'absolute',
+      left: '5px',
+      top: '50%',
+      transform: 'translateY(-50%) rotate(-90deg)',
+      transformOrigin: 'center',
+      fontSize: '14px',
+      fontWeight: 'bold',
+      color: '#333',
+      whiteSpace: 'nowrap'
+    }}>
+      Performance Percentile
+    </div>
+    
+    {/* Main chart area */}
+    <div style={{ height: '350px', position: 'relative', marginLeft: '20px' }}>
+      {/* Y-axis scale */}
+      <div style={{ 
+        position: 'absolute',
+        left: '-30px',
+        top: '0',
+        height: '300px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        fontSize: '12px',
+        color: '#666',
+        fontWeight: 'bold'
+      }}>
+        <span>100%</span>
+        <span>75%</span>
+        <span>50%</span>
+        <span>25%</span>
+        <span>0%</span>
+      </div>
+      
+      {/* Chart plot area */}
+      <div style={{ height: '300px', position: 'relative' }}>
+        {/* Grid lines */}
+        <div style={{ position: 'absolute', inset: '0' }}>
+          {/* Horizontal lines */}
+          {[0, 25, 50, 75, 100].map(val => (
+            <div key={`h-${val}`} style={{ 
+              position: 'absolute',
+              left: '0',
+              right: '0',
+              top: `${100 - val}%`,
+              borderTop: '1px solid #e5e7eb'
+            }}></div>
+          ))}
+          {/* Vertical lines for stages */}
+          {[1, 2, 3, 4].map(stage => (
+            <div key={`v-${stage}`} style={{ 
+              position: 'absolute',
+              top: '0',
+              bottom: '0',
+              left: `${((stage - 0.5) / 4) * 100}%`,
+              borderLeft: '1px solid #e5e7eb'
+            }}></div>
+          ))}
+          {/* Center reference lines */}
+          <div style={{ 
+            position: 'absolute',
+            left: '50%',
+            top: '0',
+            bottom: '0',
+            borderLeft: '2px dashed #9ca3af'
+          }}></div>
+          <div style={{ 
+            position: 'absolute',
+            left: '0',
+            right: '0',
+            top: '50%',
+            borderTop: '2px dashed #9ca3af'
+          }}></div>
+        </div>
+        
+        {/* Quadrant backgrounds */}
+        <div style={{ position: 'absolute', inset: '0' }}>
+          {/* Top Left - High Performance, Low Stage */}
+          <div style={{ 
+            position: 'absolute',
+            left: '0',
+            top: '0',
+            width: '50%',
+            height: '50%',
+            backgroundColor: '#F59E0B',
+            opacity: 0.05
+          }}></div>
+          {/* Top Right - High Performance, High Stage */}
+          <div style={{ 
+            position: 'absolute',
+            right: '0',
+            top: '0',
+            width: '50%',
+            height: '50%',
+            backgroundColor: '#10B981',
+            opacity: 0.05
+          }}></div>
+          {/* Bottom Left - Low Performance, Low Stage */}
+          <div style={{ 
+            position: 'absolute',
+            left: '0',
+            bottom: '0',
+            width: '50%',
+            height: '50%',
+            backgroundColor: '#6B7280',
+            opacity: 0.05
+          }}></div>
+          {/* Bottom Right - Low Performance, High Stage */}
+          <div style={{ 
+            position: 'absolute',
+            right: '0',
+            bottom: '0',
+            width: '50%',
+            height: '50%',
+            backgroundColor: '#EF4444',
+            opacity: 0.05
+          }}></div>
+        </div>
+        
+        {/* Plot points */}
+        {(results as any).rawData.map((emp: any, idx: number) => {
+          // Calculate position
+          const xPercent = ((emp.stage - 0.5) / 4) * 100
+          const yPercent = emp.percentile
+          
+          // Determine color based on stage
+          const dotColor = emp.stage === 1 ? '#E8B70B' : 
+                          emp.stage === 2 ? '#ED1B34' : 
+                          emp.stage === 3 ? '#0086D6' : '#071D49'
+          
+          return (
+            <div
+              key={idx}
+              style={{
+                position: 'absolute',
+                left: `${xPercent}%`,
+                top: `${100 - yPercent}%`,
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                backgroundColor: dotColor,
+                transform: 'translate(-50%, -50%)',
+                border: '2px solid white',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                cursor: 'pointer',
+                zIndex: 10
+              }}
+              className="hover:scale-150 transition-transform"
+            />
+          )
+        })}
+      </div>
+      
+      {/* X-axis labels */}
+      <div style={{ 
+        display: 'flex',
+        justifyContent: 'space-around',
+        marginTop: '10px',
+        paddingLeft: '0px',
+        paddingRight: '0px'
+      }}>
+        {[1, 2, 3, 4].map(stage => {
+          const count = (results as any).rawData.filter((r: any) => r.stage === stage).length
+          return (
+            <div key={stage} style={{ 
+              textAlign: 'center',
+              flex: 1
+            }}>
+              <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage {stage}</div>
+              <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>
+                ({count} {count === 1 ? 'leader' : 'leaders'})
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  </div>
+  
 
-          {/* ALL YOUR REMAINING SECTIONS - Performance-Stage Distribution Scatterplot */}
-          <div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
-            {/* YOUR EXISTING SCATTERPLOT CODE */}
-          </div>
-
+</div>
           {/* Performance-Stage Misalignment */}
           <div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
-            {/* YOUR EXISTING MISALIGNMENT MATRIX CODE */}
+            <h2 className="text-xl font-semibold mb-2">Performance-Stage Misalignment Analysis</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Identifies talent opportunities and risks based on performance and career stage alignment
+            </p>
+            
+            {/* Risk Matrix and Alert List */}
+            <div style={{ display: 'flex', gap: '60px' }}>
+              {/* 2x2 Matrix */}
+              <div style={{ flex: '1' }}>
+                <h3 className="font-semibold mb-4 text-gray-800">Talent Distribution Matrix</h3>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: '80px 1fr 1fr', 
+                  gridTemplateRows: '1fr 1fr 40px 40px', 
+                  gap: '3px', 
+                  height: '380px'
+                }}>
+                  {/* Y-axis label */}
+                  <div style={{ 
+                    gridRow: '1 / 3',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    writingMode: 'vertical-rl',
+                    transform: 'rotate(180deg)',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    backgroundColor: 'white',
+                    color: '#374151',
+                    letterSpacing: '0.05em',
+                    borderRadius: '5px 0 0 5px'
+                  }}>
+                    PERFORMANCE
+                  </div>
+                  
+                  {/* Top Left - High Performance, Low Stage */}
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)',
+                    borderRadius: '6px',
+                    padding: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0 2px 4px rgba(251, 191, 36, 0.1)'
+                  }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#78350F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      High Potential
+                    </div>
+                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#F59E0B', margin: '8px 0' }}>
+                      {(() => {
+                        const rawData = (results as any).rawData || []
+                        return rawData.filter((r: any) => 
+                          (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) > 50
+                        ).length
+                      })()}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#92400E', textAlign: 'center' }}>
+                      Ready to advance
+                    </div>
+                  </div>
+                  
+                  {/* Top Right - High Performance, High Stage */}
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
+                    borderRadius: '6px',
+                    padding: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0 2px 4px rgba(16, 185, 129, 0.1)'
+                  }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#064E3B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      Top Performers
+                    </div>
+                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#10B981', margin: '8px 0' }}>
+                      {(() => {
+                        const rawData = (results as any).rawData || []
+                        return rawData.filter((r: any) => 
+                          (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) > 50
+                        ).length
+                      })()}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#065F46', textAlign: 'center' }}>
+                      Well positioned
+                    </div>
+                  </div>
+                  
+                  {/* Bottom Left - Low Performance, Low Stage */}
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
+                    borderRadius: '6px',
+                    padding: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
+                  }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#374151', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      Developing
+                    </div>
+                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#6B7280', margin: '8px 0' }}>
+                      {(() => {
+                        const rawData = (results as any).rawData || []
+                        return rawData.filter((r: any) => 
+                          (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) <= 50
+                        ).length
+                      })()}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#4B5563', textAlign: 'center' }}>
+                      Develop or remove
+                    </div>
+                  </div>
+                  
+                  {/* Bottom Right - Low Performance, High Stage */}
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%)',
+                    borderRadius: '6px',
+                    padding: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0 2px 4px rgba(239, 68, 68, 0.1)'
+                  }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#7F1D1D', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      At Risk
+                    </div>
+                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#EF4444', margin: '8px 0' }}>
+                      {(() => {
+                        const rawData = (results as any).rawData || []
+                        return rawData.filter((r: any) => 
+                          (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) <= 50
+                        ).length
+                      })()}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#991B1B', textAlign: 'center' }}>
+                      Need support
+                    </div>
+                  </div>
+                  
+                  {/* X-axis stage labels row */}
+                  <div></div>
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    color: '#4B5563',
+                    backgroundColor: 'white'
+                  }}>
+                    Early Stage (1-2)
+                  </div>
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    color: '#4B5563',
+                    backgroundColor: 'white'
+                  }}>
+                    Senior Stage (3-4)
+                  </div>
+                  
+                  {/* X-axis main label row */}
+                  <div style={{ gridColumn: '2 / 4', textAlign: 'center', fontSize: '14px', fontWeight: 'bold', color: '#374151', letterSpacing: '0.05em', paddingTop: '0px' }}>
+                    CAREER STAGE
+                  </div>
+                </div>
+              </div>
+              
+              {/* Action Items */}
+              <div style={{ flex: '1' }}>
+                <h3 className="font-semibold mb-4 text-gray-800">Priority Actions</h3>
+                <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+                  {(() => {
+                    const rawData = (results as any).rawData || []
+                    const alerts: any[] = []
+                    
+                    // High performers in Stage 1-2
+                    rawData.filter((r: any) => 
+                      (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) > 75
+                    ).forEach((r: any) => {
+                      alerts.push({
+                        type: 'opportunity',
+                        employee: r.employee,
+                        title: r.title,
+                        stage: r.stage,
+                        percentile: r.percentile,
+                        message: `Consider for advancement`,
+                        icon: '⬆️',
+                        bgColor: '#FEF3C7',
+                        borderColor: '#F59E0B'
+                      })
+                    })
+                    
+                    // Low performers in Stage 3-4
+                    rawData.filter((r: any) => 
+                      (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) < 25
+                    ).forEach((r: any) => {
+                      alerts.push({
+                        type: 'risk',
+                        employee: r.employee,
+                        title: r.title,
+                        stage: r.stage,
+                        percentile: r.percentile,
+                        message: `Development needed`,
+                        icon: '⚠️',
+                        bgColor: '#FEE2E2',
+                        borderColor: '#EF4444'
+                      })
+                    })
+                    
+                    if (alerts.length === 0) {
+                      return (
+                        <div className="text-center py-8">
+                          <div className="text-gray-400 mb-2">
+                            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
+                          <div className="text-gray-500 font-medium">
+                            No critical misalignments detected
+                          </div>
+                          <div className="text-gray-400 text-sm mt-1">
+                            All employees appear appropriately positioned
+                          </div>
+                        </div>
+                      )
+                    }
+                    
+                    return alerts.map((alert, idx) => (
+                      <div key={idx} className="rounded-lg border-2 p-4 transition-all hover:shadow-md" style={{ 
+                        backgroundColor: alert.bgColor,
+                        borderColor: alert.borderColor
+                      }}>
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span style={{ fontSize: '20px' }}>{alert.icon}</span>
+                              <span className="font-semibold text-gray-800">{alert.employee}</span>
+                            </div>
+                            <div className="text-sm text-gray-600 mb-2">{alert.title}</div>
+                            <div className="flex gap-4 text-xs">
+                              <span className="px-2 py-1 rounded bg-white bg-opacity-60">
+                                Stage {alert.stage}
+                              </span>
+                              <span className="px-2 py-1 rounded bg-white bg-opacity-60 font-medium">
+                                {alert.percentile}% Performance
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-sm font-medium" style={{ color: alert.borderColor }}>
+                            {alert.message}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  })()}
+                </div>
+              </div>
+            </div>
+            
+            {/* Calculation note */}
+            <div className="mt-4 p-3 bg-blue-50 rounded text-xs text-gray-700">
+              <strong>Note:</strong> The matrix categorizes employees based on their career stage (1-2 = Early, 3-4 = Senior) 
+              and performance percentile (50% or below = Lower, above 50% = Higher). Priority actions highlight high performers in early stages 
+              (above 75th percentile in stages 1-2) as advancement opportunities and low performers in senior stages 
+              (below 25th percentile in stages 3-4) as development needs.
+            </div>
           </div>
+          
+{/*
+          {/* Business Unit Stage by Performance */}
+          {/* 
+<div className="bg-white p-6 rounded-lg shadow business-unit-health-section">
+  <h2 className="text-xl font-semibold mb-2">Business Unit Stage by Performance</h2>
+  <p className="text-sm text-gray-600 mb-4">
+    Stage distribution and average performance by business unit
+  </p>
+  
+  <div className="space-y-6">
+    {(() => {
+      const rawData = (results as any).rawData || []
+      const businessUnits = Array.from(new Set(rawData.map((r: any) => r.businessUnit)))
+      
+      if (businessUnits.length === 0) {
+        return (
+          <div className="text-center py-8 text-gray-500">
+            No business unit data available
+          </div>
+        )
+      }
+      
+      return businessUnits.map(unit => {
+        const unitData = rawData.filter((r: any) => r.businessUnit === unit)
+        const stage1 = unitData.filter((r: any) => r.stage === 1).length
+        const stage2 = unitData.filter((r: any) => r.stage === 2).length
+        const stage3 = unitData.filter((r: any) => r.stage === 3).length
+        const stage4 = unitData.filter((r: any) => r.stage === 4).length
+        const total = unitData.length
+        
+        // Calculate percentages
+        const stage1Pct = total > 0 ? (stage1 / total) * 100 : 0
+        const stage2Pct = total > 0 ? (stage2 / total) * 100 : 0
+        const stage3Pct = total > 0 ? (stage3 / total) * 100 : 0
+        const stage4Pct = total > 0 ? (stage4 / total) * 100 : 0
+        
+        // Calculate average performance
+        const avgPerformance = unitData.reduce((sum: number, r: any) => 
+          sum + parseFloat(r.percentile), 0) / unitData.length
+        
+        return (
+          <div key={unit} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '32px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h3 className="font-semibold text-lg">{unit || 'Unspecified'}</h3>
+              <div className="flex gap-4 text-sm">
+                <span className="text-gray-600">Total: <span className="font-semibold">{total}</span> leaders</span>
+                <span className={`font-medium ${avgPerformance >= 60 ? 'text-green-600' : avgPerformance >= 40 ? 'text-yellow-600' : 'text-red-600'}`}>
+                  Avg Performance: {avgPerformance.toFixed(1)}%
+                </span>
+              </div>
+            </div>
+            
+            {/* Vertical Bar Chart Container */}{/* 
+            <div style={{ position: 'relative', height: '250px', paddingLeft: '40px' }}>
+              {/* Main chart area */}{/* 
+              <div style={{ height: '200px', position: 'relative', marginLeft: '10px' }}>
+                {/* Y-axis scale */}{/* 
+                <div style={{ 
+                  position: 'absolute',
+                  left: '-30px',
+                  top: '0',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  fontSize: '11px',
+                  color: '#666'
+                }}>
+                  <span>100%</span>
+                  <span>75%</span>
+                  <span>50%</span>
+                  <span>25%</span>
+                  <span>0%</span>
+                </div>
+                
+                {/* Grid lines */}{/* 
+                <div style={{ position: 'absolute', inset: '0' }}>
+                  {[0, 25, 50, 75, 100].map(val => (
+                    <div key={val} style={{ 
+                      position: 'absolute',
+                      left: '0',
+                      right: '0',
+                      top: `${100 - val}%`,
+                      borderTop: '1px solid #e5e7eb'
+                    }}></div>
+                  ))}
+                </div>
+                
+                {/* Bars container */}{/* 
+                <div style={{ 
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'space-evenly',
+                  height: '100%',
+                  position: 'relative',
+                  paddingLeft: '30px',
+                  paddingRight: '30px'
+                }}>
+                  {[1, 2, 3, 4].map(stage => {
+                    const count = stage === 1 ? stage1 : stage === 2 ? stage2 : stage === 3 ? stage3 : stage4
+                    const percentage = stage === 1 ? stage1Pct : stage === 2 ? stage2Pct : stage === 3 ? stage3Pct : stage4Pct
+                    const stageColor = stage === 1 ? '#E8B70B' : stage === 2 ? '#ED1B34' : stage === 3 ? '#0086D6' : '#071D49'
+                    
+                    return (
+                      <div key={stage} style={{ 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '60px'
+                      }}>
+                        {/* Bar with value */}{/* 
+                        <div style={{ 
+                          width: '45px',
+                          height: `${percentage * 2}px`,
+                          backgroundColor: stageColor,
+                          position: 'relative',
+                          transition: 'height 0.5s ease'
+                        }}>
+                          {/* Value label */}{/* 
+                          <span style={{ 
+                            position: 'absolute',
+                            top: '-22px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {percentage.toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                
+                {/* X-axis labels */}{/* 
+                <div style={{ 
+                  display: 'flex',
+                  justifyContent: 'space-evenly',
+                  marginTop: '10px',
+                  paddingLeft: '30px',
+                  paddingRight: '30px'
+                }}>
+                  {[1, 2, 3, 4].map(stage => {
+                    const count = stage === 1 ? stage1 : stage === 2 ? stage2 : stage === 3 ? stage3 : stage4
+                    return (
+                      <div key={stage} style={{ 
+                        textAlign: 'center',
+                        width: '60px'
+                      }}>
+                        <div style={{ fontSize: '13px', fontWeight: 'bold' }}>Stage {stage}</div>
+                        <div style={{ fontSize: '11px', color: '#666', fontWeight: 'normal' }}>
+                          ({count} {count === 1 ? 'leader' : 'leaders'})
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      })
+    })()}
+  </div>
+</div> 
+*/}
 
           {/* Raw Data Table */}
           <div className="bg-white p-6 rounded-lg shadow raw-data-section">
-            {/* YOUR EXISTING RAW DATA TABLE CODE */}
-          </div>
-
-          {/* NEW: Recommendations Section */}
-          <div className="bg-white p-6 rounded-lg shadow recommendations-section">
-            <h2 className="text-xl font-semibold mb-4">Development Roadmap</h2>
-            <div className="grid gap-4">
-              {getRecommendations().map((rec, idx) => (
-                <div key={idx} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
-                      {idx + 1}
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900 mb-1">{rec.title}</h4>
-                    <p className="text-sm text-gray-600">{rec.description}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Raw Data</h2>
+              
             </div>
             
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Investment Guidelines</h4>
-              <p className="text-sm text-blue-800">
-                {getOverallStatus()?.status === 'CRITICAL' ? 
-                  'Invest 3-5% of payroll in leadership development with 70% focused on Stage 1-2 acceleration' :
-                 getOverallStatus()?.status === 'NEEDS ATTENTION' ? 
-                  'Invest 2-3% of payroll with balanced focus across all stages' :
-                  'Invest 1-2% of payroll focused on maintaining excellence and succession planning'}
-              </p>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead style={{ backgroundColor: '#071D49' }}>
+                  <tr>
+                    <th className="px-4 py-2 text-left" style={{ color: 'white' }}>Leader</th>
+                    <th className="px-4 py-2 text-left" style={{ color: 'white' }}>Employee</th>
+                    <th className="px-4 py-2 text-left" style={{ color: 'white' }}>Title</th>
+                    <th className="px-4 py-2 text-left" style={{ color: 'white' }}>Business Unit</th>
+                    <th className="px-4 py-2 text-center" style={{ color: 'white' }}>Stage</th>
+                    <th className="px-4 py-2 text-center" style={{ color: 'white' }}>Rank</th>
+                    <th className="px-4 py-2 text-center" style={{ color: 'white' }}>Percentile</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {(results as any).rawData && (results as any).rawData.length > 0 ? (
+                    (results as any).rawData.map((row: any, idx: number) => (
+                      <tr key={idx} className="hover:bg-gray-50">
+                        <td className="px-4 py-2 text-left">{row.leader}</td>
+                        <td className="px-4 py-2 text-left">{row.employee}</td>
+                        <td className="px-4 py-2 text-left">{row.title}</td>
+                        <td className="px-4 py-2 text-left">{row.businessUnit}</td>
+                        <td className="px-4 py-2 text-center">{row.stage}</td>
+                        <td className="px-4 py-2 text-center">{row.rank}</td>
+                        <td className="px-4 py-2 text-center">{row.percentile}%</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                        No ratings have been submitted yet
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
