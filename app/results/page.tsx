@@ -1257,8 +1257,128 @@ export default function ResultsPage() {
             
             {/* Chart Container */}
             <div style={{ position: 'relative', height: '350px', paddingLeft: '120px' }}>
-              {/* ... existing chart code stays the same ... */}
-            </div>
+              {/* Y-axis label */}
+              <div style={{ 
+                position: 'absolute',
+                left: '5px',
+                top: '50%',
+                transform: 'translateY(-50%) rotate(-90deg)',
+                transformOrigin: 'center',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                color: '#333',
+                whiteSpace: 'nowrap'
+              }}>
+                Percentage of Leaders
+              </div>
+              
+              {/* Main chart area */}
+              <div style={{ height: '300px', position: 'relative', marginLeft: '20px' }}>
+                {/* Y-axis scale */}
+                <div style={{ 
+                  position: 'absolute',
+                  left: '-30px',
+                  top: '0',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  fontSize: '12px',
+                  color: '#666'
+                }}>
+                  <span>100%</span>
+                  <span>75%</span>
+                  <span>50%</span>
+                  <span>25%</span>
+                  <span>0%</span>
+                </div>
+                
+                {/* Grid lines */}
+                <div style={{ position: 'absolute', inset: '0' }}>
+                  {[0, 25, 50, 75, 100].map(val => (
+                    <div key={val} style={{ 
+                      position: 'absolute',
+                      left: '0',
+                      right: '0',
+                      top: `${100 - val}%`,
+                      borderTop: '1px solid #e5e7eb'
+                    }}></div>
+                  ))}
+                </div>
+                
+                {/* Bars container */}
+                <div style={{ 
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'space-evenly',
+                  height: '100%',
+                  position: 'relative',
+                  paddingLeft: '40px',
+                  paddingRight: '40px'
+                }}>
+                  {[1, 2, 3, 4].map(stage => {
+                    const count = results.stageCounts.find(s => s.stage === stage)?.count || 0
+                    const total = results.stageCounts.reduce((sum, s) => sum + s.count, 0)
+                    const percentage = total > 0 ? (count / total) * 100 : 0
+                    
+                    return (
+                      <div key={stage} style={{ 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '80px'
+                      }}>
+                        {/* Bar with value */}
+                        <div style={{ 
+                          width: '60px',
+                          height: `${percentage * 3}px`,
+                          backgroundColor: stageColors[stage as keyof typeof stageColors],
+                          position: 'relative',
+                          transition: 'height 0.5s ease'
+                        }}>
+                          {/* Value label */}
+                          <span style={{ 
+                            position: 'absolute',
+                            top: '-25px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {percentage.toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                
+                {/* X-axis labels */}
+                <div style={{ 
+                  display: 'flex',
+                  justifyContent: 'space-evenly',
+                  marginTop: '10px',
+                  paddingLeft: '40px',
+                  paddingRight: '40px'
+                }}>
+                  {[1, 2, 3, 4].map(stage => {
+                    const count = results.stageCounts.find(s => s.stage === stage)?.count || 0
+                    return (
+                      <div key={stage} style={{ 
+                        textAlign: 'center',
+                        width: '80px'
+                      }}>
+                        <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage {stage}</div>
+                        <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>
+                          ({count} {count === 1 ? 'leader' : 'leaders'})
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              </div>
 
             {/* Interpretation Card */}
             <div className="mt-6 p-6 rounded-lg border-l-4" style={{
@@ -1391,6 +1511,8 @@ export default function ResultsPage() {
               </div>
             </div>
           </div>
+          
+
 
           {/* Stage by Performance - Vertical Bar Chart */}
           <div className="bg-white p-6 rounded-lg shadow stage-by-performance-section">
