@@ -2417,50 +2417,7 @@ export default function ResultsPage() {
   </div>
 </div> 
 */}
-
-          {/* Recommended Leadership Development Actions */}
-          <div className="bg-white rounded-lg shadow-lg" style={{
-            border: `2px solid ${(() => {
-              const stage1_2_percentage = results.stageCounts
-                .filter(s => s.stage === 1 || s.stage === 2)
-                .reduce((sum, s) => sum + s.count, 0) / 
-                results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-              
-              if (stage1_2_percentage >= 40) return '#EF4444'
-              if (stage1_2_percentage >= 20) return '#F59E0B'
-              return '#10B981'
-            })()}`
-          }}>
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">📋</span>
-                <h2 className="text-xl font-bold">Recommended Leadership Development Actions</h2>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium text-white`} style={{
-                  backgroundColor: (() => {
-                    const stage1_2_percentage = results.stageCounts
-                      .filter(s => s.stage === 1 || s.stage === 2)
-                      .reduce((sum, s) => sum + s.count, 0) / 
-                      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                    
-                    if (stage1_2_percentage >= 40) return '#EF4444'
-                    if (stage1_2_percentage >= 20) return '#F59E0B'
-                    return '#10B981'
-                  })()
-                }}>
-                  {(() => {
-                    const stage1_2_percentage = results.stageCounts
-                      .filter(s => s.stage === 1 || s.stage === 2)
-                      .reduce((sum, s) => sum + s.count, 0) / 
-                      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                    
-                    if (stage1_2_percentage >= 40) return 'Critical - Immediate Action Required'
-                    if (stage1_2_percentage >= 20) return 'Needs Attention - Enhancement Required'
-                    return 'Optimized - Sustain Excellence'
-                  })()}
-                </span>
-              </div>
-
-              {/* Recommendations Content */}
+          {/* Recommendations Content */}
               <div className="space-y-6">
                 {(() => {
                   const stage1_2_percentage = results.stageCounts
@@ -2477,38 +2434,44 @@ export default function ResultsPage() {
                           
                           <div className="space-y-4">
                             <div>
-                              <h4 className="font-semibold mb-2">1. Establish Business Case for Leadership Crisis</h4>
-                              <p className="text-sm text-gray-700 ml-4">Document the cost of underdeveloped leaders on growth, strategy, and customer satisfaction</p>
+                              <h4 className="font-semibold mb-2">1. Build an Urgent Business Case for Leadership</h4>
+                              <p className="text-sm text-gray-700 ml-4">Document the immediate cost of leadership gaps on stakeholder value. Calculate the impact on customer retention, employee engagement scores, and investor confidence. Present this case to the board within 30 days to secure emergency funding and executive sponsorship for transformation.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">2. Deploy Rapid Assessment Tools</h4>
-                              <p className="text-sm text-gray-700 ml-4">Conduct individual Leadership Code assessments and psychometric evaluations to identify high-potential Stage 1-2 leaders for accelerated development</p>
+                              <h4 className="font-semibold mb-2">2. Define Emergency Leadership Brand Standards</h4>
+                              <p className="text-sm text-gray-700 ml-4">Rapidly establish what Stage 3 readiness looks like in your organization. Create a simplified competency model focused on the critical few behaviors that differentiate Stage 3 from Stage 2. Use RBL's Leadership Code as the foundation: Shape the Future, Make Things Happen, Engage Today's Talent, Build the Next Generation, and Invest in Yourself.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">3. Intensive Development Interventions</h4>
+                              <h4 className="font-semibold mb-2">3. Conduct Triage Assessment</h4>
+                              <p className="text-sm text-gray-700 ml-4">Deploy rapid 360 assessments focused on the gap between current state and Stage 3 requirements. Use RBL's Leadership Brand Assessment to identify which Stage 1-2 leaders have the highest potential for acceleration. Create heat maps showing capability gaps by business unit.</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Deploy Intensive Development Interventions</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• <strong>Job Assignments:</strong> Pair all Stage 1-2 leaders with Stage 4 mentors in co-leadership arrangements</li>
-                                <li>• <strong>Training:</strong> Enroll in Leadership Academy Bootcamp focusing on the five Leadership Code domains</li>
-                                <li>• <strong>Coaching:</strong> Provide executive coaching for all Stage 2 leaders to accelerate progression to Stage 3</li>
+                                <li>• Enroll all Stage 2 leaders in RBL's Leadership Academy Bootcamp (3-month intensive)</li>
+                                <li>• Implement executive coaching using RBL's "because of/so that" methodology</li>
+                                <li>• Create action learning projects tied directly to business challenges</li>
+                                <li>• Establish Stage 4 mentorship for every Stage 1-2 leader</li>
                               </ul>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">4. Create 90-Day Acceleration Plans</h4>
-                              <p className="text-sm text-gray-700 ml-4">Establish clear milestones for Stage progression</p>
+                              <h4 className="font-semibold mb-2">5. Track 90-Day Progression Metrics</h4>
+                              <p className="text-sm text-gray-700 ml-4">Measure weekly progression indicators: behavioral change observations, business metric improvements, and stakeholder feedback. Use RBL's Organization Guidance System to track ROI on development investments.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">5. Consider External Talent Acquisition</h4>
-                              <p className="text-sm text-gray-700 ml-4">Recruit for critical Stage 3-4 positions while developing internal pipeline</p>
+                              <h4 className="font-semibold mb-2">6. Communicate Crisis and Progress</h4>
+                              <p className="text-sm text-gray-700 ml-4">Be transparent with stakeholders about the leadership crisis and the transformation plan. Share monthly progress updates with employees, quarterly updates with customers, and include leadership development metrics in investor communications.</p>
                             </div>
                           </div>
                         </div>
                         
                         <div className="mt-6 p-4 bg-red-50 rounded-lg">
-                          <p className="text-sm font-semibold text-red-900">Investment Guideline: Invest 3-5% of payroll in leadership development with 70% focused on Stage 1-2 acceleration</p>
+                          <p className="text-sm font-semibold text-red-900">Investment Required: 3-5% of payroll, with 70% focused on Stage 1-2 acceleration</p>
                         </div>
                       </>
                     )
@@ -2521,38 +2484,44 @@ export default function ResultsPage() {
                           
                           <div className="space-y-4">
                             <div>
-                              <h4 className="font-semibold mb-2">1. Refine Competency Model</h4>
-                              <p className="text-sm text-gray-700 ml-4">Clarify both foundational and differentiating competencies specific to your brand</p>
+                              <h4 className="font-semibold mb-2">1. Strengthen the Business Case</h4>
+                              <p className="text-sm text-gray-700 ml-4">Articulate how closing the Stage 2-3 gap will improve competitive advantage. Link leadership development to strategic priorities like innovation, customer experience, or operational excellence. Use benchmarking data to show the opportunity cost of the current state.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">2. Implement Structured Assessment</h4>
-                              <p className="text-sm text-gray-700 ml-4">Use aggregated 360 assessments to identify specific capability gaps</p>
+                              <h4 className="font-semibold mb-2">2. Refine Your Leadership Brand</h4>
+                              <p className="text-sm text-gray-700 ml-4">Develop a clear statement: "Leaders at [company] are known for [3 differentiators] so that we can deliver [stakeholder outcomes]." Ensure this brand connects to your customer promise and differentiates you from competitors.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">3. Focused Development Options</h4>
+                              <h4 className="font-semibold mb-2">3. Implement Systematic Assessment</h4>
+                              <p className="text-sm text-gray-700 ml-4">Deploy annual 360 assessments tied to your leadership brand. Use RBL's stratified assessment tools (different for Stage 2 vs Stage 3). Include stakeholder impact metrics in addition to behavioral competencies.</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Create Targeted Development Pathways</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• <strong>Job Assignments:</strong> Create stretch assignments and cross-functional projects</li>
-                                <li>• <strong>Training:</strong> Deploy targeted modules from Custom Leadership Development programs</li>
-                                <li>• <strong>Shared Language & Tools:</strong> Establish common leadership frameworks across the organization</li>
+                                <li>• Implement RBL's Custom Leadership Development program tailored to your brand</li>
+                                <li>• Design 70-20-10 development plans: job experiences, coaching, and training</li>
+                                <li>• Create leadership cohorts for peer learning and accountability</li>
+                                <li>• Establish clear "ready now" criteria for Stage 3 advancement</li>
                               </ul>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">4. Measure Progress Quarterly</h4>
-                              <p className="text-sm text-gray-700 ml-4">Use follow-up Pipeline Audits to track Stage progression</p>
+                              <h4 className="font-semibold mb-2">5. Measure Development ROI</h4>
+                              <p className="text-sm text-gray-700 ml-4">Track progression rates from Stage 2 to 3, time to proficiency, and business impact of newly advanced Stage 3 leaders. Monitor leading indicators like engagement scores and customer satisfaction by leader stage.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">5. Build Development into Performance Management</h4>
-                              <p className="text-sm text-gray-700 ml-4">Make Stage progression a key performance indicator</p>
+                              <h4 className="font-semibold mb-2">6. Build Leadership Reputation</h4>
+                              <p className="text-sm text-gray-700 ml-4">Share success stories internally and externally. Include leadership capability in talent acquisition materials. Feature leadership development in annual reports as a competitive advantage.</p>
                             </div>
                           </div>
                         </div>
                         
                         <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
-                          <p className="text-sm font-semibold text-yellow-900">Investment Guideline: Invest 2-3% of payroll with balanced focus across all stages</p>
+                          <p className="text-sm font-semibold text-yellow-900">Investment Required: 2-3% of payroll with balanced investment across stages</p>
                         </div>
                       </>
                     )
@@ -2565,69 +2534,56 @@ export default function ResultsPage() {
                           
                           <div className="space-y-4">
                             <div>
-                              <h4 className="font-semibold mb-2">1. Document Best Practices</h4>
-                              <p className="text-sm text-gray-700 ml-4">Capture what's working in your leadership development approach</p>
+                              <h4 className="font-semibold mb-2">1. Evolve the Business Case</h4>
+                              <p className="text-sm text-gray-700 ml-4">Focus on how leadership excellence drives innovation and agility. Document the correlation between your leadership capability and premium P/E multiples. Position leadership as your sustainable competitive advantage.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">2. Focus on Stage 3 to 4 Progression</h4>
-                              <p className="text-sm text-gray-700 ml-4">Implement advanced academies for senior leader development</p>
+                              <h4 className="font-semibold mb-2">2. Advance Your Leadership Brand</h4>
+                              <p className="text-sm text-gray-700 ml-4">Ensure your leadership brand evolves with strategy. Use RBL's outside-in approach: start with customer expectations and work backward to leadership capabilities. Focus on differentiators that competitors cannot easily replicate.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">3. Advanced Development Initiatives</h4>
+                              <h4 className="font-semibold mb-2">3. Sophisticated Assessment Approach</h4>
+                              <p className="text-sm text-gray-700 ml-4">Use predictive analytics to identify future Stage 4 potential. Implement RBL's Organization Guidance System for real-time capability tracking. Include external stakeholder assessments (customers, partners, investors).</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">4. Elite Development Experiences</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• <strong>Job Assignments:</strong> Global rotations and board-level exposure</li>
-                                <li>• <strong>Training:</strong> Focus on strategic and differentiating capabilities</li>
-                                <li>• <strong>External Learning:</strong> Participation in executive networks and thought leadership</li>
+                                <li>• Enroll Stage 3-4 leaders in RBL's Reinventing the Organization Academy</li>
+                                <li>• Create board exposure and investor interaction opportunities</li>
+                                <li>• Design global leadership exchanges and external executive education</li>
+                                <li>• Implement reverse mentoring to keep senior leaders current</li>
                               </ul>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">4. Measure Business Impact</h4>
-                              <p className="text-sm text-gray-700 ml-4">Track correlation between leadership capability and P/E multiple or other investor metrics</p>
+                              <h4 className="font-semibold mb-2">5. Measure Intangible Value Creation</h4>
+                              <p className="text-sm text-gray-700 ml-4">Track leadership's impact on brand value, innovation pipeline, and stakeholder confidence. Use RBL's Human Capital Investor Index to measure market value premium from leadership capability.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">5. Manage Reputation</h4>
-                              <p className="text-sm text-gray-700 ml-4">Include leadership strength in annual reports and investor communications</p>
-                            </div>
-                            
-                            <div>
-                              <h4 className="font-semibold mb-2">6. Continuous Adaptation</h4>
-                              <p className="text-sm text-gray-700 ml-4">Annual Leadership Brand Audit to ensure alignment with evolving customer expectations</p>
+                              <h4 className="font-semibold mb-2">6. Leverage Leadership as Strategic Asset</h4>
+                              <p className="text-sm text-gray-700 ml-4">Feature your leadership capability in investor presentations. Use leadership strength in M&A discussions as integration capability. Export your leadership development approach to joint ventures and partnerships.</p>
                             </div>
                           </div>
                         </div>
                         
                         <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                          <p className="text-sm font-semibold text-green-900">Investment Guideline: Invest 1-2% of payroll focused on maintaining excellence and succession planning</p>
+                          <p className="text-sm font-semibold text-green-900">Investment Required: 1-2% of payroll focused on Stage 3-4 advancement and succession planning</p>
                         </div>
                       </>
                     )
                   }
                 })()}
                 
-                {/* Universal Next Steps */}
-                <div className="border-t pt-6">
-                  <h3 className="font-bold text-lg mb-4">Universal Next Steps (All Organizations)</h3>
-                  <ol className="space-y-2 text-sm text-gray-700">
-                    <li><strong>1. Establish Regular Audit Cycle:</strong> Conduct Pipeline Audits every 6-12 months to track progress</li>
-                    <li><strong>2. Create Individual Development Plans:</strong> Every leader should have a clear path to their next stage</li>
-                    <li><strong>3. Build Shared Language:</strong> Implement consistent leadership frameworks and tools</li>
-                    <li><strong>4. Link to Business Outcomes:</strong> Connect leadership development investments to measurable business results</li>
-                    <li><strong>5. Communicate Progress:</strong> Share audit results and development initiatives with all stakeholders</li>
-                  </ol>
-                </div>
-                
                 <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                   <p className="text-sm text-gray-700 italic">
-                    Remember: The goal is not just to develop individual leaders, but to build organizational leadership capability that delivers stakeholder confidence in future results.
+                    The ultimate test of a firm's leadership strength comes from its ability to produce leadership capability that delivers stakeholder confidence in future results. Your Pipeline Audit is not just a diagnostic—it's the foundation for building a leadership brand that creates sustainable value for all stakeholders.
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
 
           {/* Raw Data Table */}
           <div className="bg-white p-6 rounded-lg shadow raw-data-section">
