@@ -21,25 +21,25 @@ const stageDescriptions = [
     stage: 1,
     title: "One",
     color: "#E8B70B", // Yellow
-    description: "People who are in One are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have expert technical skills, so they are often not trusted with independent projects. They need others in the organization to give them direction and guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
+    description: "People who contribute as a One are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
   },
   {
     stage: 2,
     title: "Two",
     color: "#ED1B34", // Red
-    description: "Those in Two are independent contributors. They are experts in a technical or functional area. They are strong technically. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not typically seen as developmental to others because they believe their technical contributions are enough."
+    description: "Those who contribute as a Two are seen as experts in their area of expertise. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not seen as developersl of others because they tend to be micro managers."
   },
   {
     stage: 3,
     title: "Three",
     color: "#0086D6", // Medium RBL Blue
-    description: "People who are described in Three have shifted from expert to someone who can be interdependent with others. They are strong influencers. They are still knowledgeable about technical areas but have shifted from a focus on self to a focus on ensuring the success of their team. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. Those in Three are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully."
+    description: "People who are described as contributors in Three have shifted from individual expert to someone who cares about and is  interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team-. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. Those in Three are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully to get things done."
   },
   {
     stage: 4,
     title: "Four",
     color: "#071D49", // Dark RBL Navy
-    description: "People in Four are seen as contributing through the entire business. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and  information. They have shifted from influence to power. They set strategic direction for a large part if not the entire organization. From the outside, those in FOUR are seen as representing the entire business not just a part of the business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+    description: "People who contribute in Four are seen as contributors to the entire business. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
   }
 ]
 
@@ -301,19 +301,19 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               <ul className="ml-6 space-y-2 text-gray-700">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#E8B70B' }}></span>
-                  <span><strong>One:</strong> Depends on others for direction and support</span>
+                  <span><strong>One:</strong> Depends on others for direction and guidance</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#ED1B34' }}></span>
-                  <span><strong>Two:</strong> Independent contributor with technical expertise</span>
+                  <span><strong>Two:</strong> Independent contributor with strong technical expertise</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#0086D6' }}></span>
-                  <span><strong>Three:</strong> Influences and develops others</span>
+                  <span><strong>Three:</strong> Influences, coaches and develops others</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
-                  <span><strong>Four:</strong> Directs the business strategically</span>
+                  <span><strong>Four:</strong> Sets direction for the entire business </span>
                 </li>
               </ul>
             </div>
@@ -366,7 +366,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
     </li>
     <li className="flex items-start">
       <span className="text-amber-600 mr-2">•</span>
-      <span>There are no "right" or "wrong" answers - we seek your honest professional judgment</span>
+      <span>•	Acknowledge that your judgement of relative performance is based on your perception</span>
     </li>
     <li className="flex items-start">
       <span className="text-amber-600 mr-2">•</span>
@@ -418,10 +418,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {step === 'stages' && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">
-            Step 1: Determine Employees' Way of Contributing
+            Step 1: Categorize Each Leader's Way of Contributing
           </h2>
           <p className="mb-6 text-gray-600">
-            For each employee, sort each person into one of the four options.
+            For each person, sort each person into one of the four options.
           </p>
 
           {/* Stage Framework Tables - Desktop shows as one 4-column table, Mobile shows as two 2-column tables */}
@@ -441,7 +441,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <ul className="space-y-3">
                       <li className="text-sm text-gray-700">Depends on others</li>
                       <li className="text-sm text-gray-700">Works on a portion of a larger project</li>
-                      <li className="text-sm text-gray-700">Routine and detailed tasks</li>
+                      <li className="text-sm text-gray-700">Works on routine tasks</li>
                       <li className="text-sm text-gray-700">Learns how "we" do things</li>
                     </ul>
                   </div>
@@ -460,9 +460,9 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       <li className="text-sm text-gray-700">Works independently</li>
                       <li className="text-sm text-gray-700">Responsible for projects</li>
                       <li className="text-sm text-gray-700">Credible</li>
-                      <li className="text-sm text-gray-700">Increases expertise</li>
-                      <li className="text-sm text-gray-700">Builds internal network</li>
-                      <li className="text-sm text-gray-700">Acts as an innovator</li>
+                      <li className="text-sm text-gray-700">Considered an expert</li>
+                      <li className="text-sm text-gray-700">Has an internal network of other experts</li>
+                      <li className="text-sm text-gray-700">Can often acts as an innovator in technical area of expert</li>
                     </ul>
                   </div>
                 </div>
@@ -478,10 +478,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
                       <li className="text-sm text-gray-700">Influences others</li>
-                      <li className="text-sm text-gray-700">Manages, coaches, mentors or idea leader</li>
-                      <li className="text-sm text-gray-700">Increases technical breadth</li>
-                      <li className="text-sm text-gray-700">Integrator of ideas</li>
-                      <li className="text-sm text-gray-700">Represents workgroup to outside stakeholders</li>
+                      <li className="text-sm text-gray-700">Ability to Integrate across multiple areas of expertise in complex projects</li>
+                      <li className="text-sm text-gray-700">Manages, coaches, mentors and/or idea leader</li>
+                      <li className="text-sm text-gray-700">Develops others</li>
+                      <li className="text-sm text-gray-700">Represents workgroup to external stakeholders</li>
                       <li className="text-sm text-gray-700">Builds internal and external networks</li>
                     </ul>
                   </div>
@@ -499,10 +499,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <ul className="space-y-3">
                       <li className="text-sm text-gray-700">Directs the business</li>
                       <li className="text-sm text-gray-700">Sets strategic direction</li>
+                      <li className="text-sm text-gray-700">Controls business resources</li>
                       <li className="text-sm text-gray-700">Uses power rather than influence</li>
                       <li className="text-sm text-gray-700">Sponsors key people</li>
                       <li className="text-sm text-gray-700">Represents the entire organization to outside groups</li>
-                      <li className="text-sm text-gray-700">Provides global technical direction to the organization</li>
                     </ul>
                   </div>
                 </div>
@@ -526,7 +526,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       <ul className="space-y-2">
                         <li className="text-xs text-gray-700">Depends on others</li>
                         <li className="text-xs text-gray-700">Works on a portion of a larger project</li>
-                        <li className="text-xs text-gray-700">Routine and detailed tasks</li>
+                        <li className="text-xs text-gray-700">Works on routine tasks</li>
                         <li className="text-xs text-gray-700">Learns how "we" do things</li>
                       </ul>
                     </div>
@@ -545,9 +545,9 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                         <li className="text-xs text-gray-700">Works independently</li>
                         <li className="text-xs text-gray-700">Responsible for projects</li>
                         <li className="text-xs text-gray-700">Credible</li>
-                        <li className="text-xs text-gray-700">Increases expertise</li>
-                        <li className="text-xs text-gray-700">Builds internal network</li>
-                        <li className="text-xs text-gray-700">Acts as an innovator</li>
+                        <li className="text-xs text-gray-700">Considered an expert</li>
+                        <li className="text-xs text-gray-700">Has an internal network of other experts</li>
+                        <li className="text-xs text-gray-700">Can often acts as an innovator in technical area of expert</li>
                       </ul>
                     </div>
                   </div>
@@ -568,10 +568,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
                         <li className="text-xs text-gray-700">Influences others</li>
-                        <li className="text-xs text-gray-700">Manages, coaches, mentors or idea leader</li>
-                        <li className="text-xs text-gray-700">Increases technical breadth</li>
-                        <li className="text-xs text-gray-700">Integrator of ideas</li>
-                        <li className="text-xs text-gray-700">Represents workgroup to outside stakeholders</li>
+                        <li className="text-xs text-gray-700">Ability to Integrate across multiple areas of expertise in complex projects</li>
+                        <li className="text-xs text-gray-700">Manages, coaches, mentors and/or idea leader</li>
+                        <li className="text-xs text-gray-700">Develops others</li>
+                        <li className="text-xs text-gray-700">Represents workgroup to external stakeholders</li>
                         <li className="text-xs text-gray-700">Builds internal and external networks</li>
                       </ul>
                     </div>
@@ -589,10 +589,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       <ul className="space-y-2">
                         <li className="text-xs text-gray-700">Directs the business</li>
                         <li className="text-xs text-gray-700">Sets strategic direction</li>
+                        <li className="text-xs text-gray-700">Controls business resources</li>
                         <li className="text-xs text-gray-700">Uses power rather than influence</li>
                         <li className="text-xs text-gray-700">Sponsors key people</li>
                         <li className="text-xs text-gray-700">Represents the entire organization to outside groups</li>
-                        <li className="text-xs text-gray-700">Provides global technical direction to the organization</li>
                       </ul>
                     </div>
                   </div>
@@ -670,8 +670,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who is least highest?  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. There will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
-<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on the relative impact of your employees. Imagine you were starting over with a limited budget. What employees would you hire first, last?</p>
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to to who has least impactf.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
+<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
             <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
             <p className="mb-6 text-gray-600">Now rank them.
           </p>
