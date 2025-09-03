@@ -447,8 +447,8 @@ export default function ResultsPage() {
                     .reduce((sum, s) => sum + s.count, 0) / 
                     results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                   
-                  if (stage1_2_percentage >= 40) return '🚨'
-                  if (stage1_2_percentage >= 20) return '⚠️'
+                  if (stage1_2_percentage >= 60) return '🚨'
+                  if (stage1_2_percentage >= 11) return '⚠️'
                   return '✅'
                 })()}
               </div>
@@ -459,8 +459,8 @@ export default function ResultsPage() {
                     .reduce((sum, s) => sum + s.count, 0) / 
                     results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                   
-                  if (stage1_2_percentage >= 40) return 'Critical'
-                  if (stage1_2_percentage >= 20) return 'Needs Attention'
+                  if (stage1_2_percentage >= 60) return 'Critical'
+                  if (stage1_2_percentage >= 11) return 'Needs Attention'
                   return 'Optimized'
                 })()}
               </div>
@@ -483,8 +483,8 @@ export default function ResultsPage() {
                     .reduce((sum, s) => sum + s.count, 0) / 
                     results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                   
-                  if (percentage >= 40) return 'Leaders not ready for roles'
-                  if (percentage >= 20) return 'Development gaps exist'
+                  if (percentage >= 60) return 'Leaders not ready for roles'
+                  if (percentage >= 11) return 'Development gaps exist'
                   return 'Leaders appropriately developed'
                 })()}
               </div>
@@ -1384,8 +1384,8 @@ export default function ResultsPage() {
                   .reduce((sum, s) => sum + s.count, 0) / 
                   results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                 
-                if (stage1_2_percentage >= 40) return '#FEE2E2'
-                if (stage1_2_percentage >= 20) return '#FEF3C7'
+                if (stage1_2_percentage >= 60) return '#FEE2E2'
+                if (stage1_2_percentage >= 11) return '#FEF3C7'
                 return '#D1FAE5'
               })(),
               borderLeftColor: (() => {
@@ -1394,8 +1394,8 @@ export default function ResultsPage() {
                   .reduce((sum, s) => sum + s.count, 0) / 
                   results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                 
-                if (stage1_2_percentage >= 40) return '#EF4444'
-                if (stage1_2_percentage >= 20) return '#F59E0B'
+                if (stage1_2_percentage >= 60) return '#EF4444'
+                if (stage1_2_percentage >= 11) return '#F59E0B'
                 return '#10B981'
               })()
             }}>
@@ -1409,8 +1409,8 @@ export default function ResultsPage() {
                           .reduce((sum, s) => sum + s.count, 0) / 
                           results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                         
-                        if (stage1_2_percentage >= 40) return '🚨'
-                        if (stage1_2_percentage >= 20) return '⚠️'
+                        if (stage1_2_percentage >= 60) return '🚨'
+                        if (stage1_2_percentage >= 11) return '⚠️'
                         return '✅'
                       })()}
                     </span>
@@ -1421,8 +1421,8 @@ export default function ResultsPage() {
                           .reduce((sum, s) => sum + s.count, 0) / 
                           results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                         
-                        if (stage1_2_percentage >= 40) return '#991B1B'
-                        if (stage1_2_percentage >= 20) return '#92400E'
+                        if (stage1_2_percentage >= 60) return '#991B1B'
+                        if (stage1_2_percentage >= 1) return '#92400E'
                         return '#065F46'
                       })()
                     }}>
@@ -1432,8 +1432,8 @@ export default function ResultsPage() {
                           .reduce((sum, s) => sum + s.count, 0) / 
                           results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                         
-                        if (stage1_2_percentage >= 40) return 'CRITICAL'
-                        if (stage1_2_percentage >= 20) return 'NEEDS ATTENTION'
+                        if (stage1_2_percentage >= 60) return 'CRITICAL'
+                        if (stage1_2_percentage >= 11) return 'NEEDS ATTENTION'
                         return 'OPTIMIZED'
                       })()}
                     </h3>
@@ -1444,8 +1444,8 @@ export default function ResultsPage() {
                           .reduce((sum, s) => sum + s.count, 0) / 
                           results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                         
-                        if (stage1_2_percentage >= 40) return '#EF4444'
-                        if (stage1_2_percentage >= 20) return '#F59E0B'
+                        if (stage1_2_percentage >= 60) return '#EF4444'
+                        if (stage1_2_percentage >= 11) return '#F59E0B'
                         return '#10B981'
                       })()
                     }}>
@@ -1462,8 +1462,8 @@ export default function ResultsPage() {
                         .reduce((sum, s) => sum + s.count, 0) / 
                         results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                       
-                      if (stage1_2_percentage >= 40) return 'Leadership Readiness Crisis - Immediate Development Required'
-                      if (stage1_2_percentage >= 20) return 'Leadership Development Gaps - Acceleration Needed'
+                      if (stage1_2_percentage >= 60) return 'Leadership Readiness Crisis - Immediate Development Required'
+                      if (stage1_2_percentage >= 11) return 'Leadership Development Gaps - Acceleration Needed'
                       return 'Strong Leadership Maturity - Ready to Scale'
                     })()}
                   </h4>
@@ -1474,7 +1474,7 @@ export default function ResultsPage() {
                         .reduce((sum, s) => sum + s.count, 0) / 
                         results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                       
-                      if (stage1_2_percentage >= 40) {
+                      if (stage1_2_percentage >= 60) {
                         return [
                           'Growth is unlikely as leaders lack the capability to execute expansion strategies',
                           'Strategic execution is compromised with most leaders neither aligned with nor capable of delivering on organizational goals',
@@ -1482,7 +1482,7 @@ export default function ResultsPage() {
                           'Customer relationships are at risk with leaders unable to maintain service standards or respond to market needs'
                         ]
                       }
-                      if (stage1_2_percentage >= 20) {
+                      if (stage1_2_percentage >= 11) {
                         return [
                           'Growth potential exists but faces challenges as some leaders aren\'t ready to scale operations',
                           'Strategic alignment is inconsistent with pockets of leaders who need better capability building',
@@ -2425,7 +2425,7 @@ export default function ResultsPage() {
                     .reduce((sum, s) => sum + s.count, 0) / 
                     results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
                   
-                  if (stage1_2_percentage >= 40) {
+                  if (stage1_2_percentage >= 60) {
                     // CRITICAL
                     return (
                       <>
@@ -2478,7 +2478,7 @@ export default function ResultsPage() {
                     )
 
                   
-                  } else if (stage1_2_percentage >= 20) {
+                  } else if (stage1_2_percentage >= 11) {
                     // NEEDS ATTENTION
                     return (
                       <>
