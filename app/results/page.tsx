@@ -2429,7 +2429,7 @@ export default function ResultsPage() {
                     // CRITICAL
                     return (
                       <>
-                        <div>
+                        <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #EF4444' }}>
                           <h3 className="font-bold text-lg mb-4 text-red-900">Immediate Leadership Acceleration Required</h3>
                           
                           <div className="space-y-4">
@@ -2445,33 +2445,38 @@ export default function ResultsPage() {
                             
                             <div>
                               <h4 className="font-semibold mb-2">3. Conduct Triage Assessment</h4>
-                              <p className="text-sm text-gray-700 ml-4">Deploy rapid 360 assessments focused on the gap between current state and Stage 3 requirements. Use RBL's Leadership Brand Assessment to identify which Stage 1-2 leaders have the highest potential for acceleration. Create heat maps showing capability gaps by business unit.</p>
+                              <p className="text-sm text-gray-700 ml-4">Deploy the organizational Leadership Brand Audit to assess your collective leadership capability. For individual Stage 1-2 leaders in senior positions, use RBL's MENTOR battery of psychometric assessments to identify who has potential for acceleration to Stage 3 versus those who may need to be transitioned out. Create heat maps showing capability gaps by business unit.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">4. Deploy Intensive Development Interventions</h4>
+                              <h4 className="font-semibold mb-2">4. Make Critical Talent Decisions</h4>
+                              <p className="text-sm text-gray-700 ml-4">Based on assessment results, categorize Stage 1-2 leaders into three groups: Fast-track (high potential for Stage 3), Develop (need support but viable), and Transition (unlikely to reach Stage 3). For the Transition group, create respectful exit plans while immediately recruiting Stage 3+ replacements.</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-semibold mb-2">5. Deploy Intensive Development Interventions</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• Enroll all Stage 2 leaders in RBL's Leadership Academy Bootcamp (3-month intensive)</li>
+                                <li>• Enroll all high-potential Stage 2 leaders in RBL's Leadership Code Academy</li>
                                 <li>• Implement executive coaching using RBL's "because of/so that" methodology</li>
                                 <li>• Create action learning projects tied directly to business challenges</li>
-                                <li>• Establish Stage 4 mentorship for every Stage 1-2 leader</li>
+                                <li>• Establish Stage 4 mentorship for every viable Stage 1-2 leader</li>
                               </ul>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">5. Track 90-Day Progression Metrics</h4>
+                              <h4 className="font-semibold mb-2">6. Track 90-Day Progression Metrics</h4>
                               <p className="text-sm text-gray-700 ml-4">Measure weekly progression indicators: behavioral change observations, business metric improvements, and stakeholder feedback. Use RBL's Organization Guidance System to track ROI on development investments.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">6. Communicate Crisis and Progress</h4>
+                              <h4 className="font-semibold mb-2">7. Communicate Crisis and Progress</h4>
                               <p className="text-sm text-gray-700 ml-4">Be transparent with stakeholders about the leadership crisis and the transformation plan. Share monthly progress updates with employees, quarterly updates with customers, and include leadership development metrics in investor communications.</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="mt-6 p-4 bg-red-50 rounded-lg">
-                          <p className="text-sm font-semibold text-red-900">Investment Required: 3-5% of payroll, with 70% focused on Stage 1-2 acceleration</p>
+                          
+                          <div className="mt-6 p-4 bg-red-50 rounded-lg">
+                            <p className="text-sm font-semibold text-red-900">Investment Required: 3-5% of payroll, with 70% focused on Stage 1-2 acceleration</p>
+                          </div>
                         </div>
                       </>
                     )
@@ -2479,7 +2484,7 @@ export default function ResultsPage() {
                     // NEEDS ATTENTION
                     return (
                       <>
-                        <div>
+                        <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #F59E0B' }}>
                           <h3 className="font-bold text-lg mb-4 text-yellow-900">Targeted Development Enhancement</h3>
                           
                           <div className="space-y-4">
@@ -2495,13 +2500,13 @@ export default function ResultsPage() {
                             
                             <div>
                               <h4 className="font-semibold mb-2">3. Implement Systematic Assessment</h4>
-                              <p className="text-sm text-gray-700 ml-4">Deploy annual 360 assessments tied to your leadership brand. Use RBL's stratified assessment tools (different for Stage 2 vs Stage 3). Include stakeholder impact metrics in addition to behavioral competencies.</p>
+                              <p className="text-sm text-gray-700 ml-4">Deploy annual Leadership Brand Audit at the organizational level. Use RBL's stratified 360 assessment tools for individual leaders (different for Stage 2 vs Stage 3). For Stage 1-2 leaders in critical roles, consider MENTOR psychometric assessments to guide development planning.</p>
                             </div>
                             
                             <div>
                               <h4 className="font-semibold mb-2">4. Create Targeted Development Pathways</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• Implement RBL's Custom Leadership Development program tailored to your brand</li>
+                                <li>• Implement RBL's Leadership Code Academy for Stage 2 leaders</li>
                                 <li>• Design 70-20-10 development plans: job experiences, coaching, and training</li>
                                 <li>• Create leadership cohorts for peer learning and accountability</li>
                                 <li>• Establish clear "ready now" criteria for Stage 3 advancement</li>
@@ -2518,10 +2523,10 @@ export default function ResultsPage() {
                               <p className="text-sm text-gray-700 ml-4">Share success stories internally and externally. Include leadership capability in talent acquisition materials. Feature leadership development in annual reports as a competitive advantage.</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
-                          <p className="text-sm font-semibold text-yellow-900">Investment Required: 2-3% of payroll with balanced investment across stages</p>
+                          
+                          <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
+                            <p className="text-sm font-semibold text-yellow-900">Investment Required: 2-3% of payroll with balanced investment across stages</p>
+                          </div>
                         </div>
                       </>
                     )
@@ -2529,7 +2534,7 @@ export default function ResultsPage() {
                     // OPTIMIZED
                     return (
                       <>
-                        <div>
+                        <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #10B981' }}>
                           <h3 className="font-bold text-lg mb-4 text-green-900">Sustain and Enhance Excellence</h3>
                           
                           <div className="space-y-4">
@@ -2545,7 +2550,7 @@ export default function ResultsPage() {
                             
                             <div>
                               <h4 className="font-semibold mb-2">3. Sophisticated Assessment Approach</h4>
-                              <p className="text-sm text-gray-700 ml-4">Use predictive analytics to identify future Stage 4 potential. Implement RBL's Organization Guidance System for real-time capability tracking. Include external stakeholder assessments (customers, partners, investors).</p>
+                              <p className="text-sm text-gray-700 ml-4">Use predictive analytics to identify future Stage 4 potential. Implement RBL's Organization Guidance System for real-time capability tracking. Conduct annual Leadership Brand Audits to ensure organizational alignment. Include external stakeholder assessments (customers, partners, investors).</p>
                             </div>
                             
                             <div>
@@ -2568,10 +2573,10 @@ export default function ResultsPage() {
                               <p className="text-sm text-gray-700 ml-4">Feature your leadership capability in investor presentations. Use leadership strength in M&A discussions as integration capability. Export your leadership development approach to joint ventures and partnerships.</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                          <p className="text-sm font-semibold text-green-900">Investment Required: 1-2% of payroll focused on Stage 3-4 advancement and succession planning</p>
+                          
+                          <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                            <p className="text-sm font-semibold text-green-900">Investment Required: 1-2% of payroll focused on Stage 3-4 advancement and succession planning</p>
+                          </div>
                         </div>
                       </>
                     )
