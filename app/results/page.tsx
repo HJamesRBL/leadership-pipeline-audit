@@ -2434,43 +2434,39 @@ export default function ResultsPage() {
                           
                           <div className="space-y-4">
                             <div>
-                              <h4 className="font-semibold mb-2">1. Build an Urgent Business Case for Leadership</h4>
-                              <p className="text-sm text-gray-700 ml-4">Document the immediate cost of leadership gaps on stakeholder value. Calculate the impact on customer retention, employee engagement scores, and investor confidence. Present this case to the board within 30 days to secure emergency funding and executive sponsorship for transformation.</p>
+                              <h4 className="font-semibold mb-2">1. Build Business Case for Leadership</h4>
+                              <p className="text-sm text-gray-700 ml-4">Document the cost of leadership gaps on stakeholder value. Calculate the impact on customer retention, employee engagement scores, and investor confidence. Present this case to the board within 30 days to secure funding and executive sponsorship for transformation.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">2. Define Emergency Leadership Brand Standards</h4>
-                              <p className="text-sm text-gray-700 ml-4">Rapidly establish what Stage 3 readiness looks like in your organization. Create a simplified competency model focused on the critical few behaviors that differentiate Stage 3 from Stage 2. Use RBL's Leadership Code as the foundation: Shape the Future, Make Things Happen, Engage Today's Talent, Build the Next Generation, and Invest in Yourself.</p>
+                              <h4 className="font-semibold mb-2">2. Define Leadership Brand Standards</h4>
+                              <p className="text-sm text-gray-700 ml-4">Establish what Stage 3 readiness looks like in your organization. Create a focused competency model highlighting the key behaviors that differentiate Stage 3 from Stage 2. Use RBL's Leadership Code as the foundation: Shape the Future, Make Things Happen, Engage Today's Talent, Build the Next Generation, and Invest in Yourself.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">3. Conduct Triage Assessment</h4>
-                              <p className="text-sm text-gray-700 ml-4">Deploy the organizational Leadership Brand Audit to assess your collective leadership capability. For individual Stage 1-2 leaders in senior positions, use RBL's MENTOR battery of psychometric assessments to identify who has potential for acceleration to Stage 3 versus those who may need to be transitioned out. Create heat maps showing capability gaps by business unit.</p>
+                              <h4 className="font-semibold mb-2">3. Conduct Comprehensive Assessment</h4>
+                              <p className="text-sm text-gray-700 ml-4">Deploy the organizational Leadership Brand Audit to assess your collective leadership capability. Use the Leadership Code 360 assessment for all leaders to establish baseline capabilities. For individual Stage 1-2 leaders in senior positions, add RBL's MENTOR battery of psychometric assessments to identify development potential and readiness for acceleration. Create heat maps showing capability gaps by business unit.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">4. Make Critical Talent Decisions</h4>
-                              <p className="text-sm text-gray-700 ml-4">Based on assessment results, categorize Stage 1-2 leaders into three groups: Fast-track (high potential for Stage 3), Develop (need support but viable), and Transition (unlikely to reach Stage 3). For the Transition group, create respectful exit plans while immediately recruiting Stage 3+ replacements.</p>
-                            </div>
-                            
-                            <div>
-                              <h4 className="font-semibold mb-2">5. Deploy Intensive Development Interventions</h4>
+                              <h4 className="font-semibold mb-2">4. Deploy Intensive Development Interventions</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• Enroll all high-potential Stage 2 leaders in RBL's Leadership Code Academy</li>
-                                <li>• Implement executive coaching using RBL's "because of/so that" methodology</li>
-                                <li>• Create action learning projects tied directly to business challenges</li>
-                                <li>• Establish Stage 4 mentorship for every viable Stage 1-2 leader</li>
+                                <li>Based on assessment results, categorize Stage 1-2 leaders into three groups: Fast-track (high potential for Stage 3), Develop (need support but viable), and Transition (may need alternative roles or career paths)</li>
+                                <li>Enroll all high-potential Stage 2 leaders in RBL's Leadership Code Academy</li>
+                                <li>Implement executive coaching using RBL's "because of/so that" methodology</li>
+                                <li>Create action learning projects tied directly to business challenges</li>
+                                <li>Establish Stage 4 mentorship for every viable Stage 1-2 leader</li>
                               </ul>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">6. Track 90-Day Progression Metrics</h4>
+                              <h4 className="font-semibold mb-2">5. Track 90-Day Progression Metrics</h4>
                               <p className="text-sm text-gray-700 ml-4">Measure weekly progression indicators: behavioral change observations, business metric improvements, and stakeholder feedback. Use RBL's Organization Guidance System to track ROI on development investments.</p>
                             </div>
                             
                             <div>
-                              <h4 className="font-semibold mb-2">7. Communicate Crisis and Progress</h4>
-                              <p className="text-sm text-gray-700 ml-4">Be transparent with stakeholders about the leadership crisis and the transformation plan. Share monthly progress updates with employees, quarterly updates with customers, and include leadership development metrics in investor communications.</p>
+                              <h4 className="font-semibold mb-2">6. Communicate Transparently</h4>
+                              <p className="text-sm text-gray-700 ml-4">Share the leadership development plan with stakeholders. Provide monthly progress updates to employees, quarterly updates to customers, and include leadership development metrics in investor communications.</p>
                             </div>
                           </div>
                           
@@ -2480,6 +2476,8 @@ export default function ResultsPage() {
                         </div>
                       </>
                     )
+
+                  
                   } else if (stage1_2_percentage >= 20) {
                     // NEEDS ATTENTION
                     return (
@@ -2506,10 +2504,10 @@ export default function ResultsPage() {
                             <div>
                               <h4 className="font-semibold mb-2">4. Create Targeted Development Pathways</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• Implement RBL's Leadership Code Academy for Stage 2 leaders</li>
-                                <li>• Design 70-20-10 development plans: job experiences, coaching, and training</li>
-                                <li>• Create leadership cohorts for peer learning and accountability</li>
-                                <li>• Establish clear "ready now" criteria for Stage 3 advancement</li>
+                                <li>Implement RBL's Leadership Code Academy for Stage 2 leaders</li>
+                                <li>Design 70-20-10 development plans: job experiences, coaching, and training</li>
+                                <li>Create leadership cohorts for peer learning and accountability</li>
+                                <li>Establish clear "ready now" criteria for Stage 3 advancement</li>
                               </ul>
                             </div>
                             
@@ -2556,10 +2554,10 @@ export default function ResultsPage() {
                             <div>
                               <h4 className="font-semibold mb-2">4. Elite Development Experiences</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
-                                <li>• Enroll Stage 3-4 leaders in RBL's Reinventing the Organization Academy</li>
-                                <li>• Create board exposure and investor interaction opportunities</li>
-                                <li>• Design global leadership exchanges and external executive education</li>
-                                <li>• Implement reverse mentoring to keep senior leaders current</li>
+                                <li>Enroll Stage 3-4 leaders in RBL's Reinventing the Organization Academy</li>
+                                <li>Create board exposure and investor interaction opportunities</li>
+                                <li>Design global leadership exchanges and external executive education</li>
+                                <li>Implement reverse mentoring to keep senior leaders current</li>
                               </ul>
                             </div>
                             
