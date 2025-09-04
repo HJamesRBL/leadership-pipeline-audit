@@ -2249,9 +2249,10 @@ export default function ResultsPage() {
             </div>
           </div>
           
-{/*
+
           {/* Business Unit Stage by Performance */}
-          {/* 
+          {/* Business Unit Stage by Performance */}
+          
 <div className="bg-white p-6 rounded-lg shadow business-unit-health-section">
   <h2 className="text-xl font-semibold mb-2">Business Unit Stage by Performance</h2>
   <p className="text-sm text-gray-600 mb-4">
@@ -2261,7 +2262,7 @@ export default function ResultsPage() {
   <div className="space-y-6">
     {(() => {
       const rawData = (results as any).rawData || []
-      const businessUnits = Array.from(new Set(rawData.map((r: any) => r.businessUnit)))
+      const businessUnits: string[] = Array.from(new Set(rawData.map((r: any) => r.businessUnit)))
       
       if (businessUnits.length === 0) {
         return (
@@ -2301,11 +2302,11 @@ export default function ResultsPage() {
               </div>
             </div>
             
-            {/* Vertical Bar Chart Container */}{/* 
+            {/* Vertical Bar Chart Container */}
             <div style={{ position: 'relative', height: '250px', paddingLeft: '40px' }}>
-              {/* Main chart area */}{/* 
+              {/* Main chart area */}
               <div style={{ height: '200px', position: 'relative', marginLeft: '10px' }}>
-                {/* Y-axis scale */}{/* 
+                {/* Y-axis scale */}
                 <div style={{ 
                   position: 'absolute',
                   left: '-30px',
@@ -2324,7 +2325,7 @@ export default function ResultsPage() {
                   <span>0%</span>
                 </div>
                 
-                {/* Grid lines */}{/* 
+                {/* Grid lines */}
                 <div style={{ position: 'absolute', inset: '0' }}>
                   {[0, 25, 50, 75, 100].map(val => (
                     <div key={val} style={{ 
@@ -2337,7 +2338,7 @@ export default function ResultsPage() {
                   ))}
                 </div>
                 
-                {/* Bars container */}{/* 
+                {/* Bars container */}
                 <div style={{ 
                   display: 'flex',
                   alignItems: 'flex-end',
@@ -2359,7 +2360,7 @@ export default function ResultsPage() {
                         alignItems: 'center',
                         width: '60px'
                       }}>
-                        {/* Bar with value */}{/* 
+                        {/* Bar with value */}
                         <div style={{ 
                           width: '45px',
                           height: `${percentage * 2}px`,
@@ -2367,7 +2368,7 @@ export default function ResultsPage() {
                           position: 'relative',
                           transition: 'height 0.5s ease'
                         }}>
-                          {/* Value label */}{/* 
+                          {/* Value label */}
                           <span style={{ 
                             position: 'absolute',
                             top: '-22px',
@@ -2385,7 +2386,7 @@ export default function ResultsPage() {
                   })}
                 </div>
                 
-                {/* X-axis labels */}{/* 
+                {/* X-axis labels */}
                 <div style={{ 
                   display: 'flex',
                   justifyContent: 'space-evenly',
@@ -2415,8 +2416,7 @@ export default function ResultsPage() {
       })
     })()}
   </div>
-</div> 
-*/}
+</div>
           {/* Recommendations Content */}
               <div className="space-y-6">
                 {(() => {
