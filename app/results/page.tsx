@@ -432,97 +432,6 @@ export default function ResultsPage() {
           )}
         </div>
       )}
-            {/* Leadership Health Assessment Dashboard */}
-      {results && !loading && (
-        <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
-          <h2 className="text-xl font-bold mb-4">Leadership Health Assessment</h2>
-          
-          <div className="grid grid-cols-3 gap-4">
-            {/* Overall Status Card */}
-            <div className="bg-white p-4 rounded-lg text-center">
-              <div className="text-3xl mb-2">
-                {(() => {
-                  const stage1_2_percentage = results.stageCounts
-                    .filter(s => s.stage === 1 || s.stage === 2)
-                    .reduce((sum, s) => sum + s.count, 0) / 
-                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                  
-                  if (stage1_2_percentage >= 60) return '🚨'
-                  if (stage1_2_percentage >= 11) return '⚠️'
-                  return '✅'
-                })()}
-              </div>
-              <div className="text-lg font-bold">
-                {(() => {
-                  const stage1_2_percentage = results.stageCounts
-                    .filter(s => s.stage === 1 || s.stage === 2)
-                    .reduce((sum, s) => sum + s.count, 0) / 
-                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                  
-                  if (stage1_2_percentage >= 60) return 'Critical'
-                  if (stage1_2_percentage >= 11) return 'Needs Attention'
-                  return 'Optimized'
-                })()}
-              </div>
-              <div className="text-sm text-gray-600">Overall Assessment</div>
-            </div>
-            
-            {/* Stage Distribution Card */}
-            <div className="bg-white p-4 rounded-lg">
-              <div className="text-sm text-gray-600">Stage Readiness</div>
-              <div className="text-2xl font-bold">
-                {(results.stageCounts
-                  .filter(s => s.stage === 1 || s.stage === 2)
-                  .reduce((sum, s) => sum + s.count, 0) / 
-                  results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100).toFixed(1)}%
-              </div>
-              <div className="text-xs">
-                {(() => {
-                  const percentage = results.stageCounts
-                    .filter(s => s.stage === 1 || s.stage === 2)
-                    .reduce((sum, s) => sum + s.count, 0) / 
-                    results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                  
-                  if (percentage >= 60) return 'Leaders not ready for roles'
-                  if (percentage >= 11) return 'Development gaps exist'
-                  return 'Leaders appropriately developed'
-                })()}
-              </div>
-            </div>
-            
-            {/* Performance Gradient Card */}
-            <div className="bg-white p-4 rounded-lg">
-              <div className="text-sm text-gray-600">Performance Gradient</div>
-              <div className="text-2xl font-bold">
-                {(() => {
-                  const stage2 = results.averagePerformance.find(s => s.stage === 2)
-                  const stage3 = results.averagePerformance.find(s => s.stage === 3)
-                  
-                  if (!stage2 || !stage3) return 'N/A'
-                  
-                  const gradient = stage3.average - stage2.average
-                  
-                  return `${gradient > 0 ? '+' : ''}${gradient.toFixed(1)}pts`
-                })()}
-              </div>
-              <div className="text-xs">
-                {(() => {
-                  const stage2 = results.averagePerformance.find(s => s.stage === 2)
-                  const stage3 = results.averagePerformance.find(s => s.stage === 3)
-                  
-                  if (!stage2 || !stage3) return 'Insufficient data'
-                  
-                  const gradient = stage3.average - stage2.average
-                  
-                  if (gradient < 0) return 'Stage 3 underperforming Stage 2'
-                  if (gradient <= 20) return 'Limited progression'
-                  return 'Strong performance maturation'
-                })()}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       {/* Loading State */}
       {loading && (
         <div className="text-center py-12">
@@ -1226,6 +1135,302 @@ export default function ResultsPage() {
         </button>
       </div>
     </div>
+
+          {/* Educational Introduction Section */}
+<div className="bg-white p-8 rounded-lg shadow mb-6">
+  <h2 className="text-2xl font-bold mb-6 text-gray-900">Understanding Your Leadership Pipeline: A Framework for Organizational Growth</h2>
+  
+  <div className="prose max-w-none space-y-6 text-gray-700">
+    <p className="text-lg leading-relaxed">
+      Every organization faces a fundamental challenge: how do we develop leaders who can drive value today while building capability for tomorrow? The answer lies not in traditional hierarchical thinking but in understanding how professionals truly progress through their careers—and how organizations often misunderstand that progression.
+    </p>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-4 text-gray-900">The Hidden Crisis of Career Expectations</h3>
+      <p className="mb-4">
+        Organizations harbor a dangerous misconception about career progression that undermines their leadership development efforts. Consider what the research reveals about how organizations actually view their talent across the career lifespan:
+      </p>
+      
+      {/* Video embed */}
+      <div className="my-6">
+        <video 
+          controls 
+          className="w-full rounded-lg shadow-lg"
+          style={{ maxWidth: '800px', margin: '0 auto', display: 'block' }}
+        >
+          <source src="/expectations.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div className="space-y-4 mt-6">
+        <p>
+          <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
+        </p>
+        <p>
+          <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
+        </p>
+        <p>
+          <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
+        </p>
+        <p>
+          <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
+        </p>
+        <p>
+          This disconnect between chronological age and actual capability explains why so many organizations struggle with succession planning, talent retention, and leadership development. They're using the wrong lens to evaluate their talent.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-4 text-gray-900">The Career Stages Framework: A Better Model</h3>
+      <p className="mb-4">
+        The solution comes from decades of research by Gene Dalton, Paul Thompson, and our team at RBL Group. Rather than viewing careers through age or tenure, we must understand progression through capability stages. Each stage represents a fundamental shift in how professionals create value:
+      </p>
+      
+      <div className="space-y-6">
+        <div className="pl-4 border-l-4 border-yellow-500">
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 1: Dependent Contribution</h4>
+          <p className="text-gray-700">
+            Professionals at this stage depend on others for direction and support. They work on portions of larger projects, focus on routine tasks, and learn "how we do things around here." They're building technical competence but haven't yet developed independence. Without strong technical skills, they need guidance about what to do and how to do it.
+          </p>
+        </div>
+
+        <div className="pl-4 border-l-4 border-red-500">
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 2: Independent Contribution</h4>
+          <p className="text-gray-700">
+            These professionals have become experts in their domain. They work independently, take responsibility for entire projects, and are considered credible specialists. They view work through the lens of competence and often compete with others in similar roles. While technically proficient, they tend to micromanage rather than develop others, focusing on their individual expertise rather than organizational capability.
+          </p>
+        </div>
+
+        <div className="pl-4 border-l-4 border-blue-500">
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributing Through Others</h4>
+          <p className="text-gray-700">
+            The shift to Stage 3 represents a fundamental transformation from individual expert to organizational leader. These professionals have moved from a focus on self to ensuring team success. They influence others, integrate across multiple areas of expertise, and build both internal and external networks. They coach, mentor, and develop others while representing their workgroup to external stakeholders. They understand organizational culture and can navigate it to get things done.
+          </p>
+        </div>
+
+        <div className="pl-4 border-l-4" style={{ borderColor: '#071D49' }}>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributing Through the Business</h4>
+          <p className="text-gray-700">
+            Stage 4 leaders direct the business itself. They set strategic direction, control organizational resources, and use power rather than just influence. They see how functions, geographies, and operating units fit together to serve the enterprise. From the outside, they represent the entire organization. Their relationship with talent shifts from mentoring to testing future leaders for senior roles. They sponsor key people and shape organizational capability for the future.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-4 text-gray-900">What This Means for Your Pipeline Audit</h3>
+      <p className="mb-4">
+        Most organizations discover a troubling reality when they honestly assess their leadership pipeline: they're dramatically overweighted in Stages 1 and 2. The research suggests an optimal distribution looks quite different from what most organizations achieve:
+      </p>
+
+      {/* Optimal Distribution Chart */}
+      <div className="my-8 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg">
+        <h4 className="text-center font-semibold mb-6 text-gray-800">Optimal Leadership Distribution</h4>
+        
+        <div style={{ position: 'relative', height: '350px', paddingLeft: '120px' }}>
+          <div style={{ 
+            position: 'absolute',
+            left: '5px',
+            top: '50%',
+            transform: 'translateY(-50%) rotate(-90deg)',
+            transformOrigin: 'center',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            color: '#333',
+            whiteSpace: 'nowrap'
+          }}>
+            Percentage of Leaders
+          </div>
+          
+          <div style={{ height: '300px', position: 'relative', marginLeft: '20px' }}>
+            <div style={{ 
+              position: 'absolute',
+              left: '-30px',
+              top: '0',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              fontSize: '12px',
+              color: '#666'
+            }}>
+              <span>100%</span>
+              <span>75%</span>
+              <span>50%</span>
+              <span>25%</span>
+              <span>0%</span>
+            </div>
+            
+            <div style={{ position: 'absolute', inset: '0' }}>
+              {[0, 25, 50, 75, 100].map(val => (
+                <div key={val} style={{ 
+                  position: 'absolute',
+                  left: '0',
+                  right: '0',
+                  top: `${100 - val}%`,
+                  borderTop: '1px solid #e5e7eb'
+                }}></div>
+              ))}
+            </div>
+            
+            <div style={{ 
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'space-evenly',
+              height: '100%',
+              position: 'relative',
+              paddingLeft: '40px',
+              paddingRight: '40px'
+            }}>
+              {/* Stage 1 - 2% */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
+                <div style={{ 
+                  width: '60px',
+                  height: '6px', // 2% * 3
+                  backgroundColor: '#E8B70B',
+                  position: 'relative',
+                  transition: 'height 0.5s ease'
+                }}>
+                  <span style={{ 
+                    position: 'absolute',
+                    top: '-25px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    2%
+                  </span>
+                </div>
+              </div>
+              
+              {/* Stage 2 - 8% */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
+                <div style={{ 
+                  width: '60px',
+                  height: '24px', // 8% * 3
+                  backgroundColor: '#ED1B34',
+                  position: 'relative',
+                  transition: 'height 0.5s ease'
+                }}>
+                  <span style={{ 
+                    position: 'absolute',
+                    top: '-25px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    8%
+                  </span>
+                </div>
+              </div>
+              
+              {/* Stage 3 - 65% */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
+                <div style={{ 
+                  width: '60px',
+                  height: '195px', // 65% * 3
+                  backgroundColor: '#0086D6',
+                  position: 'relative',
+                  transition: 'height 0.5s ease'
+                }}>
+                  <span style={{ 
+                    position: 'absolute',
+                    top: '-25px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    65%
+                  </span>
+                </div>
+              </div>
+              
+              {/* Stage 4 - 25% */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
+                <div style={{ 
+                  width: '60px',
+                  height: '75px', // 25% * 3
+                  backgroundColor: '#071D49',
+                  position: 'relative',
+                  transition: 'height 0.5s ease'
+                }}>
+                  <span style={{ 
+                    position: 'absolute',
+                    top: '-25px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    25%
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{ 
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              marginTop: '10px',
+              paddingLeft: '40px',
+              paddingRight: '40px'
+            }}>
+              <div style={{ textAlign: 'center', width: '80px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage 1</div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>Dependent</div>
+              </div>
+              <div style={{ textAlign: 'center', width: '80px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage 2</div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>Independent</div>
+              </div>
+              <div style={{ textAlign: 'center', width: '80px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage 3</div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>Through Others</div>
+              </div>
+              <div style={{ textAlign: 'center', width: '80px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage 4</div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>Through Business</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="mt-6">
+        This optimal distribution reflects a crucial insight: <strong>organizations create the most value when the majority of their leaders operate at Stage 3—contributing through others.</strong> Stage 3 is where leverage happens, where individual expertise transforms into organizational capability.
+      </p>
+      
+      <p>
+        Yet most organizations find themselves with 60% or more of their leaders stuck in Stages 1 and 2. They have an organization of individual contributors trying to compete in a world that demands collaborative leadership. They wonder why strategy execution fails, why innovation stalls, why customer relationships suffer, and why employee engagement lags. The answer is simple: they lack the Stage 3 leaders who translate strategy into action, who build the networks and relationships that create value, who develop the next generation of talent.
+      </p>
+      
+      <p>
+        The Pipeline Audit you're about to review doesn't just count heads—it reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
+      </p>
+      
+      <p>
+        Remember: careers aren't defined by age or tenure but by the fundamental value professionals create. Some will remain valuable Stage 2 experts throughout their careers. Others will quickly progress to Stage 4. The key is having the right distribution for your strategy and ensuring clear pathways for those ready to advance.
+      </p>
+      
+      <p>
+        Your Pipeline Audit results will show you where you stand today. More importantly, they'll point the way toward building the leadership capability that creates sustainable competitive advantage. Because in the end, organizations don't compete on strategy or technology or capital—they compete on their ability to build leaders who can orchestrate all these resources to create stakeholder value.
+      </p>
+      
+      <p className="font-semibold text-lg mt-6">
+        The question isn't whether you need to develop your pipeline. The question is whether you'll act on what the audit reveals before your competition does.
+      </p>
+    </div>
+  </div>
+</div>
           {/* Completion Status */}
           <div className="bg-white p-6 rounded-lg shadow completion-status-section">
             <h2 className="text-xl font-semibold mb-4">
