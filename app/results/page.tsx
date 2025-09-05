@@ -1213,7 +1213,7 @@ export default function ResultsPage() {
         </div>
 
         <div className="pl-4 border-l-4" style={{ borderColor: '#071D49' }}>
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributes through the Business</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributes through Business</h4>
           <p className="text-gray-700">
             Stage 4 leaders direct the business itself. They set strategic direction, control organizational resources, and use power rather than just influence. They see how functions, geographies, and operating units fit together to serve the enterprise. From the outside, they represent the entire organization. Their relationship with talent shifts from mentoring to testing future leaders for senior roles. They sponsor key people and shape organizational capability for the future.
           </p>
