@@ -1165,19 +1165,19 @@ export default function ResultsPage() {
 
       <div className="space-y-4 mt-6">
         <ul className="space-y-4 list-disc pl-6">
-            <li>
-                <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
-            </li>
-            <li>
-                <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
-            </li>
-            <li>
-                <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
-            </li>
-            <li>
-                <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
-            </li>
-        </ul>
+  <li>
+    <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
+  </li>
+  <li>
+    <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
+  </li>
+  <li>
+    <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
+  </li>
+  <li>
+    <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
+  </li>
+</ul>
         <p>
           This disconnect between chronological age and actual capability explains why so many organizations struggle with succession planning, talent retention, and leadership development. They're using the wrong lens to evaluate their talent.
         </p>
@@ -1663,11 +1663,11 @@ export default function ResultsPage() {
             return (
               <>
                 <p>Your organization faces significant risk with the majority of leaders unprepared for their current roles. When over 60% of leaders operate at Stages 1-2, they lack the fundamental capabilities to provide direction and instead depend on others for guidance. This creates a cascade of challenges:</p>
-                <ul className="space-y-1 ml-4">
-                  <li>• Growth becomes unlikely as leaders cannot execute expansion strategies</li>
-                  <li>• Strategic execution is compromised with leaders neither aligned nor capable of delivery</li>
-                  <li>• Employee engagement suffers under leaders who struggle to inspire</li>
-                  <li>• Customer relationships deteriorate as leaders cannot maintain service standards or respond to market needs</li>
+                <ul className="space-y-1 list-disc pl-6">
+                    <li>Growth becomes unlikely as leaders cannot execute expansion strategies</li>
+                    <li>Strategic execution is compromised with leaders neither aligned nor capable of delivery</li>
+                    <li>Employee engagement suffers under leaders who struggle to inspire</li>
+                    <li>Customer relationships deteriorate as leaders cannot maintain service standards or respond to market needs</li>
                 </ul>
                 <p>The impact is systemic—underdeveloped leaders cannot develop others, perpetuating the crisis across the organization.</p>
               </>
@@ -1677,11 +1677,11 @@ export default function ResultsPage() {
             return (
               <>
                 <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having 11-59% at Stages 1-2 creates uneven capability across the organization:</p>
-                <ul className="space-y-1 ml-4">
-                  <li>• Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
-                  <li>• Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
-                  <li>• Employee engagement varies significantly between teams with strong versus weak leaders</li>
-                  <li>• Customer satisfaction is at risk in areas led by Stage 1-2 leaders who lack strategic thinking</li>
+                <ul className="space-y-1 list-disc pl-6">
+                    <li>Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
+                    <li>Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
+                    <li>Employee engagement varies significantly between teams with strong versus weak leaders</li>
+                    <li>Customer satisfaction is at risk in areas led by Stage 1-2 leaders who lack strategic thinking</li>
                 </ul>
                 <p>With targeted development, many of these leaders can progress to Stage 3 readiness within 12-18 months.</p>
               </>
@@ -1690,12 +1690,12 @@ export default function ResultsPage() {
           return (
             <>
               <p>Your leadership team is appropriately developed and positioned for success. With over 90% of leaders at Stages 3-4, your organization has the critical mass to grow and scale effectively:</p>
-              <ul className="space-y-1 ml-4">
-                <li>• Leaders are aligned and capable of delivering on strategic objectives autonomously</li>
-                <li>• Employee engagement thrives under mature leaders who create positive, developmental work environments</li>
-                <li>• Customer relationships benefit from leaders who think strategically and innovate solutions</li>
-                <li>• Growth strategies can be pursued aggressively with confidence in execution</li>
-              </ul>
+              <ul className="space-y-1 list-disc pl-6">
+                <li>Leaders are aligned and capable of delivering on strategic objectives autonomously</li>
+                <li>Employee engagement thrives under mature leaders who create positive, developmental work environments</li>
+                <li>Customer relationships benefit from leaders who think strategically and innovate solutions</li>
+                <li>Growth strategies can be pursued aggressively with confidence in execution</li>
+            </ul>
               <p>This represents normal, healthy transition as new leaders are promoted and rapidly developed. Your organization can leverage this leadership strength for competitive advantage.</p>
             </>
           )
