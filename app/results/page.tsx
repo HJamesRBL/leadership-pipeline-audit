@@ -1164,7 +1164,7 @@ export default function ResultsPage() {
       </div>
 
       <div className="space-y-4 mt-6">
-        <ul className="space-y-4 list-disc pl-6">
+        <ul className="space-y-1 list-disc ml-4 pl-5">
   <li>
     <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
   </li>
@@ -1416,17 +1416,8 @@ export default function ResultsPage() {
       </p>
        <br />
       <p>
-        The Pipeline Audit you're about to review doesn't just count heads—it reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
+        The Pipeline Audit you're about to review reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
       </p>
-       <br />
-      <p>
-        Remember: careers aren't defined by age or tenure but by the fundamental value professionals create. Some will remain valuable Stage 2 experts throughout their careers. Others will quickly progress to Stage 4. The key is having the right distribution for your strategy and ensuring clear pathways for those ready to advance.
-      </p>
-       <br />
-      <p>
-        Your Pipeline Audit results will show you where you stand today. More importantly, they'll point the way toward building the leadership capability that creates sustainable competitive advantage. Because in the end, organizations don't compete on strategy or technology or capital—they compete on their ability to build leaders who can create stakeholder value.
-      </p>
-       <br />
     </div>
   </div>
 </div>
@@ -1663,7 +1654,7 @@ export default function ResultsPage() {
             return (
               <>
                 <p>Your organization faces significant risk with the majority of leaders unprepared for their current roles. When over 60% of leaders operate at Stages 1-2, they lack the fundamental capabilities to provide direction and instead depend on others for guidance. This creates a cascade of challenges:</p>
-                <ul className="space-y-1 list-disc pl-6">
+                <ul className="space-y-1 list-disc ml-4 pl-5">
                     <li>Growth becomes unlikely as leaders cannot execute expansion strategies</li>
                     <li>Strategic execution is compromised with leaders neither aligned nor capable of delivery</li>
                     <li>Employee engagement suffers under leaders who struggle to inspire</li>
@@ -1677,7 +1668,7 @@ export default function ResultsPage() {
             return (
               <>
                 <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having 11-59% at Stages 1-2 creates uneven capability across the organization:</p>
-                <ul className="space-y-1 list-disc pl-6">
+                <ul className="space-y-1 list-disc ml-4 pl-5">
                     <li>Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
                     <li>Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
                     <li>Employee engagement varies significantly between teams with strong versus weak leaders</li>
@@ -1690,7 +1681,7 @@ export default function ResultsPage() {
           return (
             <>
               <p>Your leadership team is appropriately developed and positioned for success. With over 90% of leaders at Stages 3-4, your organization has the critical mass to grow and scale effectively:</p>
-              <ul className="space-y-1 list-disc pl-6">
+              <ul className="space-y-1 list-disc ml-4 pl-5">
                 <li>Leaders are aligned and capable of delivering on strategic objectives autonomously</li>
                 <li>Employee engagement thrives under mature leaders who create positive, developmental work environments</li>
                 <li>Customer relationships benefit from leaders who think strategically and innovate solutions</li>
