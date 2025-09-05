@@ -1138,7 +1138,7 @@ export default function ResultsPage() {
 
           {/* Educational Introduction Section */}
 <div className="bg-white p-8 rounded-lg shadow mb-6">
-  <h2 className="text-2xl font-bold mb-6 text-gray-900">Understanding Your Leadership Pipeline: A Framework for Organizational Growth</h2>
+  <h2 className="text-2xl font-bold mb-6 text-gray-900">Understanding Your Leadership Pipeline Audit Results</h2>
   
   <div className="prose max-w-none space-y-6 text-gray-700">
     <p className="text-lg leading-relaxed">
@@ -1164,18 +1164,20 @@ export default function ResultsPage() {
       </div>
 
       <div className="space-y-4 mt-6">
-        <p>
-          <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
-        </p>
-        <p>
-          <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
-        </p>
-        <p>
-          <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
-        </p>
-        <p>
-          <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
-        </p>
+        <ul className="space-y-4 list-disc pl-6">
+            <li>
+                <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
+            </li>
+            <li>
+                <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
+            </li>
+            <li>
+                <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
+            </li>
+            <li>
+                <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
+            </li>
+        </ul>
         <p>
           This disconnect between chronological age and actual capability explains why so many organizations struggle with succession planning, talent retention, and leadership development. They're using the wrong lens to evaluate their talent.
         </p>
@@ -1408,26 +1410,23 @@ export default function ResultsPage() {
       <p className="mt-6">
         This optimal distribution reflects a crucial insight: <strong>organizations create the most value when the majority of their leaders operate at Stage 3—contributing through others.</strong> Stage 3 is where leverage happens, where individual expertise transforms into organizational capability.
       </p>
-      
+      <br />
       <p>
         Yet most organizations find themselves with 60% or more of their leaders stuck in Stages 1 and 2. They have an organization of individual contributors trying to compete in a world that demands collaborative leadership. They wonder why strategy execution fails, why innovation stalls, why customer relationships suffer, and why employee engagement lags. The answer is simple: they lack the Stage 3 leaders who translate strategy into action, who build the networks and relationships that create value, who develop the next generation of talent.
       </p>
-      
+       <h2>Leadership Pipeline Audit Report</h2>
       <p>
         The Pipeline Audit you're about to review doesn't just count heads—it reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
       </p>
-      
+       <br />
       <p>
         Remember: careers aren't defined by age or tenure but by the fundamental value professionals create. Some will remain valuable Stage 2 experts throughout their careers. Others will quickly progress to Stage 4. The key is having the right distribution for your strategy and ensuring clear pathways for those ready to advance.
       </p>
-      
+       <br />
       <p>
-        Your Pipeline Audit results will show you where you stand today. More importantly, they'll point the way toward building the leadership capability that creates sustainable competitive advantage. Because in the end, organizations don't compete on strategy or technology or capital—they compete on their ability to build leaders who can orchestrate all these resources to create stakeholder value.
+        Your Pipeline Audit results will show you where you stand today. More importantly, they'll point the way toward building the leadership capability that creates sustainable competitive advantage. Because in the end, organizations don't compete on strategy or technology or capital—they compete on their ability to build leaders who can create stakeholder value.
       </p>
-      
-      <p className="font-semibold text-lg mt-6">
-        The question isn't whether you need to develop your pipeline. The question is whether you'll act on what the audit reveals before your competition does.
-      </p>
+       <br />
     </div>
   </div>
 </div>
