@@ -435,7 +435,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#E8B70B' }}
                   >
-                    Contributes Dependently
+                    Dependently
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -453,7 +453,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#ED1B34' }}
                   >
-                    Contributes Independently
+                    Independently
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -473,7 +473,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#0086D6' }}
                   >
-                    Contributes through Others
+                    Through Others
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -493,7 +493,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#071D49' }}
                   >
-                    Contributes through Business
+                    Through Business
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
