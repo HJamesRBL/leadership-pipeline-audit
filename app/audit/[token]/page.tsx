@@ -19,27 +19,27 @@ interface Employee {
 const stageDescriptions = [
   {
     stage: 1,
-    title: "One",
+    title: "Contributes Dependently",
     color: "#E8B70B", // Yellow
-    description: "People who contribute as a One are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
+    description: "People who contribute dependently are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
   },
   {
     stage: 2,
-    title: "Two",
+    title: "Contributes Independently",
     color: "#ED1B34", // Red
-    description: "Those who contribute as a Two are seen as experts in their area of expertise. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not seen as developersl of others because they tend to be micro managers."
+    description: "Those who contribute independently are seen as experts in their area of expertise. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not seen as developers of others because they tend to be micro managers."
   },
   {
     stage: 3,
-    title: "Three",
+    title: "Contributes through Others",
     color: "#0086D6", // Medium RBL Blue
     description: "People who are described as contributors in Three have shifted from individual expert to someone who cares about and is  interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team-. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. Those in Three are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully to get things done."
   },
   {
     stage: 4,
-    title: "Four",
+    title: "Contributes through the Business",
     color: "#071D49", // Dark RBL Navy
-    description: "People who contribute in Four are seen as contributors to the entire business. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+    description: "People who contribute through the business are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
   }
 ]
 
@@ -296,24 +296,24 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
               <h3 className="font-bold text-lg mb-3 text-blue-900">Exercise 1: Ways of Contributing</h3>
               <p className="text-gray-700 mb-2">
-                You will categorize each employee based on how they contribute to the organization::
+                You will categorize each employee based on how they contribute to the organization:
               </p>
               <ul className="ml-6 space-y-2 text-gray-700">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#E8B70B' }}></span>
-                  <span><strong>One:</strong> Depends on others for direction and guidance</span>
+                  <span><strong>Contributes Dependently:</strong> Depends on others for direction and guidance</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#ED1B34' }}></span>
-                  <span><strong>Two:</strong> Independent contributor with strong technical expertise</span>
+                  <span><strong>Contributes Independently:</strong> Independent contributor with strong technical expertise</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#0086D6' }}></span>
-                  <span><strong>Three:</strong> Influences, coaches and develops others</span>
+                  <span><strong>Contributes through Others:</strong> Influences, coaches and develops others</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
-                  <span><strong>Four:</strong> Sets direction for the entire business </span>
+                  <span><strong>Contributes through the Business:</strong> Sets direction for the entire business </span>
                 </li>
               </ul>
             </div>
@@ -435,7 +435,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#E8B70B' }}
                   >
-                    One
+                    Contributes Dependently
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -453,7 +453,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#ED1B34' }}
                   >
-                    Two
+                    Contributes Independently
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -473,7 +473,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#0086D6' }}
                   >
-                    Three
+                    Contributes through Others
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -493,7 +493,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#071D49' }}
                   >
-                    Four
+                    Contributes through the Business
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -520,7 +520,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       className="text-white text-center py-3 font-bold text-lg"
                       style={{ backgroundColor: '#E8B70B' }}
                     >
-                      One
+                      Contributes Dependently
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
@@ -538,7 +538,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       className="text-white text-center py-3 font-bold text-lg"
                       style={{ backgroundColor: '#ED1B34' }}
                     >
-                      Two
+                      Contributes Independently
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
@@ -563,7 +563,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       className="text-white text-center py-3 font-bold text-lg"
                       style={{ backgroundColor: '#0086D6' }}
                     >
-                      Three
+                      Contributes through Others
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
@@ -583,7 +583,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       className="text-white text-center py-3 font-bold text-lg"
                       style={{ backgroundColor: '#071D49' }}
                     >
-                      Four
+                      Contributes through the Business
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
@@ -643,10 +643,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     style={{ minWidth: '150px' }}
                   >
                     <option value="0">Selection</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    <option value="4">Four</option>
+                    <option value="1">Contributes Dependently</option>
+                    <option value="2">Contributes Independently</option>
+                    <option value="3">Contributes through Others</option>
+                    <option value="4">Contributes through the Business</option>
                   </select>
                 </div>
               </div>
