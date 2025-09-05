@@ -1582,18 +1582,19 @@ export default function ResultsPage() {
 
             {/* Interpretation Card */}
             {/* Interpretation Card */}
-<div className="mt-6 p-6 bg-white rounded-lg border-2" style={{
-  borderColor: (() => {
-    const stage1_2_percentage = results.stageCounts
-      .filter(s => s.stage === 1 || s.stage === 2)
-      .reduce((sum, s) => sum + s.count, 0) / 
-      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-    
-    if (stage1_2_percentage >= 60) return '#EF4444'
-    if (stage1_2_percentage >= 11) return '#F59E0B'
-    return '#10B981'
-  })()
-}}>
+{/* Interpretation Card */}
+            <div className="mt-6 p-6 bg-white rounded-lg shadow" style={{
+              border: `2px solid ${(() => {
+                const stage1_2_percentage = results.stageCounts
+                  .filter(s => s.stage === 1 || s.stage === 2)
+                  .reduce((sum, s) => sum + s.count, 0) / 
+                  results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+                
+                if (stage1_2_percentage >= 60) return '#EF4444'
+                if (stage1_2_percentage >= 11) return '#F59E0B'
+                return '#10B981'
+              })()}`
+            }}>
   <div className="flex items-start justify-between">
     <div className="flex-1">
       <div className="flex items-center gap-3 mb-2">
@@ -2242,7 +2243,7 @@ export default function ResultsPage() {
                     
                     // Low performers in Stage 3-4
                     rawData.filter((r: any) => 
-                      (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) < 25
+                      (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) < 12
                     ).forEach((r: any) => {
                       alerts.push({
                         type: 'risk',
