@@ -1206,7 +1206,7 @@ export default function ResultsPage() {
         </div>
 
         <div className="pl-4 border-l-4 border-blue-500">
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributes through Influence</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributes through Others</h4>
           <p className="text-gray-700">
             The shift to Stage 3 represents a fundamental transformation from individual expert to organizational leader. These professionals have moved from a focus on self to ensuring team success. They influence others, integrate across multiple areas of expertise, and build both internal and external networks. They coach, mentor, and develop others while representing their workgroup to external stakeholders. They understand organizational culture and can navigate it to get things done.
           </p>
