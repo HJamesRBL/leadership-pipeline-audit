@@ -1414,7 +1414,7 @@ export default function ResultsPage() {
       <p>
         Yet most organizations find themselves with 60% or more of their leaders stuck in Stages 1 and 2. They have an organization of individual contributors trying to compete in a world that demands collaborative leadership. They wonder why strategy execution fails, why innovation stalls, why customer relationships suffer, and why employee engagement lags. The answer is simple: they lack the Stage 3 leaders who translate strategy into action, who build the networks and relationships that create value, who develop the next generation of talent.
       </p>
-       <h2>Leadership Pipeline Audit Report</h2>
+       <br />
       <p>
         The Pipeline Audit you're about to review doesn't just count heads—it reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
       </p>
@@ -1581,135 +1581,129 @@ export default function ResultsPage() {
               </div>
 
             {/* Interpretation Card */}
-            <div className="mt-6 p-6 rounded-lg border-l-4" style={{
-              backgroundColor: (() => {
-                const stage1_2_percentage = results.stageCounts
-                  .filter(s => s.stage === 1 || s.stage === 2)
-                  .reduce((sum, s) => sum + s.count, 0) / 
-                  results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                
-                if (stage1_2_percentage >= 60) return '#FEE2E2'
-                if (stage1_2_percentage >= 11) return '#FEF3C7'
-                return '#D1FAE5'
-              })(),
-              borderLeftColor: (() => {
-                const stage1_2_percentage = results.stageCounts
-                  .filter(s => s.stage === 1 || s.stage === 2)
-                  .reduce((sum, s) => sum + s.count, 0) / 
-                  results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                
-                if (stage1_2_percentage >= 60) return '#EF4444'
-                if (stage1_2_percentage >= 11) return '#F59E0B'
-                return '#10B981'
-              })()
-            }}>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-2xl">
-                      {(() => {
-                        const stage1_2_percentage = results.stageCounts
-                          .filter(s => s.stage === 1 || s.stage === 2)
-                          .reduce((sum, s) => sum + s.count, 0) / 
-                          results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                        
-                        if (stage1_2_percentage >= 60) return '🚨'
-                        if (stage1_2_percentage >= 11) return '⚠️'
-                        return '✅'
-                      })()}
-                    </span>
-                    <h3 className="text-lg font-bold" style={{
-                      color: (() => {
-                        const stage1_2_percentage = results.stageCounts
-                          .filter(s => s.stage === 1 || s.stage === 2)
-                          .reduce((sum, s) => sum + s.count, 0) / 
-                          results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                        
-                        if (stage1_2_percentage >= 60) return '#991B1B'
-                        if (stage1_2_percentage >= 1) return '#92400E'
-                        return '#065F46'
-                      })()
-                    }}>
-                      {(() => {
-                        const stage1_2_percentage = results.stageCounts
-                          .filter(s => s.stage === 1 || s.stage === 2)
-                          .reduce((sum, s) => sum + s.count, 0) / 
-                          results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                        
-                        if (stage1_2_percentage >= 60) return 'CRITICAL'
-                        if (stage1_2_percentage >= 11) return 'NEEDS ATTENTION'
-                        return 'OPTIMIZED'
-                      })()}
-                    </h3>
-                    <span className="px-3 py-1 rounded-full text-sm font-medium text-white" style={{
-                      backgroundColor: (() => {
-                        const stage1_2_percentage = results.stageCounts
-                          .filter(s => s.stage === 1 || s.stage === 2)
-                          .reduce((sum, s) => sum + s.count, 0) / 
-                          results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                        
-                        if (stage1_2_percentage >= 60) return '#EF4444'
-                        if (stage1_2_percentage >= 11) return '#F59E0B'
-                        return '#10B981'
-                      })()
-                    }}>
-                      {(results.stageCounts
-                        .filter(s => s.stage === 1 || s.stage === 2)
-                        .reduce((sum, s) => sum + s.count, 0) / 
-                        results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100).toFixed(1)}% in Stages 1-2
-                    </span>
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    {(() => {
-                      const stage1_2_percentage = results.stageCounts
-                        .filter(s => s.stage === 1 || s.stage === 2)
-                        .reduce((sum, s) => sum + s.count, 0) / 
-                        results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                      
-                      if (stage1_2_percentage >= 60) return 'Leadership Readiness Crisis - Immediate Development Required'
-                      if (stage1_2_percentage >= 11) return 'Leadership Development Gaps - Acceleration Needed'
-                      return 'Strong Leadership Maturity - Ready to Scale'
-                    })()}
-                  </h4>
-                  <ul className="space-y-2 text-sm text-gray-700">
-                    {(() => {
-                      const stage1_2_percentage = results.stageCounts
-                        .filter(s => s.stage === 1 || s.stage === 2)
-                        .reduce((sum, s) => sum + s.count, 0) / 
-                        results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                      
-                      if (stage1_2_percentage >= 60) {
-                        return [
-                          'Growth is unlikely as leaders lack the capability to execute expansion strategies',
-                          'Strategic execution is compromised with most leaders neither aligned with nor capable of delivering on organizational goals',
-                          'Employee engagement suffers as underdeveloped leaders struggle to inspire and guide their teams effectively',
-                          'Customer relationships are at risk with leaders unable to maintain service standards or respond to market needs'
-                        ]
-                      }
-                      if (stage1_2_percentage >= 11) {
-                        return [
-                          'Growth potential exists but faces challenges as some leaders aren\'t ready to scale operations',
-                          'Strategic alignment is inconsistent with pockets of leaders who need better capability building',
-                          'Employee engagement is uneven with many teams experiencing leadership gaps',
-                          'Customer satisfaction is at risk in areas led by underdeveloped leaders'
-                        ]
-                      }
-                      return [
-                        'Organization has critical mass to grow and scale with capable leaders ready to execute',
-                        'Leaders are aligned and capable of delivering on strategic objectives',
-                        'Employee engagement is strong with mature leaders creating positive work environments',
-                        'Customer relationships thrive with experienced leaders ensuring consistent value delivery'
-                      ]
-                    })().map((bullet, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <span className="mr-2 font-bold">•</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+            {/* Interpretation Card */}
+<div className="mt-6 p-6 bg-white rounded-lg border-2" style={{
+  borderColor: (() => {
+    const stage1_2_percentage = results.stageCounts
+      .filter(s => s.stage === 1 || s.stage === 2)
+      .reduce((sum, s) => sum + s.count, 0) / 
+      results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+    
+    if (stage1_2_percentage >= 60) return '#EF4444'
+    if (stage1_2_percentage >= 11) return '#F59E0B'
+    return '#10B981'
+  })()
+}}>
+  <div className="flex items-start justify-between">
+    <div className="flex-1">
+      <div className="flex items-center gap-3 mb-2">
+        <h3 className="text-lg font-bold" style={{
+          color: (() => {
+            const stage1_2_percentage = results.stageCounts
+              .filter(s => s.stage === 1 || s.stage === 2)
+              .reduce((sum, s) => sum + s.count, 0) / 
+              results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+            
+            if (stage1_2_percentage >= 60) return '#991B1B'
+            if (stage1_2_percentage >= 11) return '#92400E'
+            return '#065F46'
+          })()
+        }}>
+          {(() => {
+            const stage1_2_percentage = results.stageCounts
+              .filter(s => s.stage === 1 || s.stage === 2)
+              .reduce((sum, s) => sum + s.count, 0) / 
+              results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+            
+            if (stage1_2_percentage >= 60) return 'CRITICAL'
+            if (stage1_2_percentage >= 11) return 'NEEDS ATTENTION'
+            return 'OPTIMIZED'
+          })()}
+        </h3>
+        <span className="px-3 py-1 rounded-full text-sm font-medium text-white" style={{
+          backgroundColor: (() => {
+            const stage1_2_percentage = results.stageCounts
+              .filter(s => s.stage === 1 || s.stage === 2)
+              .reduce((sum, s) => sum + s.count, 0) / 
+              results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+            
+            if (stage1_2_percentage >= 60) return '#EF4444'
+            if (stage1_2_percentage >= 11) return '#F59E0B'
+            return '#10B981'
+          })()
+        }}>
+          {(results.stageCounts
+            .filter(s => s.stage === 1 || s.stage === 2)
+            .reduce((sum, s) => sum + s.count, 0) / 
+            results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100).toFixed(1)}% in Stages 1-2
+        </span>
+      </div>
+      <h4 className="font-semibold text-gray-900 mb-3">
+        {(() => {
+          const stage1_2_percentage = results.stageCounts
+            .filter(s => s.stage === 1 || s.stage === 2)
+            .reduce((sum, s) => sum + s.count, 0) / 
+            results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+          
+          if (stage1_2_percentage >= 60) return 'Leadership Readiness Crisis - Immediate Development Required'
+          if (stage1_2_percentage >= 11) return 'Leadership Development Gaps - Acceleration Needed'
+          return 'Strong Leadership Maturity - Ready to Scale'
+        })()}
+      </h4>
+      
+      <div className="text-sm text-gray-700 space-y-3">
+        {(() => {
+          const stage1_2_percentage = results.stageCounts
+            .filter(s => s.stage === 1 || s.stage === 2)
+            .reduce((sum, s) => sum + s.count, 0) / 
+            results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
+          
+          if (stage1_2_percentage >= 60) {
+            return (
+              <>
+                <p>Your organization faces significant risk with the majority of leaders unprepared for their current roles. When over 60% of leaders operate at Stages 1-2, they lack the fundamental capabilities to provide direction and instead depend on others for guidance. This creates a cascade of challenges:</p>
+                <ul className="space-y-1 ml-4">
+                  <li>• Growth becomes unlikely as leaders cannot execute expansion strategies</li>
+                  <li>• Strategic execution is compromised with leaders neither aligned nor capable of delivery</li>
+                  <li>• Employee engagement suffers under leaders who struggle to inspire</li>
+                  <li>• Customer relationships deteriorate as leaders cannot maintain service standards or respond to market needs</li>
+                </ul>
+                <p>The impact is systemic—underdeveloped leaders cannot develop others, perpetuating the crisis across the organization.</p>
+              </>
+            )
+          }
+          if (stage1_2_percentage >= 11) {
+            return (
+              <>
+                <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having 11-59% at Stages 1-2 creates uneven capability across the organization:</p>
+                <ul className="space-y-1 ml-4">
+                  <li>• Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
+                  <li>• Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
+                  <li>• Employee engagement varies significantly between teams with strong versus weak leaders</li>
+                  <li>• Customer satisfaction is at risk in areas led by Stage 1-2 leaders who lack strategic thinking</li>
+                </ul>
+                <p>With targeted development, many of these leaders can progress to Stage 3 readiness within 12-18 months.</p>
+              </>
+            )
+          }
+          return (
+            <>
+              <p>Your leadership team is appropriately developed and positioned for success. With over 90% of leaders at Stages 3-4, your organization has the critical mass to grow and scale effectively:</p>
+              <ul className="space-y-1 ml-4">
+                <li>• Leaders are aligned and capable of delivering on strategic objectives autonomously</li>
+                <li>• Employee engagement thrives under mature leaders who create positive, developmental work environments</li>
+                <li>• Customer relationships benefit from leaders who think strategically and innovate solutions</li>
+                <li>• Growth strategies can be pursued aggressively with confidence in execution</li>
+              </ul>
+              <p>This represents normal, healthy transition as new leaders are promoted and rapidly developed. Your organization can leverage this leadership strength for competitive advantage.</p>
+            </>
+          )
+        })()}
+      </div>
+    </div>
+  </div>
+</div>
+            
           </div>
           
 
