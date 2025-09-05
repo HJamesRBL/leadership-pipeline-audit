@@ -1192,28 +1192,28 @@ export default function ResultsPage() {
       
       <div className="space-y-6">
         <div className="pl-4 border-l-4 border-yellow-500">
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 1: Dependent Contribution</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 1: Contributes Dependently</h4>
           <p className="text-gray-700">
             Professionals at this stage depend on others for direction and support. They work on portions of larger projects, focus on routine tasks, and learn "how we do things around here." They're building technical competence but haven't yet developed independence. Without strong technical skills, they need guidance about what to do and how to do it.
           </p>
         </div>
 
         <div className="pl-4 border-l-4 border-red-500">
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 2: Independent Contribution</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 2: Contributes Independently</h4>
           <p className="text-gray-700">
             These professionals have become experts in their domain. They work independently, take responsibility for entire projects, and are considered credible specialists. They view work through the lens of competence and often compete with others in similar roles. While technically proficient, they tend to micromanage rather than develop others, focusing on their individual expertise rather than organizational capability.
           </p>
         </div>
 
         <div className="pl-4 border-l-4 border-blue-500">
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributing Through Others</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributes through Influence</h4>
           <p className="text-gray-700">
             The shift to Stage 3 represents a fundamental transformation from individual expert to organizational leader. These professionals have moved from a focus on self to ensuring team success. They influence others, integrate across multiple areas of expertise, and build both internal and external networks. They coach, mentor, and develop others while representing their workgroup to external stakeholders. They understand organizational culture and can navigate it to get things done.
           </p>
         </div>
 
         <div className="pl-4 border-l-4" style={{ borderColor: '#071D49' }}>
-          <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributing Through the Business</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributes through the Business</h4>
           <p className="text-gray-700">
             Stage 4 leaders direct the business itself. They set strategic direction, control organizational resources, and use power rather than just influence. They see how functions, geographies, and operating units fit together to serve the enterprise. From the outside, they represent the entire organization. Their relationship with talent shifts from mentoring to testing future leaders for senior roles. They sponsor key people and shape organizational capability for the future.
           </p>
