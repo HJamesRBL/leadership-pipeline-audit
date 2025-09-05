@@ -37,9 +37,9 @@ const stageDescriptions = [
   },
   {
     stage: 4,
-    title: "Contributes through Business",
+    title: "Contributes through Enterprise",
     color: "#071D49", // Dark RBL Navy
-    description: "People who contribute through the business are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+    description: "People who contribute through the enterprise are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
   }
 ]
 
@@ -313,7 +313,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
-                  <span><strong>Contributes through Business:</strong> Sets direction for the entire business </span>
+                  <span><strong>Contributes through Enterprise:</strong> Sets direction for the entire business </span>
                 </li>
               </ul>
             </div>
@@ -493,7 +493,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     className="text-white text-center py-3 font-bold text-lg"
                     style={{ backgroundColor: '#071D49' }}
                   >
-                    Through Business
+                    Through Enterprise
                   </div>
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
@@ -583,7 +583,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       className="text-white text-center py-3 font-bold text-lg"
                       style={{ backgroundColor: '#071D49' }}
                     >
-                      Contributes through Business
+                      Contributes through Enterprise
                     </div>
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
@@ -646,7 +646,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <option value="1">Contributes Dependently</option>
                     <option value="2">Contributes Independently</option>
                     <option value="3">Contributes through Others</option>
-                    <option value="4">Contributes through Business</option>
+                    <option value="4">Contributes through Enterprise</option>
                   </select>
                 </div>
               </div>
