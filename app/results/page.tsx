@@ -1838,6 +1838,7 @@ export default function ResultsPage() {
 
           </div>
 {/* Performance-Stage Distribution Scatterplot */}
+{/*
 <div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
   <h2 className="text-xl font-semibold mb-2">Performance-Stage Distribution</h2>
   <p className="text-sm text-gray-600 mb-6">
@@ -2030,7 +2031,9 @@ export default function ResultsPage() {
   
 
 </div>
+*/}
           {/* Performance-Stage Misalignment */}
+          {/*
           <div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
             <h2 className="text-xl font-semibold mb-2">Performance-Stage Misalignment Analysis</h2>
             <p className="text-sm text-gray-600 mb-6">
@@ -2307,7 +2310,8 @@ export default function ResultsPage() {
               (below 25th percentile in stages 3-4) as development needs.
             </div>
           </div>
-          
+          */}
+
 
           {/* Business Unit Stage by Performance */}
           {/* Business Unit Stage by Performance */}
@@ -2477,36 +2481,37 @@ export default function ResultsPage() {
   </div>
 </div>
           {/* Recommendations Content */}
+          {/*
               <div className="space-y-6">
                 {(() => {
                   const stage1_2_percentage = results.stageCounts
                     .filter(s => s.stage === 1 || s.stage === 2)
-                    .reduce((sum, s) => sum + s.count, 0) / 
+                    .reduce((sum, s) => sum + s.count, 0) /
                     results.stageCounts.reduce((sum, s) => sum + s.count, 0) * 100
-                  
+
                   if (stage1_2_percentage >= 60) {
                     // CRITICAL
                     return (
                       <>
                         <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #EF4444' }}>
                           <h3 className="font-bold text-lg mb-4 text-red-900">Immediate Leadership Acceleration Required</h3>
-                          
+
                           <div className="space-y-4">
                             <div>
                               <h4 className="font-semibold mb-2">1. Build Business Case for Leadership</h4>
                               <p className="text-sm text-gray-700 ml-4">Document the cost of leadership gaps on stakeholder value. Calculate the impact on customer retention, employee engagement scores, and investor confidence. Present this case to the board within 30 days to secure funding and executive sponsorship for transformation.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">2. Define Leadership Brand Standards</h4>
                               <p className="text-sm text-gray-700 ml-4">Establish what Stage 3 readiness looks like in your organization. Create a focused competency model highlighting the key behaviors that differentiate Stage 3 from Stage 2. Use RBL's Leadership Code as the foundation: Shape the Future, Make Things Happen, Engage Today's Talent, Build the Next Generation, and Invest in Yourself.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">3. Conduct Comprehensive Assessment</h4>
                               <p className="text-sm text-gray-700 ml-4">Deploy the organizational Leadership Brand Audit to assess your collective leadership capability. Use the Leadership Code 360 assessment for all leaders to establish baseline capabilities. For individual Stage 1-2 leaders in senior positions, add RBL's MENTOR battery of psychometric assessments to identify development potential and readiness for acceleration. Create heat maps showing capability gaps by business unit.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">4. Deploy Intensive Development Interventions</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
@@ -2517,18 +2522,18 @@ export default function ResultsPage() {
                                 <li>Establish Stage 4 mentorship for every viable Stage 1-2 leader</li>
                               </ul>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">5. Track 90-Day Progression Metrics</h4>
                               <p className="text-sm text-gray-700 ml-4">Measure weekly progression indicators: behavioral change observations, business metric improvements, and stakeholder feedback. Use RBL's Organization Guidance System to track ROI on development investments.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">6. Communicate Transparently</h4>
                               <p className="text-sm text-gray-700 ml-4">Share the leadership development plan with stakeholders. Provide monthly progress updates to employees, quarterly updates to customers, and include leadership development metrics in investor communications.</p>
                             </div>
                           </div>
-                          
+
                           <div className="mt-6 p-4 bg-red-50 rounded-lg">
                             <p className="text-sm font-semibold text-red-900">Investment Required: 3-5% of payroll, with 70% focused on Stage 1-2 acceleration</p>
                           </div>
@@ -2536,30 +2541,30 @@ export default function ResultsPage() {
                       </>
                     )
 
-                  
+
                   } else if (stage1_2_percentage >= 11) {
                     // NEEDS ATTENTION
                     return (
                       <>
                         <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #F59E0B' }}>
                           <h3 className="font-bold text-lg mb-4 text-yellow-900">Targeted Development Enhancement</h3>
-                          
+
                           <div className="space-y-4">
                             <div>
                               <h4 className="font-semibold mb-2">1. Strengthen the Business Case</h4>
                               <p className="text-sm text-gray-700 ml-4">Articulate how closing the Stage 2-3 gap will improve competitive advantage. Link leadership development to strategic priorities like innovation, customer experience, or operational excellence. Use benchmarking data to show the opportunity cost of the current state.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">2. Refine Your Leadership Brand</h4>
                               <p className="text-sm text-gray-700 ml-4">Develop a clear statement: "Leaders at [company] are known for [3 differentiators] so that we can deliver [stakeholder outcomes]." Ensure this brand connects to your customer promise and differentiates you from competitors.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">3. Implement Systematic Assessment</h4>
                               <p className="text-sm text-gray-700 ml-4">Deploy annual Leadership Brand Audit at the organizational level. Use RBL's stratified 360 assessment tools for individual leaders (different for Stage 2 vs Stage 3). For Stage 1-2 leaders in critical roles, consider MENTOR psychometric assessments to guide development planning.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">4. Create Targeted Development Pathways</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
@@ -2569,18 +2574,18 @@ export default function ResultsPage() {
                                 <li>Establish clear "ready now" criteria for Stage 3 advancement</li>
                               </ul>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">5. Measure Development ROI</h4>
                               <p className="text-sm text-gray-700 ml-4">Track progression rates from Stage 2 to 3, time to proficiency, and business impact of newly advanced Stage 3 leaders. Monitor leading indicators like engagement scores and customer satisfaction by leader stage.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">6. Build Leadership Reputation</h4>
                               <p className="text-sm text-gray-700 ml-4">Share success stories internally and externally. Include leadership capability in talent acquisition materials. Feature leadership development in annual reports as a competitive advantage.</p>
                             </div>
                           </div>
-                          
+
                           <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
                             <p className="text-sm font-semibold text-yellow-900">Investment Required: 2-3% of payroll with balanced investment across stages</p>
                           </div>
@@ -2593,23 +2598,23 @@ export default function ResultsPage() {
                       <>
                         <div className="p-6 bg-white rounded-lg" style={{ border: '2px solid #10B981' }}>
                           <h3 className="font-bold text-lg mb-4 text-green-900">Sustain and Enhance Excellence</h3>
-                          
+
                           <div className="space-y-4">
                             <div>
                               <h4 className="font-semibold mb-2">1. Evolve the Business Case</h4>
                               <p className="text-sm text-gray-700 ml-4">Focus on how leadership excellence drives innovation and agility. Document the correlation between your leadership capability and premium P/E multiples. Position leadership as your sustainable competitive advantage.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">2. Advance Your Leadership Brand</h4>
                               <p className="text-sm text-gray-700 ml-4">Ensure your leadership brand evolves with strategy. Use RBL's outside-in approach: start with customer expectations and work backward to leadership capabilities. Focus on differentiators that competitors cannot easily replicate.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">3. Sophisticated Assessment Approach</h4>
                               <p className="text-sm text-gray-700 ml-4">Use predictive analytics to identify future Stage 4 potential. Implement RBL's Organization Guidance System for real-time capability tracking. Conduct annual Leadership Brand Audits to ensure organizational alignment. Include external stakeholder assessments (customers, partners, investors).</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">4. Elite Development Experiences</h4>
                               <ul className="text-sm text-gray-700 ml-4 space-y-1">
@@ -2619,18 +2624,18 @@ export default function ResultsPage() {
                                 <li>Implement reverse mentoring to keep senior leaders current</li>
                               </ul>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">5. Measure Intangible Value Creation</h4>
                               <p className="text-sm text-gray-700 ml-4">Track leadership's impact on brand value, innovation pipeline, and stakeholder confidence. Use RBL's Human Capital Investor Index to measure market value premium from leadership capability.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-semibold mb-2">6. Leverage Leadership as Strategic Asset</h4>
                               <p className="text-sm text-gray-700 ml-4">Feature your leadership capability in investor presentations. Use leadership strength in M&A discussions as integration capability. Export your leadership development approach to joint ventures and partnerships.</p>
                             </div>
                           </div>
-                          
+
                           <div className="mt-6 p-4 bg-green-50 rounded-lg">
                             <p className="text-sm font-semibold text-green-900">Investment Required: 1-2% of payroll focused on Stage 3-4 advancement and succession planning</p>
                           </div>
@@ -2639,13 +2644,14 @@ export default function ResultsPage() {
                     )
                   }
                 })()}
-                
+
                 <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                   <p className="text-sm text-gray-700 italic">
                     The ultimate test of a firm's leadership strength comes from its ability to produce leadership capability that delivers stakeholder confidence in future results. Your Pipeline Audit is not just a diagnostic—it's the foundation for building a leadership brand that creates sustainable value for all stakeholders.
                   </p>
                 </div>
               </div>
+          */}
 
           {/* Raw Data Table */}
           <div className="bg-white p-6 rounded-lg shadow raw-data-section">
