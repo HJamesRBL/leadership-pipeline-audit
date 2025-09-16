@@ -262,84 +262,84 @@ export default function ResultsPage() {
   }, [selectedAudit, audits])
 
   const fetchAudits = async () => {
-  try {
-    const response = await fetch('/api/audit/list')
-    if (response.ok) {
-      const data = await response.json()
-      // Ensure data is always an array
-      setAudits(Array.isArray(data) ? data : [])
+    try {
+      const response = await fetch('/api/audit/list')
+      if (response.ok) {
+        const data = await response.json()
+        // Ensure data is always an array
+        setAudits(Array.isArray(data) ? data : [])
+      }
+    } catch (error) {
+      console.error('Error fetching audits:', error)
+      setAudits([]) // Set empty array on error
     }
-  } catch (error) {
-    console.error('Error fetching audits:', error)
-    setAudits([]) // Set empty array on error
   }
-}
 
   const fetchResults = async () => {
-  if (!selectedAudit) return
-  
-  setLoading(true)
-  try {
-    const response = await fetch(`/api/audit/get-results/results?id=${selectedAudit}`)
-    if (response.ok) {
-      const data = await response.json()
-      // Ensure all arrays in results are actually arrays
-      const safeResults = {
-        ...data,
-        stageCounts: Array.isArray(data.stageCounts) ? data.stageCounts : [],
-        averagePerformance: Array.isArray(data.averagePerformance) ? data.averagePerformance : [],
-        completionStatus: Array.isArray(data.completionStatus) ? data.completionStatus : [],
-        rawData: Array.isArray(data.rawData) ? data.rawData : []
+    if (!selectedAudit) return
+
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/audit/get-results/results?id=${selectedAudit}`)
+      if (response.ok) {
+        const data = await response.json()
+        // Ensure all arrays in results are actually arrays
+        const safeResults = {
+          ...data,
+          stageCounts: Array.isArray(data.stageCounts) ? data.stageCounts : [],
+          averagePerformance: Array.isArray(data.averagePerformance) ? data.averagePerformance : [],
+          completionStatus: Array.isArray(data.completionStatus) ? data.completionStatus : [],
+          rawData: Array.isArray(data.rawData) ? data.rawData : []
+        }
+        setResults(safeResults)
       }
-      setResults(safeResults)
+    } catch (error) {
+      console.error('Error fetching results:', error)
+      // Set empty results structure on error
+      setResults({
+        auditName: '',
+        totalLeaders: 0,
+        completedLeaders: 0,
+        stageCounts: [],
+        averagePerformance: [],
+        completionStatus: [],
+        rawData: []
+      })
+    } finally {
+      setLoading(false)
     }
-  } catch (error) {
-    console.error('Error fetching results:', error)
-    // Set empty results structure on error
-    setResults({
-      auditName: '',
-      totalLeaders: 0,
-      completedLeaders: 0,
-      stageCounts: [],
-      averagePerformance: [],
-      completionStatus: [],
-      rawData: []
-    })
-  } finally {
-    setLoading(false)
   }
-}
 
   const fetchComparison = async () => {
-  if (!selectedAudit || !selectedPreviousAudit) return
-  
-  setLoadingComparison(true)
-  try {
-    const response = await fetch(`/api/audit/compare?currentId=${selectedAudit}&previousId=${selectedPreviousAudit}`)
-    if (response.ok) {
-      const data = await response.json()
-      // Ensure all arrays in comparison data are actually arrays
-      const safeComparisonData = {
-        ...data,
-        comparisons: Array.isArray(data.comparisons) ? data.comparisons : [],
-        movementPatterns: {
-          transitions: Array.isArray(data.movementPatterns?.transitions) ? data.movementPatterns.transitions : [],
-          byStageChange: {
-            promoted: Array.isArray(data.movementPatterns?.byStageChange?.promoted) ? data.movementPatterns.byStageChange.promoted : [],
-            maintained: Array.isArray(data.movementPatterns?.byStageChange?.maintained) ? data.movementPatterns.byStageChange.maintained : [],
-            demoted: Array.isArray(data.movementPatterns?.byStageChange?.demoted) ? data.movementPatterns.byStageChange.demoted : []
+    if (!selectedAudit || !selectedPreviousAudit) return
+
+    setLoadingComparison(true)
+    try {
+      const response = await fetch(`/api/audit/compare?currentId=${selectedAudit}&previousId=${selectedPreviousAudit}`)
+      if (response.ok) {
+        const data = await response.json()
+        // Ensure all arrays in comparison data are actually arrays
+        const safeComparisonData = {
+          ...data,
+          comparisons: Array.isArray(data.comparisons) ? data.comparisons : [],
+          movementPatterns: {
+            transitions: Array.isArray(data.movementPatterns?.transitions) ? data.movementPatterns.transitions : [],
+            byStageChange: {
+              promoted: Array.isArray(data.movementPatterns?.byStageChange?.promoted) ? data.movementPatterns.byStageChange.promoted : [],
+              maintained: Array.isArray(data.movementPatterns?.byStageChange?.maintained) ? data.movementPatterns.byStageChange.maintained : [],
+              demoted: Array.isArray(data.movementPatterns?.byStageChange?.demoted) ? data.movementPatterns.byStageChange.demoted : []
+            }
           }
         }
+        setComparisonData(safeComparisonData)
       }
-      setComparisonData(safeComparisonData)
+    } catch (error) {
+      console.error('Error fetching comparison:', error)
+      setComparisonData(null)
+    } finally {
+      setLoadingComparison(false)
     }
-  } catch (error) {
-    console.error('Error fetching comparison:', error)
-    setComparisonData(null)
-  } finally {
-    setLoadingComparison(false)
   }
-}
 
   const stageColors = {
     1: '#E8B70B',  // Yello
@@ -1837,480 +1837,6 @@ export default function ResultsPage() {
             </div>
 
           </div>
-{/* Performance-Stage Distribution Scatterplot */}
-{/*
-<div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
-  <h2 className="text-xl font-semibold mb-2">Performance-Stage Distribution</h2>
-  <p className="text-sm text-gray-600 mb-6">
-    Individual employee positioning by career stage and performance percentile (higher is better performance)
-  </p>
-  
-  {/* Chart Container */}
-  <div style={{ position: 'relative', height: '400px', paddingLeft: '120px' }}>
-    {/* Y-axis label */}
-    <div style={{ 
-      position: 'absolute',
-      left: '5px',
-      top: '50%',
-      transform: 'translateY(-50%) rotate(-90deg)',
-      transformOrigin: 'center',
-      fontSize: '14px',
-      fontWeight: 'bold',
-      color: '#333',
-      whiteSpace: 'nowrap'
-    }}>
-      Performance Percentile
-    </div>
-    
-    {/* Main chart area */}
-    <div style={{ height: '350px', position: 'relative', marginLeft: '20px' }}>
-      {/* Y-axis scale */}
-      <div style={{ 
-        position: 'absolute',
-        left: '-30px',
-        top: '0',
-        height: '300px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        fontSize: '12px',
-        color: '#666',
-        fontWeight: 'bold'
-      }}>
-        <span>100%</span>
-        <span>75%</span>
-        <span>50%</span>
-        <span>25%</span>
-        <span>0%</span>
-      </div>
-      
-      {/* Chart plot area */}
-      <div style={{ height: '300px', position: 'relative' }}>
-        {/* Grid lines */}
-        <div style={{ position: 'absolute', inset: '0' }}>
-          {/* Horizontal lines */}
-          {[0, 25, 50, 75, 100].map(val => (
-            <div key={`h-${val}`} style={{ 
-              position: 'absolute',
-              left: '0',
-              right: '0',
-              top: `${100 - val}%`,
-              borderTop: '1px solid #e5e7eb'
-            }}></div>
-          ))}
-          {/* Vertical lines for stages */}
-          {[1, 2, 3, 4].map(stage => (
-            <div key={`v-${stage}`} style={{ 
-              position: 'absolute',
-              top: '0',
-              bottom: '0',
-              left: `${((stage - 0.5) / 4) * 100}%`,
-              borderLeft: '1px solid #e5e7eb'
-            }}></div>
-          ))}
-          {/* Center reference lines */}
-          <div style={{ 
-            position: 'absolute',
-            left: '50%',
-            top: '0',
-            bottom: '0',
-            borderLeft: '2px dashed #9ca3af'
-          }}></div>
-          <div style={{ 
-            position: 'absolute',
-            left: '0',
-            right: '0',
-            top: '50%',
-            borderTop: '2px dashed #9ca3af'
-          }}></div>
-        </div>
-        
-        {/* Quadrant backgrounds */}
-        <div style={{ position: 'absolute', inset: '0' }}>
-          {/* Top Left - High Performance, Low Stage */}
-          <div style={{ 
-            position: 'absolute',
-            left: '0',
-            top: '0',
-            width: '50%',
-            height: '50%',
-            backgroundColor: '#F59E0B',
-            opacity: 0.05
-          }}></div>
-          {/* Top Right - High Performance, High Stage */}
-          <div style={{ 
-            position: 'absolute',
-            right: '0',
-            top: '0',
-            width: '50%',
-            height: '50%',
-            backgroundColor: '#10B981',
-            opacity: 0.05
-          }}></div>
-          {/* Bottom Left - Low Performance, Low Stage */}
-          <div style={{ 
-            position: 'absolute',
-            left: '0',
-            bottom: '0',
-            width: '50%',
-            height: '50%',
-            backgroundColor: '#6B7280',
-            opacity: 0.05
-          }}></div>
-          {/* Bottom Right - Low Performance, High Stage */}
-          <div style={{ 
-            position: 'absolute',
-            right: '0',
-            bottom: '0',
-            width: '50%',
-            height: '50%',
-            backgroundColor: '#EF4444',
-            opacity: 0.05
-          }}></div>
-        </div>
-        
-        {/* Plot points */}
-        {(results as any).rawData.map((emp: any, idx: number) => {
-          // Calculate position
-          const xPercent = ((emp.stage - 0.5) / 4) * 100
-          const yPercent = emp.percentile
-          
-          // Determine color based on stage
-          const dotColor = emp.stage === 1 ? '#E8B70B' : 
-                          emp.stage === 2 ? '#ED1B34' : 
-                          emp.stage === 3 ? '#0086D6' : '#071D49'
-          
-          return (
-            <div
-              key={idx}
-              style={{
-                position: 'absolute',
-                left: `${xPercent}%`,
-                top: `${100 - yPercent}%`,
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: dotColor,
-                transform: 'translate(-50%, -50%)',
-                border: '2px solid white',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
-                cursor: 'pointer',
-                zIndex: 10
-              }}
-              className="hover:scale-150 transition-transform"
-            />
-          )
-        })}
-      </div>
-      
-      {/* X-axis labels */}
-      <div style={{ 
-        display: 'flex',
-        justifyContent: 'space-around',
-        marginTop: '10px',
-        paddingLeft: '0px',
-        paddingRight: '0px'
-      }}>
-        {[1, 2, 3, 4].map(stage => {
-          const count = (results as any).rawData.filter((r: any) => r.stage === stage).length
-          return (
-            <div key={stage} style={{ 
-              textAlign: 'center',
-              flex: 1
-            }}>
-              <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Stage {stage}</div>
-              <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>
-                ({count} {count === 1 ? 'leader' : 'leaders'})
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  </div>
-  
-
-</div>
-*/}
-          {/* Performance-Stage Misalignment */}
-          {/*
-          <div className="bg-white p-6 rounded-lg shadow misalignment-analysis-section">
-            <h2 className="text-xl font-semibold mb-2">Performance-Stage Misalignment Analysis</h2>
-            <p className="text-sm text-gray-600 mb-6">
-              Identifies talent opportunities and risks based on performance and career stage alignment
-            </p>
-            
-            {/* Risk Matrix and Alert List */}
-            <div style={{ display: 'flex', gap: '60px' }}>
-              {/* 2x2 Matrix */}
-              <div style={{ flex: '1' }}>
-                <h3 className="font-semibold mb-4 text-gray-800">Talent Distribution Matrix</h3>
-                <div style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: '80px 1fr 1fr', 
-                  gridTemplateRows: '1fr 1fr 40px 40px', 
-                  gap: '3px', 
-                  height: '380px'
-                }}>
-                  {/* Y-axis label */}
-                  <div style={{ 
-                    gridRow: '1 / 3',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    writingMode: 'vertical-rl',
-                    transform: 'rotate(180deg)',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    backgroundColor: 'white',
-                    color: '#374151',
-                    letterSpacing: '0.05em',
-                    borderRadius: '5px 0 0 5px'
-                  }}>
-                    PERFORMANCE
-                  </div>
-                  
-                  {/* Top Left - High Performance, Low Stage */}
-                  <div style={{ 
-                    background: 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)',
-                    borderRadius: '6px',
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    boxShadow: '0 2px 4px rgba(251, 191, 36, 0.1)'
-                  }}>
-                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#78350F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      High Potential
-                    </div>
-                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#F59E0B', margin: '8px 0' }}>
-                      {(() => {
-                        const rawData = (results as any).rawData || []
-                        return rawData.filter((r: any) => 
-                          (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) > 50
-                        ).length
-                      })()}
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#92400E', textAlign: 'center' }}>
-                      Ready to advance
-                    </div>
-                  </div>
-                  
-                  {/* Top Right - High Performance, High Stage */}
-                  <div style={{ 
-                    background: 'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
-                    borderRadius: '6px',
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    boxShadow: '0 2px 4px rgba(16, 185, 129, 0.1)'
-                  }}>
-                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#064E3B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      Top Performers
-                    </div>
-                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#10B981', margin: '8px 0' }}>
-                      {(() => {
-                        const rawData = (results as any).rawData || []
-                        return rawData.filter((r: any) => 
-                          (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) > 50
-                        ).length
-                      })()}
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#065F46', textAlign: 'center' }}>
-                      Well positioned
-                    </div>
-                  </div>
-                  
-                  {/* Bottom Left - Low Performance, Low Stage */}
-                  <div style={{ 
-                    background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
-                    borderRadius: '6px',
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
-                  }}>
-                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#374151', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      Developing
-                    </div>
-                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#6B7280', margin: '8px 0' }}>
-                      {(() => {
-                        const rawData = (results as any).rawData || []
-                        return rawData.filter((r: any) => 
-                          (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) <= 50
-                        ).length
-                      })()}
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#4B5563', textAlign: 'center' }}>
-                      Develop or remove
-                    </div>
-                  </div>
-                  
-                  {/* Bottom Right - Low Performance, High Stage */}
-                  <div style={{ 
-                    background: 'linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%)',
-                    borderRadius: '6px',
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    boxShadow: '0 2px 4px rgba(239, 68, 68, 0.1)'
-                  }}>
-                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#7F1D1D', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      At Risk
-                    </div>
-                    <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#EF4444', margin: '8px 0' }}>
-                      {(() => {
-                        const rawData = (results as any).rawData || []
-                        return rawData.filter((r: any) => 
-                          (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) <= 50
-                        ).length
-                      })()}
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#991B1B', textAlign: 'center' }}>
-                      Need support
-                    </div>
-                  </div>
-                  
-                  {/* X-axis stage labels row */}
-                  <div></div>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    fontSize: '13px',
-                    fontWeight: '500',
-                    color: '#4B5563',
-                    backgroundColor: 'white'
-                  }}>
-                    Early Stage (1-2)
-                  </div>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    fontSize: '13px',
-                    fontWeight: '500',
-                    color: '#4B5563',
-                    backgroundColor: 'white'
-                  }}>
-                    Senior Stage (3-4)
-                  </div>
-                  
-                  {/* X-axis main label row */}
-                  <div style={{ gridColumn: '2 / 4', textAlign: 'center', fontSize: '14px', fontWeight: 'bold', color: '#374151', letterSpacing: '0.05em', paddingTop: '0px' }}>
-                    CAREER STAGE
-                  </div>
-                </div>
-              </div>
-              
-              {/* Action Items */}
-              <div style={{ flex: '1' }}>
-                <h3 className="font-semibold mb-4 text-gray-800">Priority Actions</h3>
-                <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
-                  {(() => {
-                    const rawData = (results as any).rawData || []
-                    const alerts: any[] = []
-                    
-                    // High performers in Stage 1-2
-                    rawData.filter((r: any) => 
-                      (r.stage === 1 || r.stage === 2) && parseFloat(r.percentile) > 75
-                    ).forEach((r: any) => {
-                      alerts.push({
-                        type: 'opportunity',
-                        employee: r.employee,
-                        title: r.title,
-                        stage: r.stage,
-                        percentile: r.percentile,
-                        message: `Consider for advancement`,
-                        icon: '⬆️',
-                        bgColor: '#FEF3C7',
-                        borderColor: '#F59E0B'
-                      })
-                    })
-                    
-                    // Low performers in Stage 3-4
-                    rawData.filter((r: any) => 
-                      (r.stage === 3 || r.stage === 4) && parseFloat(r.percentile) < 12
-                    ).forEach((r: any) => {
-                      alerts.push({
-                        type: 'risk',
-                        employee: r.employee,
-                        title: r.title,
-                        stage: r.stage,
-                        percentile: r.percentile,
-                        message: `Development needed`,
-                        icon: '⚠️',
-                        bgColor: '#FEE2E2',
-                        borderColor: '#EF4444'
-                      })
-                    })
-                    
-                    if (alerts.length === 0) {
-                      return (
-                        <div className="text-center py-8">
-                          <div className="text-gray-400 mb-2">
-                            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                          <div className="text-gray-500 font-medium">
-                            No critical misalignments detected
-                          </div>
-                          <div className="text-gray-400 text-sm mt-1">
-                            All employees appear appropriately positioned
-                          </div>
-                        </div>
-                      )
-                    }
-                    
-                    return alerts.map((alert, idx) => (
-                      <div key={idx} className="rounded-lg border-2 p-4 transition-all hover:shadow-md" style={{ 
-                        backgroundColor: alert.bgColor,
-                        borderColor: alert.borderColor
-                      }}>
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span style={{ fontSize: '20px' }}>{alert.icon}</span>
-                              <span className="font-semibold text-gray-800">{alert.employee}</span>
-                            </div>
-                            <div className="text-sm text-gray-600 mb-2">{alert.title}</div>
-                            <div className="flex gap-4 text-xs">
-                              <span className="px-2 py-1 rounded bg-white bg-opacity-60">
-                                Stage {alert.stage}
-                              </span>
-                              <span className="px-2 py-1 rounded bg-white bg-opacity-60 font-medium">
-                                {alert.percentile}% Performance
-                              </span>
-                            </div>
-                          </div>
-                          <div className="text-sm font-medium" style={{ color: alert.borderColor }}>
-                            {alert.message}
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  })()}
-                </div>
-              </div>
-            </div>
-            
-            {/* Calculation note */}
-            <div className="mt-4 p-3 bg-blue-50 rounded text-xs text-gray-700">
-              <strong>Note:</strong> The matrix categorizes employees based on their career stage (1-2 = Early, 3-4 = Senior) 
-              and performance percentile (50% or below = Lower, above 50% = Higher). Priority actions highlight high performers in early stages 
-              (above 75th percentile in stages 1-2) as advancement opportunities and low performers in senior stages 
-              (below 25th percentile in stages 3-4) as development needs.
-            </div>
-          </div>
-          */}
 
 
           {/* Business Unit Stage by Performance */}
