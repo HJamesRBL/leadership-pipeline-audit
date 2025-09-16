@@ -2188,12 +2188,12 @@ export default function ResultsPage() {
             <p className="text-gray-700 mb-3">
               To address these critical gaps, implement the following approach:
             </p>
-            <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
+            <ul className="list-disc ml-6 text-gray-700 space-y-2 mb-4">
               <li>Remove Stage 1 leaders from the organization</li>
               <li>Segment Stage 2 leaders into three groups: Leaders that have a 1) high, 2) moderate, and 3) low chance of developing quickly into Stage 3 contributors.</li>
               <li>Consider removing Stage 2 leaders with a low chance of development</li>
               <li>Actively develop the other two segments of Stage 2 leaders:
-                <ul className="list-circle pl-8 mt-2 space-y-1">
+                <ul className="list-disc ml-8 mt-2 space-y-1" style={{ listStyleType: 'circle' }}>
                   <li>Job assignments that build Stage 3 and 4 perspectives</li>
                   <li>Mentorship from Stage 3 and 4 leaders and internal or external coaching</li>
                   <li>Leadership Code Assessment or an internal leadership 360 assessment</li>
