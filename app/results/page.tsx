@@ -1158,7 +1158,7 @@ export default function ResultsPage() {
           className="w-full rounded-lg shadow-lg"
           style={{ maxWidth: '800px', margin: '0 auto', display: 'block' }}
         >
-          <source src="/expectations2.mp4" type="video/mp4" />
+          <source src="/expectations3.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -1667,14 +1667,14 @@ export default function ResultsPage() {
           if (stage1_2_percentage >= 11) {
             return (
               <>
-                <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having 11-59% at Stages 1-2 creates uneven capability across the organization:</p>
+                <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having this many leaders at Stages 1-2 creates uneven capability across the organization:</p>
                 <ul className="space-y-1 list-disc ml-4 pl-5">
                     <li>Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
                     <li>Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
                     <li>Employee engagement varies significantly between teams with strong versus weak leaders</li>
                     <li>Customer satisfaction is at risk in areas led by Stage 1-2 leaders who lack strategic thinking</li>
                 </ul>
-                <p>With targeted development, many of these leaders can progress to Stage 3 readiness within 12-18 months.</p>
+                
               </>
             )
           }
@@ -2190,13 +2190,13 @@ export default function ResultsPage() {
             </p>
             <ul className="text-gray-700 space-y-2 mb-4" style={{ listStyle: 'disc', paddingLeft: '1.5rem' }}>
               <li>Remove Stage 1 leaders from the organization</li>
-              <li>Segment Stage 2 leaders into three groups: Leaders that have a 1) high, 2) moderate, and 3) low chance of developing quickly into Stage 3 contributors.</li>
+              <li>Segment Stage 2 leaders into three groups: Leaders that have a 1) high, 2) moderate, and 3) low chance of developing quickly into Stage 3 contributors</li>
               <li>Consider removing Stage 2 leaders with a low chance of development</li>
               <li>Actively develop the other two segments of Stage 2 leaders:
                 <ul className="mt-2 space-y-1" style={{ listStyle: 'circle', paddingLeft: '2rem' }}>
                   <li>Job assignments that build Stage 3 and 4 perspectives</li>
                   <li>Mentorship from Stage 3 and 4 leaders and internal or external coaching</li>
-                  <li>Leadership Code Assessment or an internal leadership 360 assessment</li>
+                  <li>Leadership Code 360 Assessment or an internal leadership 360 assessment</li>
                   <li>Training programs such as the Leadership Code Academy</li>
                 </ul>
               </li>
