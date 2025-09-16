@@ -2179,6 +2179,33 @@ export default function ResultsPage() {
               </div>
           */}
 
+          {/* Pipeline Audit Implications and Next Steps */}
+          <div className="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 className="text-xl font-semibold mb-4">Pipeline Audit Implications and Next Steps</h2>
+            <p className="text-gray-700 mb-4">
+              As you review your Leadership Pipeline Audit results, remember that Stage 1 and 2 leaders do not develop or engage their people, nor do they link employees and customers to deliver the desired experience.
+            </p>
+            <p className="text-gray-700 mb-3">
+              To address these critical gaps, implement the following approach:
+            </p>
+            <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4">
+              <li>Remove Stage 1 leaders from the organization</li>
+              <li>Segment Stage 2 leaders into three groups: Leaders that have a 1) high, 2) moderate, and 3) low chance of developing quickly into Stage 3 contributors.</li>
+              <li>Consider removing Stage 2 leaders with a low chance of development</li>
+              <li>Actively develop the other two segments of Stage 2 leaders:
+                <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
+                  <li>Job assignments that build Stage 3 and 4 perspectives</li>
+                  <li>Mentorship from Stage 3 and 4 leaders and internal or external coaching</li>
+                  <li>Leadership Code Assessment or an internal leadership 360 assessment</li>
+                  <li>Training programs such as the Leadership Code Academy</li>
+                </ul>
+              </li>
+            </ul>
+            <p className="text-gray-700">
+              These actions will help you build a stronger leadership pipeline. By removing leaders who can't grow and investing in those who can, you'll create a team that delivers better results for both employees and customers. The key is to act quickly and focus your resources where they'll have the most impact.
+            </p>
+          </div>
+
           {/* Raw Data Table */}
           <div className="bg-white p-6 rounded-lg shadow raw-data-section">
             <div className="flex justify-between items-center mb-4">
