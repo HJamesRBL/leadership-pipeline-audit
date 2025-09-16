@@ -1142,13 +1142,13 @@ export default function ResultsPage() {
   
   <div className="prose max-w-none space-y-6 text-gray-700">
     <p className="text-lg leading-relaxed">
-      Every organization faces a fundamental challenge: how do we develop leaders who can drive value today while building capability for tomorrow? The answer lies not in traditional hierarchical thinking but in understanding how professionals truly progress through their careers—and how organizations often misunderstand that progression.
+      Every organization faces a fundamental challenge: how do we develop leaders who can drive value today while building capability for tomorrow? The answer lies not in traditional hierarchical thinking but in understanding how professionals progress through their careers—and how organizations often misunderstand and even get in the way of that progression.
     </p>
 
     <div>
-      <h3 className="text-xl font-semibold mb-4 text-gray-900">The Hidden Crisis of Career Expectations</h3>
+      <h3 className="text-xl font-semibold mb-4 text-gray-900">What the Research Tells Us about Careers and Performance</h3>
       <p className="mb-4">
-        Organizations harbor a dangerous misconception about career progression that undermines their leadership development efforts. Consider what the research reveals about how organizations actually view their talent across the career lifespan:
+        Consider what the research reveals about careers:
       </p>
       
       {/* Video embed */}
@@ -1166,20 +1166,20 @@ export default function ResultsPage() {
       <div className="space-y-4 mt-6">
         <ul className="space-y-1 list-disc ml-4 pl-5">
   <li>
-    <strong>Performance expectations peak at age 40-45, then decline as organizations assume diminishing returns from older workers.</strong> This reflects a troubling organizational bias—the assumption that professionals become less valuable as they age, despite decades of accumulated wisdom and experience.
+    <strong>Aggregate performance peaks at age 40, then declines. </strong> It is noteworthy that individual high performers do not follow this same pattern—some individuals become more valuable as they get older. We need to understand what they do. 
   </li>
   <li>
-    <strong>Managerial expectations follow a similar pattern but decline more sharply after 45, reflecting organizational bias against aging leadership.</strong> Just when leaders have developed the judgment and perspective to make their greatest contributions, organizations begin writing them off.
+    <strong>Becoming a manager follows a similar pattern—performance declines just a little later.</strong> Becoming a manager does not solve performance decline; it just delays it a few years.
   </li>
   <li>
-    <strong>Yet top performers face continuously rising expectations with no decline—excellence has no age ceiling in organizational perception.</strong> This reveals the truth organizations know but don't act on: real capability doesn't diminish with age.
+    <strong>Individual top performers become more valuable over time.</strong> Clearly, age is not the primary factor in remaining a high performer. High performers change the nature of their contributions over time.
   </li>
   <li>
-    <strong>Meanwhile, compensation expectations increase linearly throughout careers, creating tension when performance expectations decline after mid-career.</strong> This misalignment creates a destructive dynamic where organizations pay more while expecting less, breeding resentment and waste.
+    <strong>•	Meanwhile, compensation increases over time.</strong> This misalignment creates the conditions where compensation is not tied to performance; it’s generally tied to seniority.
   </li>
 </ul>
         <p>
-          This disconnect between chronological age and actual capability explains why so many organizations struggle with succession planning, talent retention, and leadership development. They're using the wrong lens to evaluate their talent.
+          In summary, age and seniority are important factors in becoming a high performer. Over time expectations for performance increase and high performers change the nature of their contributions. Those who are able to change the way they contribute are able to remain high performers.
         </p>
       </div>
     </div>
@@ -1187,35 +1187,35 @@ export default function ResultsPage() {
     <div>
       <h3 className="text-xl font-semibold mb-4 text-gray-900">The Career Stages Framework: A Better Model</h3>
       <p className="mb-4">
-        The solution comes from decades of research by Gene Dalton, Paul Thompson, and our team at RBL Group. Rather than viewing careers through age or tenure, we must understand progression through capability stages. Each stage represents a fundamental shift in how professionals create value:
+        The solution comes from decades of research by Gene Dalton, Paul Thompson, and our team at RBL Group. Rather than viewing careers through age or tenure, we must understand progression through stages of development. Each stage represents a shift in how professionals create value. At each stage transition, people must stop what makes them a high performer at that stage and take on new knowledge, skills, and perspective to be effective.
       </p>
       
       <div className="space-y-6">
         <div className="pl-4 border-l-4 border-yellow-500">
           <h4 className="font-semibold text-gray-900 mb-2">Stage 1: Contributes Dependently</h4>
           <p className="text-gray-700">
-            Professionals at this stage depend on others for direction and support. They work on portions of larger projects, focus on routine tasks, and learn "how we do things around here." They're building technical competence but haven't yet developed independence. Without strong technical skills, they need guidance about what to do and how to do it.
+            Professionals at this stage depend on others for direction and support. They work on portions of larger projects, focus on routine tasks, and learn "how we do things around here." They're building technical competence but haven't yet developed independence. Without strong technical skills, they need guidance about what to do and how to do it. It’s not possible to stay in stage 1 for an entire career. An individual in stage 1 must become an individual contributor or face lack of relevance and missed expectations.
           </p>
         </div>
 
         <div className="pl-4 border-l-4 border-red-500">
           <h4 className="font-semibold text-gray-900 mb-2">Stage 2: Contributes Independently</h4>
           <p className="text-gray-700">
-            These professionals have become experts in their domain. They work independently, take responsibility for entire projects, and are considered credible specialists. They view work through the lens of competence and often compete with others in similar roles. While technically proficient, they tend to micromanage rather than develop others, focusing on their individual expertise rather than organizational capability.
+            These professionals have become experts in their domain. They work independently, take responsibility for entire projects, and are considered credible specialists. They view work through the lens of competence and often compete with others in similar roles. While technically proficient, they tend to micromanage rather than develop others, focusing on their individual expertise rather than organizational capability. An individual can be a high performer in stage 2 but to do so they must invest in staying current in their technical area. This is difficult but doable over time.
           </p>
         </div>
 
         <div className="pl-4 border-l-4 border-blue-500">
           <h4 className="font-semibold text-gray-900 mb-2">Stage 3: Contributes through Others</h4>
           <p className="text-gray-700">
-            The shift to Stage 3 represents a fundamental transformation from individual expert to organizational leader. These professionals have moved from a focus on self to ensuring team success. They influence others, integrate across multiple areas of expertise, and build both internal and external networks. They coach, mentor, and develop others while representing their workgroup to external stakeholders. They understand organizational culture and can navigate it to get things done.
+            The shift to Stage 3 represents a fundamental transformation from individual expert to organizational leader. These professionals have moved from a focus on self to a focus on ensuring team success. They influence others, integrate across multiple areas of expertise, and build both internal and external networks. They coach, mentor, and develop others while representing their workgroup to external stakeholders. They understand organizational culture and can navigate it to get things done. Individuals in Stage 3 are typically considered to be high performers.
           </p>
         </div>
 
         <div className="pl-4 border-l-4" style={{ borderColor: '#071D49' }}>
           <h4 className="font-semibold text-gray-900 mb-2">Stage 4: Contributes through Enterprise</h4>
           <p className="text-gray-700">
-            Stage 4 leaders direct the business itself. They set strategic direction, control organizational resources, and use power rather than just influence. They see how functions, geographies, and operating units fit together to serve the enterprise. From the outside, they represent the entire organization. Their relationship with talent shifts from mentoring to testing future leaders for senior roles. They sponsor key people and shape organizational capability for the future.
+            Stage 4 leaders direct the business itself. They set strategic direction, control organizational resources, and use power rather than just influence. They see how functions, geographies, and operating units fit together to serve the enterprise. From the outside, they represent the entire organization. Their relationship with talent shifts from mentoring to testing future leaders for senior roles. They sponsor key people and shape organizational capability for the future. Individuals in Stage 4 are typically perceived as high performers. 
           </p>
         </div>
       </div>
@@ -1224,7 +1224,7 @@ export default function ResultsPage() {
     <div>
       <h3 className="text-xl font-semibold mb-4 text-gray-900">What This Means for Your Pipeline Audit</h3>
       <p className="mb-4">
-        Most organizations discover a troubling reality when they honestly assess their leadership pipeline: they're dramatically overweighted in Stages 1 and 2. The research suggests an optimal distribution looks quite different from what most organizations achieve:
+        Many organizations discover a troubling reality when they honestly assess their leadership pipeline: they're dramatically overweighted in Stages 1 and 2. The implication of this is leaders who don’t coach and develop their people and also don’t consider the needs of the external customer. The research suggests an optimal distribution looks quite different from what most organizations achieve when they first do a pipeline audit:
       </p>
 
       {/* Optimal Distribution Chart */}
@@ -1286,16 +1286,16 @@ export default function ResultsPage() {
               paddingLeft: '40px',
               paddingRight: '40px'
             }}>
-              {/* Stage 1 - 2% */}
+              {/* Stage 1 - 0% */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
-                <div style={{ 
+                <div style={{
                   width: '60px',
-                  height: '6px', // 2% * 3
+                  height: '0px', // 0% * 3
                   backgroundColor: '#E8B70B',
                   position: 'relative',
                   transition: 'height 0.5s ease'
                 }}>
-                  <span style={{ 
+                  <span style={{
                     position: 'absolute',
                     top: '-25px',
                     left: '50%',
@@ -1304,21 +1304,21 @@ export default function ResultsPage() {
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    2%
+                    0%
                   </span>
                 </div>
               </div>
               
-              {/* Stage 2 - 8% */}
+              {/* Stage 2 - 0% */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
-                <div style={{ 
+                <div style={{
                   width: '60px',
-                  height: '24px', // 8% * 3
+                  height: '0px', // 0% * 3
                   backgroundColor: '#ED1B34',
                   position: 'relative',
                   transition: 'height 0.5s ease'
                 }}>
-                  <span style={{ 
+                  <span style={{
                     position: 'absolute',
                     top: '-25px',
                     left: '50%',
@@ -1327,21 +1327,21 @@ export default function ResultsPage() {
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    8%
+                    0%
                   </span>
                 </div>
               </div>
               
-              {/* Stage 3 - 65% */}
+              {/* Stage 3 - 90% */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
-                <div style={{ 
+                <div style={{
                   width: '60px',
-                  height: '195px', // 65% * 3
+                  height: '270px', // 90% * 3
                   backgroundColor: '#0086D6',
                   position: 'relative',
                   transition: 'height 0.5s ease'
                 }}>
-                  <span style={{ 
+                  <span style={{
                     position: 'absolute',
                     top: '-25px',
                     left: '50%',
@@ -1350,21 +1350,21 @@ export default function ResultsPage() {
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    65%
+                    90%
                   </span>
                 </div>
               </div>
               
-              {/* Stage 4 - 25% */}
+              {/* Stage 4 - 10% */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px' }}>
-                <div style={{ 
+                <div style={{
                   width: '60px',
-                  height: '75px', // 25% * 3
+                  height: '30px', // 10% * 3
                   backgroundColor: '#071D49',
                   position: 'relative',
                   transition: 'height 0.5s ease'
                 }}>
-                  <span style={{ 
+                  <span style={{
                     position: 'absolute',
                     top: '-25px',
                     left: '50%',
@@ -1373,7 +1373,7 @@ export default function ResultsPage() {
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    25%
+                    10%
                   </span>
                 </div>
               </div>
@@ -1408,15 +1408,15 @@ export default function ResultsPage() {
       </div>
 
       <p className="mt-6">
-        This optimal distribution reflects a crucial insight: <strong>organizations create the most value when the majority of their leaders operate at Stage 3—contributing through others.</strong> Stage 3 is where leverage happens, where individual expertise transforms into organizational capability.
+        This optimal distribution reflects a crucial insight: <strong>organizations create the most value when their leaders operate at Stages 3 and 4—contributing through others and contributing through the enterprise.</strong> The most common gap is with Stage 3 leaders because Stage 3 is where leverage happens, where expertise has transformed into organizational capability.
       </p>
       <br />
       <p>
-        Yet most organizations find themselves with 60% or more of their leaders stuck in Stages 1 and 2. They have an organization of individual contributors trying to compete in a world that demands collaborative leadership. They wonder why strategy execution fails, why innovation stalls, why customer relationships suffer, and why employee engagement lags. The answer is simple: they lack the Stage 3 leaders who translate strategy into action, who build the networks and relationships that create value, who develop the next generation of talent.
+        Yet most organizations find themselves with too many leaders in Stages 1 and 2. They have individual contributors trying to compete in a world that demands collaborative leadership. This drives poor employee engagement, strategy execution failures, innovation stalls, and lessened customer relationships. They lack the Stage 3 leaders who translate strategy into action, who build the networks and relationships that create value, who develop the next generation of talent.
       </p>
        <br />
       <p>
-        The Pipeline Audit you're about to review reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that can grow and adapt, or one that's constrained by its own leadership limitations.
+        The Pipeline Audit you're about to review reveals whether your organization has the leadership capability to deliver on its promises to stakeholders. It shows whether you're building an organization that’s able to grow and adapt, or one that's constrained by its own leadership limitations.
       </p>
     </div>
   </div>
