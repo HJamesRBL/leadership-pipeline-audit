@@ -21,25 +21,25 @@ const stageDescriptions = [
     stage: 1,
     title: "Contributes Dependently",
     color: "#E8B70B", // Yellow
-    description: "People who contribute dependently are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. People who are in One do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
+    description: "People who contribute dependently are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. These leaders do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
   },
   {
     stage: 2,
     title: "Contributes Independently",
     color: "#ED1B34", // Red
-    description: "Those who contribute independently are seen as experts in their area of expertise. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not seen as developers of others because they tend to be micro managers."
+    description: "Those who contribute independently are seen as experts in their area of expertise. They look at work through the lens of competence and tend to be competitive with others who do similar work. They are not seen as developers of others because they tend to be micromanagers."
   },
   {
     stage: 3,
     title: "Contributes through Others",
     color: "#0086D6", // Medium RBL Blue
-    description: "People who are described as contributors in Three have shifted from individual expert to someone who cares about and is  interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team-. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. Those in Three are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully to get things done."
+    description: "People contribute through others have shifted from individual expert to someone who cares about and is interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. These leaders are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully to get things done."
   },
   {
     stage: 4,
     title: "Contributes through Enterprise",
     color: "#071D49", // Dark RBL Navy
-    description: "People who contribute through the enterprise are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power-meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, those in Four are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+    description: "People who contribute through the enterprise are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power——meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, these leaders are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
   }
 ]
 
@@ -155,6 +155,13 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   useEffect(() => {
     loadAuditData()
   }, [])
+
+  useEffect(() => {
+    // Scroll to top when entering the stages step
+    if (step === 'stages') {
+      window.scrollTo(0, 0)
+    }
+  }, [step])
 
   const loadAuditData = async () => {
     try {
@@ -285,8 +292,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           
           <div className="prose max-w-none mb-8">
             <p className="text-gray-700 mb-4 leading-relaxed">
-              Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations 
-              understand their talent distribution and identify opportunities for development and advancement.
+              Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations understand their leadership bench strength and identify opportunities for development and advancement.
             </p>
             
             <p className="text-gray-700 mb-4 leading-relaxed">
@@ -321,8 +327,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <div className="bg-green-50 border-l-4 border-green-600 p-6 mb-6">
               <h3 className="font-bold text-lg mb-3 text-green-900">Exercise 2: Relative Performance Ranking</h3>
               <p className="text-gray-700">
-                You will rank employees by their relative performance and impact. This helps identify high performers 
-                who may be ready for advancement and those who may need additional support or development.
+                You will rank employees by their relative performance and impact. 
               </p>
             </div>
           </div>
@@ -354,7 +359,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
     </li>
     <li className="flex items-start">
       <span className="text-amber-600 mr-2">•</span>
-      <span>•	Acknowledge that your judgement of relative performance is based on your perception</span>
+      <span>Acknowledge that your judgement of relative performance is based on your perception</span>
     </li>
     <li className="flex items-start">
       <span className="text-amber-600 mr-2">•</span>
@@ -409,7 +414,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 1: Categorize Each Leader's Way of Contributing
           </h2>
           <p className="mb-6 text-gray-600">
-            For each person, sort each person into one of the four options.
+            For each person, sort into one of the four options.
           </p>
 
           {/* Stage Framework Tables - Desktop shows as one 4-column table, Mobile shows as two 2-column tables */}
@@ -658,8 +663,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to to who has least impactf.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
-<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to to who has least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
+<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
             <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
             <p className="mb-6 text-gray-600">Now rank them.
           </p>
