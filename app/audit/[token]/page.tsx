@@ -39,7 +39,7 @@ const stageDescriptions = [
     stage: 4,
     title: "Contributes through Enterprise",
     color: "#071D49", // Dark RBL Navy
-    description: "People who contribute through the enterprise are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power——meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, these leaders are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
+    description: "People who contribute through the enterprise are seen as contributors to the entire organization. They see how functions, shared services, geographies and operating units fit together and serve the enterprise. They also have control over the resources of the company and can harness those resources of people, money, and information. They have shifted from influence to power—meaning that they are accountable for the success or failure of the entire business. They set strategic direction for a large part if not the entire business. From the outside, these leaders are seen as representing the entire business. Their orientation to people is no longer to mentor or coach them but to test them for future senior roles."
   }
 ]
 
@@ -455,7 +455,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       <li className="text-sm text-gray-700">Credible</li>
                       <li className="text-sm text-gray-700">Considered an expert</li>
                       <li className="text-sm text-gray-700">Has an internal network of other experts</li>
-                      <li className="text-sm text-gray-700">Can often acts as an innovator in technical area of expert</li>
+                      <li className="text-sm text-gray-700">Can often act as an innovator in technical area of expert</li>
                     </ul>
                   </div>
                 </div>
@@ -540,7 +540,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                         <li className="text-xs text-gray-700">Credible</li>
                         <li className="text-xs text-gray-700">Considered an expert</li>
                         <li className="text-xs text-gray-700">Has an internal network of other experts</li>
-                        <li className="text-xs text-gray-700">Can often acts as an innovator in technical area of expert</li>
+                        <li className="text-xs text-gray-700">Can often act as an innovator in technical area of expert</li>
                       </ul>
                     </div>
                   </div>
@@ -663,9 +663,9 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to to who has least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
 <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
-            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
+            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 5 and then your bottom 5. Sort the middle out after you have this figured out. </p>
             <p className="mb-6 text-gray-600">Now rank them.
           </p>
 
