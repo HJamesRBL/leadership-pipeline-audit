@@ -335,20 +335,17 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           {/* Introduction Video */}
           <div className="mb-8">
             <h3 className="font-bold text-lg mb-4 text-gray-800">Watch the Introduction Video</h3>
-            <div className="rounded-lg overflow-hidden border-2 border-gray-200 bg-black">
-              <div className="relative w-full">
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
-                  width="560"
-                  height="400"
-                  src="https://www.youtube.com/embed/9hv5nAQWQ4E?si=3BnUvFTeXK_ZwsrB"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                />
-              </div>
+            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
+              <iframe
+                className="w-full"
+                style={{ height: '400px' }}
+                src="https://www.youtube.com/embed/9hv5nAQWQ4E?si=3BnUvFTeXK_ZwsrB"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
             </div>
           </div>
 
