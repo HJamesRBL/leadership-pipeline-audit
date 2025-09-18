@@ -21,7 +21,7 @@ const stageDescriptions = [
     stage: 1,
     title: "Contributes Dependently",
     color: "#E8B70B", // Yellow
-    description: "People who contribute dependently are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. These leaders do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture around how to get things done around here."
+    description: "People who contribute dependently are seen as depending on others for support and direction. Regardless of the role they are in, this person needs others to guide them. These leaders do not have strong technical skills, so they are often not trusted to do independent projects. They need others in the organization to give them guidance about what to do. They tend to focus on routine tasks and don't completely understand the culture of how to get things done around here."
   },
   {
     stage: 2,
@@ -33,7 +33,7 @@ const stageDescriptions = [
     stage: 3,
     title: "Contributes through Others",
     color: "#0086D6", // Medium RBL Blue
-    description: "People contribute through others have shifted from individual expert to someone who cares about and is interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. These leaders are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, new ideas through the organization successfully to get things done."
+    description: "People contribute through others have shifted from individual expert to someone who cares about and is interdependent with others. They are strong influencers. They are still knowledgeable about their own technical area but have shifted from a focus on self to a focus on ensuring the success of their team. They get work done through others. They don't compete around a single area of expertise. They are good at seeing the value of different areas of expertise and how they fit together. These leaders are integrators, coaches, mentors and idea leaders. They understand the culture and have good networks so that they can move projects, initiatives, and new ideas through the organization successfully to get things done."
   },
   {
     stage: 4,
@@ -455,7 +455,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                       <li className="text-sm text-gray-700">Credible</li>
                       <li className="text-sm text-gray-700">Considered an expert</li>
                       <li className="text-sm text-gray-700">Has an internal network of other experts</li>
-                      <li className="text-sm text-gray-700">Can often act as an innovator in technical area of expert</li>
+                      <li className="text-sm text-gray-700">Can often act as an innovator in technical area of expertise</li>
                     </ul>
                   </div>
                 </div>
@@ -471,7 +471,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   <div className="px-6 py-4">
                     <ul className="space-y-3">
                       <li className="text-sm text-gray-700">Influences others</li>
-                      <li className="text-sm text-gray-700">Ability to Integrate across multiple areas of expertise in complex projects</li>
+                      <li className="text-sm text-gray-700">Ability to integrate across multiple areas of expertise in complex projects</li>
                       <li className="text-sm text-gray-700">Manages, coaches, mentors and/or idea leader</li>
                       <li className="text-sm text-gray-700">Develops others</li>
                       <li className="text-sm text-gray-700">Represents workgroup to external stakeholders</li>
@@ -540,7 +540,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                         <li className="text-xs text-gray-700">Credible</li>
                         <li className="text-xs text-gray-700">Considered an expert</li>
                         <li className="text-xs text-gray-700">Has an internal network of other experts</li>
-                        <li className="text-xs text-gray-700">Can often act as an innovator in technical area of expert</li>
+                        <li className="text-xs text-gray-700">Can often act as an innovator in technical area of expertise</li>
                       </ul>
                     </div>
                   </div>
@@ -561,7 +561,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                     <div className="px-4 py-4">
                       <ul className="space-y-2">
                         <li className="text-xs text-gray-700">Influences others</li>
-                        <li className="text-xs text-gray-700">Ability to Integrate across multiple areas of expertise in complex projects</li>
+                        <li className="text-xs text-gray-700">Ability to integrate across multiple areas of expertise in complex projects</li>
                         <li className="text-xs text-gray-700">Manages, coaches, mentors and/or idea leader</li>
                         <li className="text-xs text-gray-700">Develops others</li>
                         <li className="text-xs text-gray-700">Represents workgroup to external stakeholders</li>
