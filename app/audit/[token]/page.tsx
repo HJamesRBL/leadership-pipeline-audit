@@ -341,7 +341,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                 className="w-full aspect-video bg-black"
                 poster=""
               >
-                <source src="/Pipeline-Audit-Video-2.mp4" type="video/mp4" />
+                <source src="/Pipeline-Audit-Video-3.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
