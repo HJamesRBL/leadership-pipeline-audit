@@ -41,3 +41,6 @@ next-env.d.ts
 # database
 *.db
 *.sqlite
+
+# video files
+*.mp4

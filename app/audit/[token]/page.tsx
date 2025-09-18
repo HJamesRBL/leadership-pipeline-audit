@@ -336,14 +336,14 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           <div className="mb-8">
             <h3 className="font-bold text-lg mb-4 text-gray-800">Watch the Introduction Video</h3>
             <div className="rounded-lg overflow-hidden border-2 border-gray-200">
-              <video
-                controls
-                className="w-full aspect-video bg-black"
-                poster=""
-              >
-                <source src="/Pipeline-Audit-Video-4.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <iframe
+                className="w-full aspect-video"
+                src="https://www.youtube.com/embed/9hv5nAQWQ4E"
+                title="Pipeline Audit Introduction"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
 
