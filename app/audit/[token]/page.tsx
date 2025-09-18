@@ -339,10 +339,13 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/9hv5nAQWQ4E?rel=0&modestbranding=1&showinfo=0"
-                  title="Pipeline Audit Introduction"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/9hv5nAQWQ4E?si=3BnUvFTeXK_ZwsrB"
+                  title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                 />
               </div>
