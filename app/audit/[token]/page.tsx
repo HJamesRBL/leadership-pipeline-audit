@@ -338,7 +338,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <div className="rounded-lg overflow-hidden border-2 border-gray-200 bg-black">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
-                  className="absolute top-0 left-0 w-full h-full"
+                  className="absolute top-0 left-0 w-full h-full" 
                   src="https://www.youtube.com/embed/9hv5nAQWQ4E"
                   title="Pipeline Audit Introduction"
                   frameBorder="0"
