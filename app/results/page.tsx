@@ -2189,7 +2189,7 @@ export default function ResultsPage() {
               To address these critical gaps, implement the following approach:
             </p>
             <ul className="text-gray-700 space-y-2 mb-4" style={{ listStyle: 'disc', paddingLeft: '1.5rem' }}>
-              <li>Remove Stage 1 leaders from the organization</li>
+              <li>Remove Stage 1 leaders from the organization: These leaders have not developed their technical or leadership skills and have not found a way to contribute to the organization. The organization and individual are better separated. Consider how the employees reporting to these leaders could have been negatively affected, and make any necessary development adjustments for them.</li>
               <li>Segment Stage 2 leaders into three groups: Leaders that have a 1) high, 2) moderate, and 3) low chance of developing quickly into Stage 3 contributors</li>
               <li>Consider removing Stage 2 leaders with a low chance of development</li>
               <li>Actively develop the other two segments of Stage 2 leaders:
