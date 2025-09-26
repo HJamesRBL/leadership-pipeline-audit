@@ -400,7 +400,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <video
               className="w-full rounded-lg border-2 border-gray-200"
               controls
-              preload="metadata"
+              preload="auto"
+              playsInline
             >
               <source src="/contribution.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -661,7 +662,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <video
               className="w-full rounded-lg border-2 border-gray-200"
               controls
-              preload="metadata"
+              preload="auto"
+              playsInline
             >
               <source src="/performance.mp4" type="video/mp4" />
               Your browser does not support the video tag.
