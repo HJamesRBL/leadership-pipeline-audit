@@ -667,7 +667,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           <p className="mb-6 text-gray-600">
             In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
 <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
-            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 5 and then your bottom 5. Sort the middle out after you have this figured out. </p>
+            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
             <p className="mb-6 text-gray-600">Now rank them.
           </p>
 
