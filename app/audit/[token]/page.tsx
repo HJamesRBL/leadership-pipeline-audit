@@ -332,23 +332,6 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             </div>
           </div>
 
-          {/* Introduction Video */}
-          <div className="mb-8">
-            <h3 className="font-bold text-lg mb-4 text-gray-800">Watch the Introduction Video</h3>
-            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
-              <iframe
-                className="w-full"
-                style={{ height: '400px' }}
-                src="https://www.youtube.com/embed/9hv5nAQWQ4E?si=3BnUvFTeXK_ZwsrB"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
           {/* Important Notes */}
 <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
   <h3 className="font-bold text-lg mb-3 text-amber-900 flex items-center">
@@ -412,6 +395,20 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Stage Selection */}
       {step === 'stages' && (
         <div>
+          {/* Video Player */}
+          <div className="mb-8">
+            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
+              <video
+                className="w-full"
+                controls
+                style={{ maxHeight: '400px' }}
+              >
+                <source src="/contribution.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
           <h2 className="text-2xl font-semibold mb-4">
             Step 1: Categorize Each Leader's Way of Contributing
           </h2>
@@ -661,6 +658,20 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Performance Ranking */}
       {step === 'ranking' && (
         <div>
+          {/* Video Player */}
+          <div className="mb-8">
+            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
+              <video
+                className="w-full"
+                controls
+                style={{ maxHeight: '400px' }}
+              >
+                <source src="/performance.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
           <h2 className="text-2xl font-semibold mb-4">
             Step 2: Relative Performance Ranking
           </h2>
