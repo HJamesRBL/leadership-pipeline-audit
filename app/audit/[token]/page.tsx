@@ -397,18 +397,14 @@ export default function AuditPage({ params }: { params: { token: string } }) {
         <div>
           {/* Video Player */}
           <div className="mb-8">
-            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
-              <video
-                className="w-full"
-                controls
-                preload="metadata"
-                style={{ maxHeight: '400px', display: 'block' }}
-              >
-                <source src="/contribution.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-                <source src="/contribution.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+            <video
+              className="w-full rounded-lg border-2 border-gray-200"
+              controls
+              preload="metadata"
+            >
+              <source src="/contribution.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           <h2 className="text-2xl font-semibold mb-4">
@@ -662,18 +658,14 @@ export default function AuditPage({ params }: { params: { token: string } }) {
         <div>
           {/* Video Player */}
           <div className="mb-8">
-            <div className="rounded-lg overflow-hidden border-2 border-gray-200">
-              <video
-                className="w-full"
-                controls
-                preload="metadata"
-                style={{ maxHeight: '400px', display: 'block' }}
-              >
-                <source src="/performance.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-                <source src="/performance.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+            <video
+              className="w-full rounded-lg border-2 border-gray-200"
+              controls
+              preload="metadata"
+            >
+              <source src="/performance.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           <h2 className="text-2xl font-semibold mb-4">
