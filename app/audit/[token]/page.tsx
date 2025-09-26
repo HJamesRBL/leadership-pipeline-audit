@@ -401,8 +401,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               <video
                 className="w-full"
                 controls
-                style={{ maxHeight: '400px' }}
+                preload="metadata"
+                style={{ maxHeight: '400px', display: 'block' }}
               >
+                <source src="/contribution.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
                 <source src="/contribution.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -664,8 +666,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               <video
                 className="w-full"
                 controls
-                style={{ maxHeight: '400px' }}
+                preload="metadata"
+                style={{ maxHeight: '400px', display: 'block' }}
               >
+                <source src="/performance.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
                 <source src="/performance.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
