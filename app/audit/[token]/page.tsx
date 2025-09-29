@@ -402,11 +402,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               controls
               preload="metadata"
               playsInline
-              webkit-playsinline="true"
+              poster="/contribution-poster.jpg"
             >
-              <source src="/contribution.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
               <source src="/contribution.mp4" type="video/mp4" />
-              Your browser does not support the video tag. Please try a different browser.
+              Your browser does not support the video tag.
             </video>
           </div>
 
@@ -666,11 +665,10 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               controls
               preload="metadata"
               playsInline
-              webkit-playsinline="true"
+              poster="/performance-poster.jpg"
             >
-              <source src="/performance.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
               <source src="/performance.mp4" type="video/mp4" />
-              Your browser does not support the video tag. Please try a different browser.
+              Your browser does not support the video tag.
             </video>
           </div>
 
