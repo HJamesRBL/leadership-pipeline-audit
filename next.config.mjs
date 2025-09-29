@@ -13,6 +13,10 @@ const nextConfig = {
             key: 'Accept-Ranges',
             value: 'bytes',
           },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600',
+          },
         ],
       },
     ]

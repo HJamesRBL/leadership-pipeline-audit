@@ -400,11 +400,13 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <video
               className="w-full rounded-lg border-2 border-gray-200"
               controls
-              preload="auto"
+              preload="metadata"
               playsInline
+              webkit-playsinline="true"
             >
+              <source src="/contribution.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
               <source src="/contribution.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
+              Your browser does not support the video tag. Please try a different browser.
             </video>
           </div>
 
@@ -662,11 +664,13 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             <video
               className="w-full rounded-lg border-2 border-gray-200"
               controls
-              preload="auto"
+              preload="metadata"
               playsInline
+              webkit-playsinline="true"
             >
+              <source src="/performance.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
               <source src="/performance.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
+              Your browser does not support the video tag. Please try a different browser.
             </video>
           </div>
 
