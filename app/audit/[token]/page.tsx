@@ -157,8 +157,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   }, [])
 
   useEffect(() => {
-    // Scroll to top when entering the stages step
-    if (step === 'stages') {
+    // Scroll to top when entering the stages or ranking step
+    if (step === 'stages' || step === 'ranking') {
       window.scrollTo(0, 0)
     }
   }, [step])
