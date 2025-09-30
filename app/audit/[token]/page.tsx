@@ -640,7 +640,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           {/* Contribution Assignments Summary */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-gray-800">Career Stage Assignments</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Contribution Category Assignments</h3>
               <button
                 onClick={() => setStep('stages')}
                 className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
