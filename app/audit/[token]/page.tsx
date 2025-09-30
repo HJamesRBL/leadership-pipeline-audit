@@ -645,7 +645,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                 onClick={() => setStep('stages')}
                 className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
               >
-                Edit Stages
+                Edit Contribution Category
               </button>
             </div>
 
@@ -744,7 +744,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                 onClick={() => setStep('stages')}
                 className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-semibold transition-colors"
               >
-                ← Back to Stages
+                ← Back to Contribution Category
               </button>
               <button
                 onClick={submitRatings}
