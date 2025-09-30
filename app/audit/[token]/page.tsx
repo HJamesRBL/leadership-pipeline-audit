@@ -133,7 +133,7 @@ function SortableEmployeeCard({
 }
 
 export default function AuditPage({ params }: { params: { token: string } }) {
-  const [step, setStep] = useState<'loading' | 'introduction' | 'stages' | 'ranking' | 'complete'>('loading')
+  const [step, setStep] = useState<'loading' | 'stages' | 'ranking' | 'summary' | 'complete'>('loading')
   const [employees, setEmployees] = useState<Employee[]>([])
   const [leaderName, setLeaderName] = useState('')
   const [auditName, setAuditName] = useState('')
@@ -157,8 +157,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   }, [])
 
   useEffect(() => {
-    // Scroll to top when entering the stages or ranking step
-    if (step === 'stages' || step === 'ranking') {
+    // Scroll to top when entering the stages, ranking, or summary step
+    if (step === 'stages' || step === 'ranking' || step === 'summary') {
       window.scrollTo(0, 0)
     }
   }, [step])
@@ -175,7 +175,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           setEmployees(data.employees)
           setLeaderName(data.leaderName)
           setAuditName(data.auditName || 'Leadership Pipeline Audit')
-          setStep('introduction') // Start with introduction page
+          setStep('stages') // Start with stages page
         }
       } else {
         setMessage('Invalid audit link')
@@ -231,18 +231,22 @@ export default function AuditPage({ params }: { params: { token: string } }) {
     setActiveId(null)
   }
 
+  const proceedToSummary = () => {
+    // Update performance ranks based on current order
+    const rankedEmployees = employees.map((emp, index) => ({
+      ...emp,
+      performanceRank: index + 1
+    }))
+    setEmployees(rankedEmployees)
+    setStep('summary')
+  }
+
   const submitRatings = async () => {
     try {
-      // Update performance ranks based on current order
-      const rankedEmployees = employees.map((emp, index) => ({
-        ...emp,
-        performanceRank: index + 1
-      }))
-
       const response = await fetch(`/api/audit/leader/${params.token}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ employees: rankedEmployees })
+        body: JSON.stringify({ employees })
       })
 
       if (response.ok) {
@@ -269,114 +273,6 @@ export default function AuditPage({ params }: { params: { token: string } }) {
     )
   }
 
-  // Introduction Page
-  if (step === 'introduction') {
-    return (
-      <div className="max-w-4xl mx-auto p-8">
-        {/* RBL Brand Header */}
-        <div style={{ 
-          background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)', 
-          color: 'white', 
-          padding: '2rem', 
-          borderRadius: '0.5rem', 
-          marginBottom: '2rem' 
-        }}>
-          <h1 className="text-4xl font-bold mb-3" style={{ color: 'white' }}>Leadership Pipeline Audit</h1>
-          <p className="text-xl" style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
-          <p className="text-sm mt-2" style={{ opacity: 0.85, color: 'white' }}>{auditName}</p>
-        </div>
-
-        {/* Introduction Content */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Introduction to the Leadership Pipeline Audit Process</h2>
-          
-          <div className="prose max-w-none mb-8">
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations understand their leadership bench strength and identify opportunities for development and advancement.
-            </p>
-            
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              This audit consists of two key exercises that will take approximately 15-20 minutes to complete:
-            </p>
-
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
-              <h3 className="font-bold text-lg mb-3 text-blue-900">Exercise 1: Ways of Contributing</h3>
-              <p className="text-gray-700 mb-2">
-                You will categorize each employee based on how they contribute to the organization:
-              </p>
-              <ul className="ml-6 space-y-2 text-gray-700">
-                <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#E8B70B' }}></span>
-                  <span><strong>Contributes Dependently:</strong> Depends on others for direction and guidance</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#ED1B34' }}></span>
-                  <span><strong>Contributes Independently:</strong> Independent contributor with strong technical expertise</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#0086D6' }}></span>
-                  <span><strong>Contributes through Others:</strong> Influences, coaches and develops others</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 rounded-full mt-2 mr-3" style={{ backgroundColor: '#071D49' }}></span>
-                  <span><strong>Contributes through Enterprise:</strong> Sets direction for the entire business </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-green-50 border-l-4 border-green-600 p-6 mb-6">
-              <h3 className="font-bold text-lg mb-3 text-green-900">Exercise 2: Relative Performance Ranking</h3>
-              <p className="text-gray-700">
-                You will rank employees by their relative performance and impact. 
-              </p>
-            </div>
-          </div>
-
-          {/* Important Notes */}
-<div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
-  <h3 className="font-bold text-lg mb-3 text-amber-900 flex items-center">
-    Important Notes
-  </h3>
-  <ul className="space-y-2 text-gray-700">
-    <li className="flex items-start">
-      <span className="text-amber-600 mr-2">•</span>
-      <span>Your responses are confidential and will be aggregated with other leaders' assessments</span>
-    </li>
-    <li className="flex items-start">
-      <span className="text-amber-600 mr-2">•</span>
-      <span>Acknowledge that your judgement of relative performance is based on your perception</span>
-    </li>
-    <li className="flex items-start">
-      <span className="text-amber-600 mr-2">•</span>
-      <span>Please complete the entire audit in one session (approximately 15-20 minutes)</span>
-    </li>
-    <li className="flex items-start">
-      <span className="text-amber-600 mr-2">•</span>
-      <span>You will evaluate {employees.length} employees in this audit</span>
-    </li>
-  </ul>
-</div>
-
-          {/* Begin Button */}
-          <div className="text-center">
-            <button
-              onClick={() => setStep('stages')}
-              className="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
-              style={{ background: 'linear-gradient(135deg, #0086D6 0%, #071D49 100%)' }}
-            >
-              Begin Leadership Pipeline Audit →
-            </button>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center text-sm text-gray-500">
-          <p>© The RBL Group • All rights reserved</p>
-          <p className="mt-1">For technical assistance, please contact your audit administrator</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="max-w-6xl mx-auto p-8">
@@ -395,6 +291,17 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Stage Selection */}
       {step === 'stages' && (
         <div>
+          {/* Introduction Text */}
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Introduction to the Leadership Pipeline Audit Process</h2>
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations understand their leadership bench strength and identify opportunities for development and advancement.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              This audit consists of two key exercises that will take approximately 15-20 minutes to complete. In this first exercise, you will categorize each employee based on how they contribute to the organization. On the following page, you will rank employees by their relative performance and impact.
+            </p>
+          </div>
+
           {/* Video Player */}
           <div className="mb-8">
             <video
@@ -713,12 +620,141 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           </DndContext>
 
           <button
-            onClick={submitRatings}
-            className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
-            style={{ background: '#5EC4B6' }}
+            onClick={proceedToSummary}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+            style={{ background: '#0086D6' }}
           >
-            Submit Final Rankings
+            Review and Submit →
           </button>
+        </div>
+      )}
+
+      {/* Summary Page */}
+      {step === 'summary' && (
+        <div>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">Review Your Assessment</h2>
+          <p className="text-gray-600 mb-8">
+            Please review your selections below. You can go back to make changes if needed.
+          </p>
+
+          {/* Contribution Assignments Summary */}
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">Career Stage Assignments</h3>
+              <button
+                onClick={() => setStep('stages')}
+                className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+              >
+                Edit Stages
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {employees.map(emp => {
+                const stageName = emp.careerStage === 1 ? 'Contributes Dependently' :
+                                  emp.careerStage === 2 ? 'Contributes Independently' :
+                                  emp.careerStage === 3 ? 'Contributes through Others' :
+                                  emp.careerStage === 4 ? 'Contributes through Enterprise' : 'Not Selected'
+                const stageColor = emp.careerStage === 1 ? '#E8B70B' :
+                                   emp.careerStage === 2 ? '#ED1B34' :
+                                   emp.careerStage === 3 ? '#0086D6' :
+                                   emp.careerStage === 4 ? '#071D49' : '#999'
+
+                return (
+                  <div key={emp.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                    <div className="font-semibold text-gray-800">{emp.name}</div>
+                    <div className="text-sm text-gray-600 mb-2">{emp.title}</div>
+                    <div className="flex items-center">
+                      <span
+                        className="inline-block w-3 h-3 rounded-full mr-2"
+                        style={{ backgroundColor: stageColor }}
+                      ></span>
+                      <span className="text-sm font-medium" style={{ color: stageColor }}>
+                        {stageName}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Performance Ranking Summary */}
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">Performance Rankings</h3>
+              <button
+                onClick={() => setStep('ranking')}
+                className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+              >
+                Edit Rankings
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {employees.map((emp, index) => {
+                const isTopPerformer = index === 0
+                const isBottomPerformer = index === employees.length - 1
+
+                let bgColor = 'bg-white'
+                let borderColor = 'border-gray-200'
+                let rankColor = 'text-blue-600'
+
+                if (isTopPerformer) {
+                  bgColor = 'bg-green-50'
+                  borderColor = 'border-green-400'
+                  rankColor = 'text-green-600'
+                } else if (isBottomPerformer) {
+                  bgColor = 'bg-red-50'
+                  borderColor = 'border-red-300'
+                  rankColor = 'text-red-600'
+                }
+
+                return (
+                  <div
+                    key={emp.id}
+                    className={`${bgColor} border-2 ${borderColor} rounded-lg p-4 text-center`}
+                  >
+                    <div className={`text-2xl font-bold ${rankColor} mb-1`}>
+                      #{index + 1}
+                    </div>
+                    {(isTopPerformer || isBottomPerformer) && (
+                      <div className={`text-xs font-bold mb-2 ${
+                        isTopPerformer ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {isTopPerformer ? 'HIGHEST' : 'LOWEST'}
+                      </div>
+                    )}
+                    <div className="font-semibold text-sm mb-1">{emp.name}</div>
+                    <div className="text-xs text-gray-600">{emp.title}</div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Submit Section */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
+            <h3 className="font-bold text-lg mb-3 text-amber-900">Ready to Submit?</h3>
+            <p className="text-gray-700 mb-4">
+              Once you submit, you will not be able to make further changes. Please ensure all your selections are accurate.
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setStep('stages')}
+                className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-semibold transition-colors"
+              >
+                ← Back to Stages
+              </button>
+              <button
+                onClick={submitRatings}
+                className="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition-colors"
+                style={{ background: '#5EC4B6' }}
+              >
+                Submit Final Assessment
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
