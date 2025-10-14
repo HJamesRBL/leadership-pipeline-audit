@@ -107,16 +107,20 @@ export default function EmployeeUpload({ onDataUploaded }: EmployeeUploadProps) 
       skipEmptyLines: true,
       complete: (results) => {
         try {
-          const validEmployees: EmployeeData[] = [];
+          // Use a Map to deduplicate employees by email (same as employeeUniqueId)
+          const employeeMap = new Map<string, EmployeeData>();
           const employeeLeaderPairs: {employee: EmployeeData, leaderInfo: {name: string, email: string}}[] = [];
           const errors: string[] = [];
 
           results.data.forEach((row: any, index: number) => {
             const { employee, leaderInfo } = validateAndProcessRow(row);
-            
+
             if (employee) {
-              validEmployees.push(employee);
-              
+              // Only add employee if not already in map (prevents duplicates when employee is assigned to multiple leaders)
+              if (!employeeMap.has(employee.email)) {
+                employeeMap.set(employee.email, employee);
+              }
+
               if (leaderInfo) {
                 employeeLeaderPairs.push({ employee, leaderInfo });
               }
@@ -124,6 +128,9 @@ export default function EmployeeUpload({ onDataUploaded }: EmployeeUploadProps) 
               errors.push(`Row ${index + 2}: Missing required employee fields (Name, Email, Title, Business Unit)`);
             }
           });
+
+          // Convert map to array of unique employees
+          const validEmployees = Array.from(employeeMap.values());
 
           if (validEmployees.length === 0) {
             setError('No valid employee records found. Please check your CSV format.');
