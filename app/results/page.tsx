@@ -1653,26 +1653,28 @@ export default function ResultsPage() {
           if (stage1_2_percentage >= 60) {
             return (
               <>
-                <p>Your organization faces significant risk with the majority of leaders unprepared for their current roles. When over 60% of leaders operate at Stages 1-2, they lack the fundamental capabilities to provide direction and instead depend on others for guidance. This creates a cascade of challenges:</p>
+                <p>Your organization faces significant risk because most leaders lack the knowledge, skills and perspective required for their current role. With over 60% of leaders who act as technical experts or need direction from others, they lack the fundamental interest and ability to engage talent or ensure customer delight. These leaders are more concerned with their own agenda than with the success of others. This creates a cascade of challenges:</p>
                 <ul className="space-y-1 list-disc ml-4 pl-5">
-                    <li>Growth becomes unlikely as leaders cannot execute expansion strategies</li>
-                    <li>Strategic execution is compromised with leaders neither aligned nor capable of delivery</li>
-                    <li>Employee engagement suffers under leaders who struggle to inspire</li>
-                    <li>Customer relationships deteriorate as leaders cannot maintain service standards or respond to market needs</li>
+                    <li>Growth is unlikely as leaders cannot execute expansion strategies in a sustainable manner</li>
+                    <li>Execution is compromised with leaders taking a heroic individual approach that does not build the team</li>
+                    <li>Employee engagement suffers under leaders who struggle to recognize and develop them</li>
+                    <li>Customer relationships deteriorate as leaders don't deliver the desired customer experience</li>
                 </ul>
-                <p>The impact is systemic—underdeveloped leaders cannot develop others, perpetuating the crisis across the organization.</p>
+                <p>The impact is systemic—underdeveloped leaders don't engage or develop others, which perpetuates the dynamic across the organization. When high performing talent is not engaged and developed, they are at high risk of leaving the organization to find better options for their career.</p>
               </>
             )
           }
           if (stage1_2_percentage >= 11) {
             return (
               <>
-                <p>Your organization has a notable portion of leaders who need development support to be fully effective. While the majority operate appropriately at Stages 3-4, having this many leaders at Stages 1-2 creates uneven capability across the organization:</p>
+                <p>Most leaders in your organization operate appropriately in their roles. However, there are too many who still operate as technical experts or need direction from others. These leaders must shift their knowledge, skills and perspective to be effective. This creates uneven performance and employee experiences with employees who have effective leaders and those who don't:</p>
                 <ul className="space-y-1 list-disc ml-4 pl-5">
-                    <li>Growth potential exists but faces challenges as some leaders aren't ready to scale operations</li>
-                    <li>Strategic alignment becomes inconsistent with pockets of underdeveloped leadership</li>
-                    <li>Employee engagement varies significantly between teams with strong versus weak leaders</li>
-                    <li>Customer satisfaction is at risk in areas led by Stage 1-2 leaders who lack strategic thinking</li>
+                    <li>Some leaders aren't ready to scale their part of the business</li>
+                    <li>Strategic alignment is inconsistent with pockets of leaders who lack the appropriate knowledge, skills and perspective</li>
+                    <li>Employee engagement varies significantly between teams with strong versus weaker leaders</li>
+                    <li>Execution is compromised with the unprepared leaders likely taking a heroic individual approach that does not build their team and is not sustainable</li>
+                    <li>For the teams with weaker leaders, there is higher potential for high performers to leave and seek better career options</li>
+                    <li>Customer satisfaction is at risk in the areas led by self-focused leaders and therefore lack business perspective and customer empathy</li>
                 </ul>
                 
               </>
@@ -1680,14 +1682,15 @@ export default function ResultsPage() {
           }
           return (
             <>
-              <p>Your leadership team is appropriately developed and positioned for success. With over 90% of leaders at Stages 3-4, your organization has the critical mass to grow and scale effectively:</p>
+              <p>Congratulations!</p>
+              <p>Your leadership team has very effective leadership and is positioned for success. With over 90% of leaders with the knowledge, skills and perspective required for their role your organization has the critical mass to grow and scale effectively:</p>
               <ul className="space-y-1 list-disc ml-4 pl-5">
-                <li>Leaders are aligned and capable of delivering on strategic objectives autonomously</li>
-                <li>Employee engagement thrives under mature leaders who create positive, developmental work environments</li>
-                <li>Customer relationships benefit from leaders who think strategically and innovate solutions</li>
+                <li>Leaders are aligned and capable of delivering on strategic objectives</li>
+                <li>Employee engagement thrives under leaders who create positive, developmental work environments</li>
+                <li>Customer relationships benefit from leaders who know how to deliver positive experiences, think strategically and innovate solutions</li>
                 <li>Growth strategies can be pursued aggressively with confidence in execution</li>
             </ul>
-              <p>This represents normal, healthy transition as new leaders are promoted and rapidly developed. Your organization can leverage this leadership strength for competitive advantage.</p>
+              <p>Your leaders are able to sustain a leadership culture that delivers the right results the right way as new leaders are promoted and rapidly developed. Your organization can leverage this leadership strength for competitive advantage.</p>
             </>
           )
         })()}
