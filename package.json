@@ -24,7 +24,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "multer": "^2.0.2",
-    "next": "^14.0.4",
+    "next": "^14.2.35",
     "next-auth": "^4.24.11",
     "papaparse": "^5.5.3",
     "postcss": "^8.4.31",
