@@ -134,7 +134,7 @@ function SortableEmployeeCard({
 }
 
 export default function AuditPage({ params }: { params: { token: string } }) {
-  const [step, setStep] = useState<'loading' | 'stages' | 'ranking' | 'summary' | 'complete'>('loading')
+  const [step, setStep] = useState<'loading' | 'intro' | 'stages' | 'ranking' | 'summary' | 'complete'>('loading')
   const [employees, setEmployees] = useState<Employee[]>([])
   const [leaderName, setLeaderName] = useState('')
   const [auditName, setAuditName] = useState('')
@@ -164,8 +164,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   }, [])
 
   useEffect(() => {
-    // Scroll to top when entering the stages, ranking, or summary step
-    if (step === 'stages' || step === 'ranking' || step === 'summary') {
+    // Scroll to top when entering the intro, stages, ranking, or summary step
+    if (step === 'intro' || step === 'stages' || step === 'ranking' || step === 'summary') {
       window.scrollTo(0, 0)
     }
   }, [step])
@@ -182,7 +182,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           setEmployees(data.employees)
           setLeaderName(data.leaderName)
           setAuditName(data.auditName || 'Leadership Pipeline Audit')
-          setStep('stages') // Start with stages page
+          setStep('intro') // Start with intro page
         }
       } else {
         setMessage('Invalid audit link')
@@ -284,16 +284,97 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   return (
     <div className="max-w-6xl mx-auto p-8">
       {/* RBL Brand Header */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)', 
-        color: 'white', 
-        padding: '1.5rem', 
-        borderRadius: '0.5rem', 
-        marginBottom: '2rem' 
+      <div style={{
+        background: 'linear-gradient(135deg, #071D49 0%, #0086D6 100%)',
+        color: 'white',
+        padding: '1.5rem',
+        borderRadius: '0.5rem',
+        marginBottom: '2rem'
       }}>
-        <h1 className="text-3xl font-bold mb-2" style={{ color: 'white' }}>Pipeline Audit</h1>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: 'white' }}>
+          {step === 'intro' ? 'The Leadership Pipeline Journey' : 'Pipeline Audit'}
+        </h1>
         <p style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
       </div>
+
+      {/* Introduction Page */}
+      {step === 'intro' && (
+        <div>
+          {/* Pipeline Journey Image */}
+          <div className="mb-8">
+            <img
+              src="/pipeline-journey.png"
+              alt="Leadership Pipeline Journey"
+              className="w-full rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Journey Content Box */}
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              The Leadership Pipeline Journey establishes the purpose and value of the leadership pipeline audit, aligning leaders on how expectations for contribution change across leadership roles and why gaps create organizational risk.
+            </p>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">1. Perform the Leadership Pipeline Audit</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Leaders are assessed using four distinct contribution types and a force-ranking process to evaluate how individuals contribute, independent of role, age, or tenure.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">2. Review Results</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Results are synthesized into a clear report and reviewed with senior sponsors to build shared understanding of how the current pipeline compares to future needs.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">3. Define The Challenge</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Identify critical leadership contribution gaps and define targeted priorities based on what is needed versus what exists.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">4. Improvement Options</h3>
+                <div className="ml-6 space-y-3">
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">A. Leadership Infrastructure:</span> Leadership expectations are clarified and embedded into competency models, development programs, performance management, and succession processes to reinforce the pipeline logic at scale.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">B. Targeted Development:</span> Development is tailored by contribution type, linking audit results to academies, coaching, and senior leader involvement to accelerate progression where it matters most.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">C. Job Assignment:</span> Assess high potential leaders and tailor their career paths, help leaders stuck in one stage of contribution broaden their contribution to other levels.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">D. Individual Development:</span> Traditional coaching and individual training programs
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Proceed Button */}
+          <button
+            onClick={() => setStep('stages')}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+            style={{ background: '#0086D6' }}
+          >
+            Proceed to Leadership Pipeline Audit →
+          </button>
+        </div>
+      )}
 
       {/* Stage Selection */}
       {step === 'stages' && (
@@ -305,7 +386,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations understand their leadership bench strength and identify opportunities for development and advancement.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              This audit consists of two key exercises that will take approximately 15-20 minutes to complete. In this first exercise, you will categorize each employee based on how they contribute to the organization. On the following page, you will rank employees by their relative performance and impact.
+              This audit consists of two key exercises that will take approximately 15-20 minutes to complete. In this first exercise, you will categorize each employee based on how they contribute to the organization. On the second exercise, you will rank employees by their relative performance and impact.
             </p>
           </div>
 
