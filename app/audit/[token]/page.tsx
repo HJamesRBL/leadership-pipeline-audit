@@ -307,12 +307,13 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               Thank you for participating in this important leadership assessment. The Leadership Pipeline Audit helps organizations understand their leadership bench strength and identify opportunities for development and advancement.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              This audit consists of two key exercises that will take approximately 15-20 minutes to complete. In this first exercise, you will categorize each employee based on how they contribute to the organization. On the second exercise, you will rank employees by their relative performance and impact.
+              This audit consists of two key exercises that will take approximately 15-20 minutes to complete. In the first exercise on the next page, you will categorize each employee based on how they contribute to the organization. On the second exercise, you will rank employees by their relative performance and impact.
             </p>
           </div>
           
           {/* Pipeline Journey Image */}
           <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">The Leadership Pipeline Journey</h2>
             <img
               src="/pipeline-journey.png"
               alt="Leadership Pipeline Journey"
