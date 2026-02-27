@@ -134,12 +134,13 @@ function SortableEmployeeCard({
 }
 
 export default function AuditPage({ params }: { params: { token: string } }) {
-  const [step, setStep] = useState<'loading' | 'intro' | 'stages' | 'ranking' | 'summary' | 'complete'>('loading')
+  const [step, setStep] = useState<'loading' | 'intro' | 'stages' | 'ranking' | 'pipeline' | 'summary' | 'complete'>('loading')
   const [employees, setEmployees] = useState<Employee[]>([])
   const [leaderName, setLeaderName] = useState('')
   const [auditName, setAuditName] = useState('')
   const [message, setMessage] = useState('')
-  const [showDescriptions, setShowDescriptions] = useState(false)
+  const [expandedSection, setExpandedSection] = useState<null | 'descriptions' | 'video'>(null)
+  const [showRankingVideo, setShowRankingVideo] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
   
   const sensors = useSensors(
@@ -164,8 +165,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
   }, [])
 
   useEffect(() => {
-    // Scroll to top when entering the intro, stages, ranking, or summary step
-    if (step === 'intro' || step === 'stages' || step === 'ranking' || step === 'summary') {
+    // Scroll to top when entering the intro, stages, ranking, pipeline, or summary step
+    if (step === 'intro' || step === 'stages' || step === 'ranking' || step === 'pipeline' || step === 'summary') {
       window.scrollTo(0, 0)
     }
   }, [step])
@@ -245,7 +246,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       performanceRank: index + 1
     }))
     setEmployees(rankedEmployees)
-    setStep('summary')
+    setStep('pipeline')
   }
 
   const submitRatings = async () => {
@@ -292,7 +293,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
         marginBottom: '2rem'
       }}>
         <h1 className="text-3xl font-bold mb-2" style={{ color: 'white' }}>
-          {step === 'intro' ? 'The Leadership Pipeline Journey' : 'Pipeline Audit'}
+          {(step === 'intro' || step === 'pipeline') ? 'The Leadership Pipeline Journey' : 'Pipeline Audit'}
         </h1>
         <p style={{ opacity: 0.95, color: 'white' }}>Welcome, {leaderName}</p>
       </div>
@@ -311,72 +312,6 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             </p>
           </div>
           
-          {/* Pipeline Journey Image */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">The Leadership Pipeline Journey</h2>
-            <img
-              src="/pipeline-journey.png"
-              alt="Leadership Pipeline Journey"
-              className="w-full rounded-lg shadow-lg"
-            />
-          </div>
-
-          {/* Journey Content Box */}
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <p className="text-gray-700 mb-6 leading-relaxed">
-              The Leadership Pipeline Journey establishes the purpose and value of the leadership pipeline audit, aligning leaders on how expectations for contribution change across leadership roles and why gaps create organizational risk.
-            </p>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">1. Perform the Leadership Pipeline Audit</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Leaders are assessed using four distinct contribution types and a force-ranking process to evaluate how individuals contribute, independent of role, age, or tenure.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">2. Review Results</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Results are synthesized into a clear report and reviewed with senior sponsors to build shared understanding of how the current pipeline compares to future needs.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">3. Define The Challenge</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Identify critical leadership contribution gaps and define targeted priorities based on what is needed versus what exists.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">4. Improvement Options</h3>
-                <div className="ml-6 space-y-3">
-                  <div>
-                    <p className="text-gray-700 leading-relaxed">
-                      <span className="font-semibold">A. Leadership Infrastructure:</span> Leadership expectations are clarified and embedded into competency models, development programs, performance management, and succession processes to reinforce the pipeline logic at scale.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700 leading-relaxed">
-                      <span className="font-semibold">B. Targeted Development:</span> Development is tailored by contribution type, linking audit results to academies, coaching, and senior leader involvement to accelerate progression where it matters most.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700 leading-relaxed">
-                      <span className="font-semibold">C. Job Assignment:</span> Assess high potential leaders and tailor their career paths, help leaders stuck in one stage of contribution broaden their contribution to other levels.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700 leading-relaxed">
-                      <span className="font-semibold">D. Individual Development:</span> Traditional coaching and individual training programs.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Proceed Button */}
           <button
             onClick={() => setStep('stages')}
@@ -391,20 +326,6 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Stage Selection */}
       {step === 'stages' && (
         <div>
-
-          {/* Video Player */}
-          <div className="mb-8">
-            <video
-              className="w-full rounded-lg border-2 border-gray-200"
-              controls
-              preload="metadata"
-              playsInline
-              poster="/contribution-poster.jpg"
-            >
-              <source src="/contribution.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
 
           <h2 className="text-2xl font-semibold mb-4">
             Step 1: Categorize Each Leader's Way of Contributing
@@ -590,20 +511,29 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             </div>
           </div>
 
-          {/* Toggle for Stage Descriptions */}
-          <button
-            onClick={() => setShowDescriptions(!showDescriptions)}
-            className="mb-6 px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
-            style={{ background: 'rgba(0, 134, 214, 0.1)' }}
-          >
-            {showDescriptions ? '− Hide' : '+ Show'} Detailed Descriptions
-          </button>
+          {/* Toggle Buttons */}
+          <div className="flex gap-3 mb-6">
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'descriptions' ? null : 'descriptions')}
+              className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
+              style={{ background: 'rgba(0, 134, 214, 0.1)' }}
+            >
+              {expandedSection === 'descriptions' ? '− Hide' : '+ Show'} Detailed Descriptions
+            </button>
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'video' ? null : 'video')}
+              className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
+              style={{ background: 'rgba(0, 134, 214, 0.1)' }}
+            >
+              {expandedSection === 'video' ? '− Hide' : '+ Show'} Optional Instructional Video
+            </button>
+          </div>
 
           {/* Stage Descriptions */}
-          {showDescriptions && (
+          {expandedSection === 'descriptions' && (
             <div className="mb-6 space-y-4">
               {stageDescriptions.map((stage) => (
-                <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4" 
+                <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4"
                      style={{ borderLeftColor: stage.color }}>
                   <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
                     {stage.title}
@@ -613,6 +543,22 @@ export default function AuditPage({ params }: { params: { token: string } }) {
                   </p>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Instructional Video */}
+          {expandedSection === 'video' && (
+            <div className="mb-6">
+              <video
+                className="w-full rounded-lg border-2 border-gray-200"
+                controls
+                preload="metadata"
+                playsInline
+                poster="/contribution-poster.jpg"
+              >
+                <source src="/contribution.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           )}
 
@@ -655,29 +601,40 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       {/* Performance Ranking */}
       {step === 'ranking' && (
         <div>
-          {/* Video Player */}
-          <div className="mb-8">
-            <video
-              className="w-full rounded-lg border-2 border-gray-200"
-              controls
-              preload="metadata"
-              playsInline
-              poster="/performance-poster.jpg"
-            >
-              <source src="/performance.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
           <h2 className="text-2xl font-semibold mb-4">
             Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier. </p>
-<p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
-            <p className="mb-6 text-gray-600"> A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out. </p>
-            <p className="mb-6 text-gray-600">Now rank them.
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier.
           </p>
+          <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
+          <p className="mb-6 text-gray-600">A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out.</p>
+
+          {/* Optional Instructional Video Toggle */}
+          <button
+            onClick={() => setShowRankingVideo(!showRankingVideo)}
+            className="mb-6 px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
+            style={{ background: 'rgba(0, 134, 214, 0.1)' }}
+          >
+            {showRankingVideo ? '− Hide' : '+ Show'} Optional Instructional Video
+          </button>
+
+          {showRankingVideo && (
+            <div className="mb-6">
+              <video
+                className="w-full rounded-lg border-2 border-gray-200"
+                controls
+                preload="metadata"
+                playsInline
+                poster="/performance-poster.jpg"
+              >
+                <source src="/performance.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
+
+          <p className="mb-6 text-gray-600">Now rank the following leaders by clicking and dragging each box to their desired rank.</p>
 
           <DndContext
             sensors={sensors}
@@ -711,6 +668,84 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
           <button
             onClick={proceedToSummary}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+            style={{ background: '#0086D6' }}
+          >
+            Continue →
+          </button>
+        </div>
+      )}
+
+      {/* Leadership Pipeline Journey Page */}
+      {step === 'pipeline' && (
+        <div>
+          {/* Pipeline Journey Image */}
+          <div className="mb-8">
+            <img
+              src="/pipeline-journey.png"
+              alt="Leadership Pipeline Journey"
+              className="w-full rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Journey Content Box */}
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              The Leadership Pipeline Journey establishes the purpose and value of the leadership pipeline audit, aligning leaders on how expectations for contribution change across leadership roles and why gaps create organizational risk.
+            </p>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">1. Perform the Leadership Pipeline Audit</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Leaders are assessed using four distinct contribution types and a force-ranking process to evaluate how individuals contribute, independent of role, age, or tenure.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">2. Review Results</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Results are synthesized into a clear report and reviewed with senior sponsors to build shared understanding of how the current pipeline compares to future needs.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">3. Define The Challenge</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  Identify critical leadership contribution gaps and define targeted priorities based on what is needed versus what exists.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">4. Improvement Options</h3>
+                <div className="ml-6 space-y-3">
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">A. Leadership Infrastructure:</span> Leadership expectations are clarified and embedded into competency models, development programs, performance management, and succession processes to reinforce the pipeline logic at scale.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">B. Targeted Development:</span> Development is tailored by contribution type, linking audit results to academies, coaching, and senior leader involvement to accelerate progression where it matters most.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">C. Job Assignment:</span> Assess high potential leaders and tailor their career paths, help leaders stuck in one stage of contribution broaden their contribution to other levels.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-700 leading-relaxed">
+                      <span className="font-semibold">D. Individual Development:</span> Traditional coaching and individual training programs.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setStep('summary')}
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
             style={{ background: '#0086D6' }}
           >
