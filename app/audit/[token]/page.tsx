@@ -333,26 +333,11 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 1: Categorize Each Leader's Way of Contributing
           </h2>
           <p className="mb-6 text-gray-600">
-            Before you begin, please review the descriptions below and watch the instructional video.
+            Before you begin, please watch the following instructional video.
           </p>
 
-          {/* Stage Descriptions */}
-          <div className="mb-6 space-y-4">
-            {stageDescriptions.map((stage) => (
-              <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4"
-                   style={{ borderLeftColor: stage.color }}>
-                <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
-                  {stage.title}
-                </h3>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  {stage.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
           {/* Instructional Video (required) */}
-          <div className="mb-2">
+          <div className="mb-6">
             <video
               className="w-full rounded-lg border-2 border-gray-200"
               controls
@@ -364,6 +349,21 @@ export default function AuditPage({ params }: { params: { token: string } }) {
               <source src="/contribution.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+          </div>
+
+          {/* Stage Descriptions */}
+          <div className="mb-2 space-y-4">
+            {stageDescriptions.map((stage) => (
+              <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4"
+                   style={{ borderLeftColor: stage.color }}>
+                <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
+                  {stage.title}
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {stage.description}
+                </p>
+              </div>
+            ))}
           </div>
 
           <button
@@ -615,10 +615,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             Step 2: Relative Performance Ranking
           </h2>
           <p className="mb-6 text-gray-600">
-            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier.
+            Before you continue, please watch the following instructional video.
           </p>
-          <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
-          <p className="mb-6 text-gray-600">A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out.</p>
 
           {/* Instructional Video (required) */}
           <div className="mb-2">
@@ -659,6 +657,11 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           <h2 className="text-2xl font-semibold mb-4">
             Step 2: Relative Performance Ranking
           </h2>
+          <p className="mb-6 text-gray-600">
+            In this next exercise, your task is to rank each of the people in order. Who is your highest performer to who has the least impact.  The person who is in last place may still be a very good performer but relative to others you are ranking is not as strong. For purposes of this exercise, there will be no need to tell others in what order you ranked them. We are using this information for statistical purposes and to correlate with where you sorted them earlier.
+          </p>
+          <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
+          <p className="mb-6 text-gray-600">A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out.</p>
           <p className="mb-6 text-gray-600">Now rank the following leaders by clicking and dragging each box to their desired rank.</p>
 
           <DndContext
