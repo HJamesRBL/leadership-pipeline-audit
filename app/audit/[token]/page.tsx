@@ -133,14 +133,17 @@ function SortableEmployeeCard({
   )
 }
 
+// Temporarily hidden — flip to true to restore the Leadership Pipeline Journey step
+const SHOW_PIPELINE_JOURNEY = false
+
 export default function AuditPage({ params }: { params: { token: string } }) {
-  const [step, setStep] = useState<'loading' | 'intro' | 'stages' | 'ranking' | 'pipeline' | 'summary' | 'complete'>('loading')
+  const [step, setStep] = useState<'loading' | 'intro' | 'stagesIntro' | 'stages' | 'rankingIntro' | 'ranking' | 'pipeline' | 'summary' | 'complete'>('loading')
   const [employees, setEmployees] = useState<Employee[]>([])
   const [leaderName, setLeaderName] = useState('')
   const [auditName, setAuditName] = useState('')
   const [message, setMessage] = useState('')
-  const [expandedSection, setExpandedSection] = useState<null | 'descriptions' | 'video'>(null)
-  const [showRankingVideo, setShowRankingVideo] = useState(false)
+  const [stagesVideoWatched, setStagesVideoWatched] = useState(false)
+  const [rankingVideoWatched, setRankingVideoWatched] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
   
   const sensors = useSensors(
@@ -166,7 +169,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
   useEffect(() => {
     // Scroll to top when entering the intro, stages, ranking, pipeline, or summary step
-    if (step === 'intro' || step === 'stages' || step === 'ranking' || step === 'pipeline' || step === 'summary') {
+    if (step === 'intro' || step === 'stagesIntro' || step === 'stages' || step === 'rankingIntro' || step === 'ranking' || step === 'pipeline' || step === 'summary') {
       window.scrollTo(0, 0)
     }
   }, [step])
@@ -206,7 +209,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       return
     }
     setMessage('')
-    setStep('ranking')
+    setStep('rankingIntro')
   }
 
   const handleDragStart = (event: any) => {
@@ -246,7 +249,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
       performanceRank: index + 1
     }))
     setEmployees(rankedEmployees)
-    setStep('pipeline')
+    setStep(SHOW_PIPELINE_JOURNEY ? 'pipeline' : 'summary')
   }
 
   const submitRatings = async () => {
@@ -259,7 +262,7 @@ export default function AuditPage({ params }: { params: { token: string } }) {
 
       if (response.ok) {
         setStep('complete')
-        setMessage('Your results are now being synthesized into a comprehensive report. Once complete, we will schedule a debrief session to review your results, explore the key insights, and discuss recommended next steps. \n\nThank you for your participation.')
+        setMessage('Your response has been recorded. Thank you for your time and participation.')
       } else {
         setMessage('Error submitting ratings')
       }
@@ -314,12 +317,70 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           
           {/* Proceed Button */}
           <button
-            onClick={() => setStep('stages')}
+            onClick={() => setStep('stagesIntro')}
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
             style={{ background: '#0086D6' }}
           >
             Proceed to Leadership Pipeline Audit →
           </button>
+        </div>
+      )}
+
+      {/* Step 1 Intro: required viewing before the categorization activity */}
+      {step === 'stagesIntro' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Step 1: Categorize Each Leader's Way of Contributing
+          </h2>
+          <p className="mb-6 text-gray-600">
+            Before you begin, please review the descriptions below and watch the instructional video.
+          </p>
+
+          {/* Stage Descriptions */}
+          <div className="mb-6 space-y-4">
+            {stageDescriptions.map((stage) => (
+              <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4"
+                   style={{ borderLeftColor: stage.color }}>
+                <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
+                  {stage.title}
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {stage.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Instructional Video (required) */}
+          <div className="mb-2">
+            <video
+              className="w-full rounded-lg border-2 border-gray-200"
+              controls
+              preload="metadata"
+              playsInline
+              poster="/contribution-poster.jpg"
+              onEnded={() => setStagesVideoWatched(true)}
+            >
+              <source src="/contribution.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <button
+            onClick={() => setStep('stages')}
+            disabled={!stagesVideoWatched}
+            className={`w-full py-3 rounded-lg font-semibold text-white ${
+              stagesVideoWatched ? 'hover:bg-blue-700' : 'cursor-not-allowed opacity-50'
+            }`}
+            style={{ background: '#0086D6' }}
+          >
+            Continue to Activity →
+          </button>
+          {!stagesVideoWatched && (
+            <p className="mt-2 text-sm text-gray-500 text-center">
+              Please watch the full video above to continue.
+            </p>
+          )}
         </div>
       )}
 
@@ -511,57 +572,6 @@ export default function AuditPage({ params }: { params: { token: string } }) {
             </div>
           </div>
 
-          {/* Toggle Buttons */}
-          <div className="flex gap-3 mb-6">
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'descriptions' ? null : 'descriptions')}
-              className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
-              style={{ background: 'rgba(0, 134, 214, 0.1)' }}
-            >
-              {expandedSection === 'descriptions' ? '− Hide' : '+ Show'} Detailed Descriptions
-            </button>
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'video' ? null : 'video')}
-              className="px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
-              style={{ background: 'rgba(0, 134, 214, 0.1)' }}
-            >
-              {expandedSection === 'video' ? '− Hide' : '+ Show'} Optional Instructional Video
-            </button>
-          </div>
-
-          {/* Stage Descriptions */}
-          {expandedSection === 'descriptions' && (
-            <div className="mb-6 space-y-4">
-              {stageDescriptions.map((stage) => (
-                <div key={stage.stage} className="bg-white p-4 rounded-lg shadow border-l-4"
-                     style={{ borderLeftColor: stage.color }}>
-                  <h3 className="font-bold text-lg mb-2" style={{ color: stage.color }}>
-                    {stage.title}
-                  </h3>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    {stage.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Instructional Video */}
-          {expandedSection === 'video' && (
-            <div className="mb-6">
-              <video
-                className="w-full rounded-lg border-2 border-gray-200"
-                controls
-                preload="metadata"
-                playsInline
-                poster="/contribution-poster.jpg"
-              >
-                <source src="/contribution.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
-
           {/* Employee Cards */}
           <div className="space-y-4 mb-8">
             {employees.map(emp => (
@@ -598,8 +608,8 @@ export default function AuditPage({ params }: { params: { token: string } }) {
         </div>
       )}
 
-      {/* Performance Ranking */}
-      {step === 'ranking' && (
+      {/* Step 2 Intro: required viewing before the ranking activity */}
+      {step === 'rankingIntro' && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">
             Step 2: Relative Performance Ranking
@@ -610,30 +620,45 @@ export default function AuditPage({ params }: { params: { token: string } }) {
           <p className="mb-6 text-gray-600">The definition of performance is your opinion as a leader on what is the relative impact of these leaders. Imagine you were starting this group again with a very limited budget. In what order would you hire first to last?</p>
           <p className="mb-6 text-gray-600">A tip for how to do this is to start with your top 2–3 and then your bottom 2–3. Sort the middle out after you have this figured out.</p>
 
-          {/* Optional Instructional Video Toggle */}
+          {/* Instructional Video (required) */}
+          <div className="mb-2">
+            <video
+              className="w-full rounded-lg border-2 border-gray-200"
+              controls
+              preload="metadata"
+              playsInline
+              poster="/performance-poster.jpg"
+              onEnded={() => setRankingVideoWatched(true)}
+            >
+              <source src="/performance.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
           <button
-            onClick={() => setShowRankingVideo(!showRankingVideo)}
-            className="mb-6 px-4 py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium"
-            style={{ background: 'rgba(0, 134, 214, 0.1)' }}
+            onClick={() => setStep('ranking')}
+            disabled={!rankingVideoWatched}
+            className={`w-full py-3 rounded-lg font-semibold text-white ${
+              rankingVideoWatched ? 'hover:bg-blue-700' : 'cursor-not-allowed opacity-50'
+            }`}
+            style={{ background: '#0086D6' }}
           >
-            {showRankingVideo ? '− Hide' : '+ Show'} Optional Instructional Video
+            Continue to Activity →
           </button>
-
-          {showRankingVideo && (
-            <div className="mb-6">
-              <video
-                className="w-full rounded-lg border-2 border-gray-200"
-                controls
-                preload="metadata"
-                playsInline
-                poster="/performance-poster.jpg"
-              >
-                <source src="/performance.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+          {!rankingVideoWatched && (
+            <p className="mt-2 text-sm text-gray-500 text-center">
+              Please watch the full video above to continue.
+            </p>
           )}
+        </div>
+      )}
 
+      {/* Performance Ranking */}
+      {step === 'ranking' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Step 2: Relative Performance Ranking
+          </h2>
           <p className="mb-6 text-gray-600">Now rank the following leaders by clicking and dragging each box to their desired rank.</p>
 
           <DndContext
