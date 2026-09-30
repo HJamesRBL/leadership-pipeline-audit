@@ -120,19 +120,31 @@ export async function PUT(
 
           // Update employee assignments
           const employees = await prisma.employee.findMany({
-            where: { 
+            where: {
               auditId: params.id,
               name: { in: leader.assignedEmployees }
             }
           })
+          const assignedEmployeeIds = new Set(employees.map(e => e.id))
 
-          // Delete old ratings
-          await prisma.rating.deleteMany({
+          // Only touch ratings whose assignment changed, so submitted
+          // ratings for still-assigned employees are preserved
+          const existingRatings = await prisma.rating.findMany({
             where: { auditLeaderId: leader.id }
           })
+          const existingEmployeeIds = new Set(existingRatings.map(r => r.employeeId))
 
-          // Create new ratings
+          // Delete ratings for unassigned employees
+          await prisma.rating.deleteMany({
+            where: {
+              auditLeaderId: leader.id,
+              employeeId: { notIn: Array.from(assignedEmployeeIds) }
+            }
+          })
+
+          // Create placeholder ratings for newly assigned employees
           for (const emp of employees) {
+            if (existingEmployeeIds.has(emp.id)) continue
             await prisma.rating.create({
               data: {
                 auditLeaderId: leader.id,
