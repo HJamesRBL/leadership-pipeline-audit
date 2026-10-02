@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { rankLeaderRatings } from '@/lib/ranking'
 
 interface EmployeeComparison {
   employeeId: string
@@ -145,41 +146,28 @@ export async function GET(request: Request) {
       
       audit.auditLeaders.forEach((leader: any) => {
         if (leader.completed) {
-          const totalEmployeesForLeader = leader.ratings.length
-          
-          leader.ratings.forEach((rating: any) => {
-            if (rating.careerStage > 0 && rating.performanceRank < 999) {
-              // Calculate performance percentile
-              const convertedRank = totalEmployeesForLeader - rating.performanceRank + 1
-              let percentile = 0
-              if (totalEmployeesForLeader > 1) {
-                percentile = ((convertedRank - 1) / (totalEmployeesForLeader - 1)) * 100
-              } else {
-                percentile = 100
-              }
-              
-              // Use email as the unique identifier
-              const uniqueId = rating.employee.employeeUniqueId || rating.employee.email || rating.employee.name
-              
-              // Store or average if multiple leaders rated the same employee
-              if (employeeData.has(uniqueId)) {
-                const existing = employeeData.get(uniqueId)
-                existing.careerStage = Math.round((existing.careerStage + rating.careerStage) / 2)
-                existing.percentile = (existing.percentile + percentile) / 2
-                existing.ratingCount++
-              } else {
-                employeeData.set(uniqueId, {
-                  employeeId: rating.employee.id,
-                  uniqueId: uniqueId,
-                  name: rating.employee.name,
-                  email: rating.employee.employeeUniqueId || rating.employee.email || '',
-                  title: rating.employee.title,
-                  businessUnit: rating.employee.businessUnit,
-                  careerStage: rating.careerStage,
-                  percentile: percentile,
-                  ratingCount: 1
-                })
-              }
+          rankLeaderRatings(leader.ratings).forEach(({ rating, percentile }: { rating: any; percentile: number }) => {
+            // Use email as the unique identifier
+            const uniqueId = rating.employee.employeeUniqueId || rating.employee.email || rating.employee.name
+            
+            // Store or average if multiple leaders rated the same employee
+            if (employeeData.has(uniqueId)) {
+              const existing = employeeData.get(uniqueId)
+              existing.careerStage = Math.round((existing.careerStage + rating.careerStage) / 2)
+              existing.percentile = (existing.percentile + percentile) / 2
+              existing.ratingCount++
+            } else {
+              employeeData.set(uniqueId, {
+                employeeId: rating.employee.id,
+                uniqueId: uniqueId,
+                name: rating.employee.name,
+                email: rating.employee.employeeUniqueId || rating.employee.email || '',
+                title: rating.employee.title,
+                businessUnit: rating.employee.businessUnit,
+                careerStage: rating.careerStage,
+                percentile: percentile,
+                ratingCount: 1
+              })
             }
           })
         }

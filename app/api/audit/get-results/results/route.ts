@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { rankLeaderRatings } from '@/lib/ranking'
 
 export async function GET(request: Request) {
   try {
@@ -67,36 +68,18 @@ export async function GET(request: Request) {
     
     audit.auditLeaders.forEach(leader => {
       if (leader.completed) {
-        // Get total number of employees this leader is rating
-        const totalEmployeesForLeader = leader.ratings.length
-        
-        leader.ratings.forEach(rating => {
-          if (rating.careerStage > 0 && rating.performanceRank < 999) {
-            // Step 1: Convert the performance rank (Total - Rank + 1)
-            const convertedRank = totalEmployeesForLeader - rating.performanceRank + 1
-            
-            // Step 2: Calculate percentile using PERCENTRANK equivalent
-            // PERCENTRANK formula: (convertedRank - 1) / (totalCount - 1) * 100
-            // This gives us the percentile position within the group
-            let percentile = 0
-            if (totalEmployeesForLeader > 1) {
-              percentile = ((convertedRank - 1) / (totalEmployeesForLeader - 1)) * 100
-            } else {
-              percentile = 100 // If only one person, they're at 100th percentile
-            }
-            
-            allRatings.push({
-              leaderName: leader.name,
-              employeeName: rating.employee.name,
-              employeeTitle: rating.employee.title,
-              employeeBusinessUnit: rating.employee.businessUnit,
-              careerStage: rating.careerStage,
-              performanceRank: rating.performanceRank,
-              convertedRank: convertedRank,
-              percentile: percentile,
-              totalInGroup: totalEmployeesForLeader
-            })
-          }
+        rankLeaderRatings(leader.ratings).forEach(({ rating, rank, convertedRank, percentile, total }) => {
+          allRatings.push({
+            leaderName: leader.name,
+            employeeName: rating.employee.name,
+            employeeTitle: rating.employee.title,
+            employeeBusinessUnit: rating.employee.businessUnit,
+            careerStage: rating.careerStage,
+            performanceRank: rank,
+            convertedRank: convertedRank,
+            percentile: percentile,
+            totalInGroup: total
+          })
         })
       }
     })

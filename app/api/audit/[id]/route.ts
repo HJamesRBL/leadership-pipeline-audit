@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { v4 as uuidv4 } from 'uuid'
+import { compactAuditRanks } from '@/lib/ranking'
 
 // GET single audit details
 export async function GET(
@@ -196,6 +197,9 @@ export async function PUT(
         })
       }
     }
+
+    // Close gaps in each leader's ranking left by removed employees/assignments
+    await compactAuditRanks(params.id)
 
     return NextResponse.json({ success: true })
   } catch (error) {
